@@ -19,12 +19,9 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 p-4">
-      <Card className="w-full max-w-md mx-auto shadow-xl">
+    <div className="flex min-h-screen  items-center justify-center  p-4">
+      <Card className="w-full max-w-md  mx-auto shadow-xl">
         <CardHeader className="text-center space-y-4">
-           <div className="flex justify-center">
-             <Logo />
-           </div>
           <CardTitle className="font-headline">Welcome to ReadyTech</CardTitle>
           <CardDescription>
             Your gateway to tech interview success. Sign in to continue.

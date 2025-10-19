@@ -9,7 +9,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { LogOut, Mail, User } from 'lucide-react';
+import { LogOut, Mail, PlusCircle, User } from 'lucide-react';
 import { mockCurrentUser } from '@/lib/mock-data';
 import Link from 'next/link';
 
@@ -50,6 +50,12 @@ export function UserNav() {
              <Link href="/profile">
               <User className="mr-2 h-4 w-4" />
               <span>Profile</span>
+             </Link>
+          </DropdownMenuItem>
+           <DropdownMenuItem asChild>
+             <Link href="/create-post">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              <span>Create Post</span>
              </Link>
           </DropdownMenuItem>
           <DropdownMenuItem disabled>

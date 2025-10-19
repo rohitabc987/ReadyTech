@@ -9,7 +9,6 @@ import { Button } from './ui/button';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard' },
-  { href: '/create-post', label: 'Create Post' },
   { href: '/questions', label: 'Question Bank' },
   { href: '/resources', label: 'Resources' },
 ];
