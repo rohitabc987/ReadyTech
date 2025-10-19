@@ -9,7 +9,7 @@ import { PlusCircle, Upload } from 'lucide-react';
 export default function NewInterviewPage() {
   return (
     <>
-      <Header breadcrumbs={[{ href: '/interviews', label: 'Experiences' }, { label: 'New' }]} />
+      <Header breadcrumbs={[{ href: '/dashboard', label: 'Dashboard' }, { label: 'Create Post' }]} />
       <main className="flex-1 mt-4">
         <Card>
           <CardHeader>

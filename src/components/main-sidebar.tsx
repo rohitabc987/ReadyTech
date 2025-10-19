@@ -45,7 +45,7 @@ export function MainSidebar() {
       <SidebarContent className="p-2">
         <div className="flex flex-col gap-2">
           <Button asChild>
-            <Link href="/interviews/new">
+            <Link href="/create-post">
               <PlusCircle />
               New Post
             </Link>

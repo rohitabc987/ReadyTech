@@ -9,7 +9,7 @@ import { Button } from './ui/button';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard' },
-  { href: '/interviews/new', label: 'Create Post' },
+  { href: '/create-post', label: 'Create Post' },
   { href: '/questions', label: 'Question Bank' },
   { href: '/resources', label: 'Resources' },
 ];
@@ -18,7 +18,7 @@ export function TopHeader() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 ml-[10vw]  bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center">
         <div className="mr-4 flex w-full items-center justify-between">
           <div className="flex items-center gap-6">
