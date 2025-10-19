@@ -14,6 +14,7 @@ export function Footer() {
             <h3 className="font-semibold uppercase tracking-wider">Company</h3>
             <ul className="space-y-1">
               <li><Link href="/questions" className="text-sm hover:underline">Question Bank</Link></li>
+              <li><Link href="/mentors" className="text-sm hover:underline">Find a Mentor</Link></li>
               <li><Link href="#" className="text-sm hover:underline">About</Link></li>
               <li><Link href="#" className="text-sm hover:underline">Contact Us</Link></li>
             </ul>
@@ -23,7 +24,7 @@ export function Footer() {
             <ul className="space-y-1">
               <li><Link href="#" className="text-sm hover:underline">How it Works</Link></li>
               <li><Link href="#" className="text-sm hover:underline">Give Feedback</Link></li>
-              <li><Link href="#" className="text-sm hover:underline">Know More</Link></li>
+              <li><Link href="#" className="text-sm hover-underline">Know More</Link></li>
             </ul>
           </div>
           <div className="space-y-2">
