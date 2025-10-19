@@ -16,20 +16,28 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   return (
     <Card className="hover:shadow-lg transition-shadow">
         <CardHeader>
-            <div className="flex items-start justify-between gap-4">
-                <div>
+            <div className="flex items-start gap-4">
+                {author && (
+                  <Link href={`/users/${author.id}`}>
+                      <Avatar>
+                          <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
+                          <AvatarFallback>{userInitials}</AvatarFallback>
+                      </Avatar>
+                  </Link>
+                )}
+                <div className="flex-1">
                     <CardTitle className="font-headline text-lg mb-1">
                         <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
                     </CardTitle>
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Briefcase className="h-4 w-4" />
-                        <span>{interview.companyInfo.company}</span>
-                        <span>&bull;</span>
-                        <span>{interview.companyInfo.role}</span>
-                    </div>
+                    {author && (
+                      <div className="text-sm text-muted-foreground">
+                          <p className="font-semibold text-foreground">{author.personal.name}</p>
+                          <p className="text-xs">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
+                      </div>
+                    )}
                 </div>
                 {interview.stats.avgRating && (
-                  <div className="flex items-center gap-1 text-sm text-amber-500">
+                  <div className="flex items-center gap-1 text-sm text-amber-500 shrink-0">
                       <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
                       <span className="font-semibold">{interview.stats.avgRating.toFixed(1)}</span>
                   </div>
@@ -37,19 +45,14 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             </div>
         </CardHeader>
         <CardContent>
+            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                <Briefcase className="h-4 w-4" />
+                <span>{interview.companyInfo.company}</span>
+                <span>&bull;</span>
+                <span>{interview.companyInfo.role}</span>
+            </div>
             <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.main.description}</p>
-            {author && (
-              <div className="flex items-center gap-2 text-sm mb-4">
-                  <Avatar className="h-8 w-8">
-                      <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
-                      <AvatarFallback>{userInitials}</AvatarFallback>
-                  </Avatar>
-                  <div>
-                      <p className="font-semibold">{author.personal.name}</p>
-                      <p className="text-xs text-muted-foreground">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
-                  </div>
-              </div>
-            )}
+            
             <Separator />
             <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground pt-4">
               <div className="flex items-center gap-2">
