@@ -56,20 +56,16 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             
             <Separator />
             <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground pt-4">
-              <div className="flex items-center gap-2">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
                   <ThumbsUp className="h-4 w-4" />
-                  <span>{interview.stats.likes}</span>
-                  <span className="sr-only">Likes</span>
+                  <span>Like ({interview.stats.likes})</span>
                 </Button>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
-                  <MessageSquare className="h-4 w-4" />
-                  <span>{interview.stats.comments.length}</span>
-                  <span className="sr-only">Comments</span>
+                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1" asChild>
+                  <Link href={`/interviews/${interview.id}#comments`}>
+                    <MessageSquare className="h-4 w-4" />
+                    <span>Comment ({interview.stats.comments.length})</span>
+                  </Link>
                 </Button>
-              </div>
             </div>
         </CardContent>
     </Card>

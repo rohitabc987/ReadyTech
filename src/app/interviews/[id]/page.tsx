@@ -82,7 +82,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                             </CardContent>
                         </Card>
                         
-                        <Card>
+                        <Card id="comments">
                             <CardHeader>
                                 <CardTitle>Comments ({interview.stats.comments.length})</CardTitle>
                             </CardHeader>
