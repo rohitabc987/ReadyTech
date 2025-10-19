@@ -20,28 +20,50 @@ The database is structured into top-level collections for core entities like use
 
 ### `/users/{userId}`
 
-This collection stores public-facing user profile information.
+This collection stores all user-related information, organized into sub-objects.
 
 - **Path**: `/users/{userId}`
 - **`userId`**: The UID from Firebase Authentication.
 
-**Schema: `UserProfile`**
+**Schema: `User`**
 ```typescript
 {
-  "uid": "string",             // Firebase Auth User ID
-  "name": "string",            // User's full name
-  "email": "string",           // User's institutional email (verified)
-  "avatarUrl": "string",       // URL for the user's profile picture
-  "institution": "string",     // Name of the college/university
-  "graduationYear": "number",  // e.g., 2025
-  "bio": "string",             // A short user biography
-  "isMentor": "boolean"        // Flag indicating if the user is available for mentorship
+  "id": "string", // User's UID from Firebase Auth
+  "personal": {
+    "name": "string",
+    "email": "string", // Verified institute email
+    "avatarUrl": "string",
+    "mobile": "string",
+    "bio": "string",
+    "createdAt": "Timestamp",
+    "updatedAt": "Timestamp"
+  },
+  "academics": {
+    "role": "'mentor' | 'learner'",
+    "institutionType": "string",
+    "institution": "'IIT' | 'NIT' | 'IIIT' | 'Private' | 'School'",
+    "branch": "string",
+    "graduationYear": "number",
+    "domainVerified": "boolean"
+  },
+  "expertise": {
+    "expertiseAreas": ["string"] // e.g., ["DSA", "System Design"]
+  },
+  "social": {
+    "linkedin": "string",
+    "github": "string",
+    "youtube": "string"
+  },
+  "preferences": {
+    "notificationsEnabled": "boolean",
+    "darkMode": "boolean"
+  }
 }
 ```
 
 ### `/posts/{postId}`
 
-This collection stores all interview experiences and mentorship profiles created by users.
+This collection stores all types of content, including interviews, resources, and questions, using a flexible structure.
 
 - **Path**: `/posts/{postId}`
 - **`postId`**: A unique, auto-generated ID.
@@ -49,35 +71,52 @@ This collection stores all interview experiences and mentorship profiles created
 **Schema: `Post`**
 ```typescript
 {
-  "id": "string",                      // The unique document ID
-  "type": "'interview' | 'mentorship'",// Type of the post
-  "title": "string",                   // Post title
-  "authorId": "string",                // UID of the user who created it (links to /users/{userId})
-  "createdAt": "Timestamp",            // Firestore server timestamp of creation
-  "updatedAt": "Timestamp",            // Firestore server timestamp of last update
-  
-  // Fields specific to 'interview' type
-  "company": "string",                 // Company name (e.g., "Google")
-  "role": "string",                    // Role (e.g., "Software Engineer Intern")
-  "experience": "string",              // Detailed description of the interview experience
-  "questions": [                       // Array of questions asked
-    { "id": "string", "question": "string", "topic": "string" }
-  ],
-  "resources": [                       // Array of helpful resources
-    { "id": "string", "title": "string", "url": "string", "type": "'pdf'|'video'|'link'" }
-  ],
-
-  // Subcollections are preferred for scalability
-  // /posts/{postId}/comments/{commentId}
-  // /posts/{postId}/ratings/{userId}
+  "id": "string",
+  "main": {
+    "authorId": "string", // Reference to users/{userId}
+    "type": "'interview' | 'resource' | 'mock' | 'question'",
+    "title": "string",
+    "description": "string",
+    "coverImage": "string",
+    "createdAt": "Timestamp",
+    "updatedAt": "Timestamp"
+  },
+  "companyInfo": {
+    "company": "string",
+    "role": "string",
+    "year": "string",
+    "difficulty": "'easy' | 'medium' | 'hard'",
+    "applicationType": "'Internship' | 'Full-Time' | 'Internship + FTE'",
+    "result": "'Selected' | 'Rejected' | 'In Process'"
+  },
+  "content": {
+    "questions": [
+      { "text": "string", "difficulty": "'Easy' | 'Medium' | 'Hard'", "type": "'Coding' | 'Technical' | 'HR'", "topic": "string" }
+    ],
+    "resources": [
+      { "id": "string", "title": "string", "url": "string", "type": "'pdf'|'video'|'link'" }
+    ]
+  },
+  "stats": {
+    "views": "number",
+    "likes": "number",
+    "comments": "Comment[]", // Typically a subcollection: /posts/{postId}/comments
+    "avgRating": "number",
+    "ratingsCount": "number",
+    "upvotes": "number"
+  }
 }
 ```
-**Subcollection: `/posts/{postId}/comments`**
-- **Schema: `Comment`**
+
+### `/feedback/{feedbackId}`
+
+A root-level collection to store user feedback.
+
+**Schema: `Feedback`**
 ```typescript
 {
-  "authorId": "string",
-  "text": "string",
+  "id": "string",      // Can be user's email or auto-generated ID
+  "content": "string",
   "createdAt": "Timestamp"
 }
 ```
