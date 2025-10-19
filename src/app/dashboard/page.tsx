@@ -47,9 +47,9 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             </div>
         </CardHeader>
         <CardContent>
-            <div className="relative">
-                <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.main.description}</p>
-                <Link href={`/interviews/${interview.id}`} className="absolute bottom-4 right-0 text-sm font-semibold text-primary hover:underline bg-background pl-2">
+            <div className="relative mb-4">
+                <p className="text-sm text-muted-foreground line-clamp-2 pr-20">{interview.main.description}</p>
+                <Link href={`/interviews/${interview.id}`} className="absolute bottom-0 right-0 text-sm font-semibold text-primary hover:underline bg-background pl-2">
                     ...Read More
                 </Link>
             </div>
