@@ -5,7 +5,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { mockInterviews, mockUsers } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Briefcase, Filter, GraduationCap, Star } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
@@ -79,12 +78,6 @@ export default function DashboardPage() {
 
   return (
     <>
-      <div className="flex justify-between items-center mb-6">
-        <div>
-          <h1 className="text-2xl font-bold tracking-tight">Group Orders</h1>
-          <p className="text-muted-foreground">Discover group orders near you. Log in to create your own.</p>
-        </div>
-      </div>
       <Tabs defaultValue="interviews">
         <TabsList className="grid w-full grid-cols-2 md:w-[400px]">
           <TabsTrigger value="interviews">Interview Experiences</TabsTrigger>
@@ -100,26 +93,20 @@ export default function DashboardPage() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                     <div className="space-y-2">
-                        <p className="font-medium text-sm">Post Status</p>
-                        <div className="flex gap-2">
-                            <Button size="sm" className="flex-1">Recent</Button>
-                            <Button size="sm" variant="outline" className="flex-1">Active</Button>
-                        </div>
-                         <Button size="sm" variant="outline" className="w-full">Expired (Today)</Button>
+                        <Label htmlFor="search-company">Company</Label>
+                        <Input id="search-company" placeholder="e.g. Google, Microsoft..." />
                     </div>
                      <div className="space-y-2">
-                        <p className="font-medium text-sm">Deadline</p>
-                        <div className="grid grid-cols-2 gap-2">
-                            <Button size="sm" variant="outline">Any time</Button>
-                            <Button size="sm" variant="outline">Next hour</Button>
-                            <Button size="sm" variant="outline">Next 3 hours</Button>
-                            <Button size="sm" variant="outline">Next 6 hours</Button>
-                            <Button size="sm" variant="outline">Next 24 hours</Button>
-                        </div>
+                        <Label htmlFor="search-branch">Branch</Label>
+                        <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="search-company">App/Restaurant Name</Label>
-                        <Input id="search-company" placeholder="e.g. Zomato, Swiggy..." />
+                        <Label htmlFor="search-year">Year</Label>
+                        <Input id="search-year" placeholder="e.g. 2024" />
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="search-college">College Name</Label>
+                        <Input id="search-college" placeholder="e.g. IIT Bombay..." />
                     </div>
                 </CardContent>
               </Card>
