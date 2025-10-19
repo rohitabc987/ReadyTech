@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { mockPosts } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Briefcase, MessageSquare, Star, ThumbsUp } from 'lucide-react';
+import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import { mockUsers } from '@/lib/mock-data';
@@ -26,15 +26,17 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                   </Link>
                 )}
                 <div className="flex-1">
-                    <CardTitle className="font-headline text-lg mb-1">
+                    <CardTitle className="font-headline text-lg">
                         <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
                     </CardTitle>
-                    {author && (
-                      <div className="text-sm text-muted-foreground">
-                          <p className="font-semibold text-foreground">{author.personal.name}</p>
-                          <p className="text-xs">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
-                      </div>
-                    )}
+                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <Briefcase className="h-4 w-4" />
+                        <span>{interview.companyInfo.company}</span>
+                        <span>&bull;</span>
+                        <span>{interview.companyInfo.role}</span>
+                        <span>&bull;</span>
+                        <div className="flex items-center gap-1"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
+                    </div>
                 </div>
                 {interview.stats.avgRating && (
                   <div className="flex items-center gap-1 text-sm text-amber-500 shrink-0">
@@ -45,12 +47,6 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             </div>
         </CardHeader>
         <CardContent>
-            <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
-                <Briefcase className="h-4 w-4" />
-                <span>{interview.companyInfo.company}</span>
-                <span>&bull;</span>
-                <span>{interview.companyInfo.role}</span>
-            </div>
             <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.main.description}</p>
             
             <Separator />
