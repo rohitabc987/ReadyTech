@@ -1,12 +1,5 @@
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from '@/components/ui/breadcrumb';
+import React from 'react';
 import Link from 'next/link';
 
 type HeaderProps = {
