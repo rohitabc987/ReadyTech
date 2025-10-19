@@ -3,10 +3,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { mockPosts } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Briefcase, Star } from 'lucide-react';
+import { Briefcase, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import { mockUsers } from '@/lib/mock-data';
+import { Separator } from '@/components/ui/separator';
 
 function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   const author = mockUsers.find(u => u.id === interview.main.authorId);
@@ -38,7 +39,7 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
         <CardContent>
             <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.main.description}</p>
             {author && (
-              <div className="flex items-center gap-2 text-sm">
+              <div className="flex items-center gap-2 text-sm mb-4">
                   <Avatar className="h-8 w-8">
                       <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
                       <AvatarFallback>{userInitials}</AvatarFallback>
@@ -49,6 +50,23 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                   </div>
               </div>
             )}
+            <Separator />
+            <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground pt-4">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
+                  <ThumbsUp className="h-4 w-4" />
+                  <span>{interview.stats.likes}</span>
+                  <span className="sr-only">Likes</span>
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
+                  <MessageSquare className="h-4 w-4" />
+                  <span>{interview.stats.comments.length}</span>
+                  <span className="sr-only">Comments</span>
+                </Button>
+              </div>
+            </div>
         </CardContent>
     </Card>
   )
