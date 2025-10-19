@@ -24,7 +24,7 @@ export default function RootLayout({
       <body className="font-body antialiased">
         <div className="flex flex-col min-h-screen">
           <TopHeader />
-          <main className="container mx-auto flex-1 p-4 sm:p-6 lg:p-8 max-w-6xl">
+          <main className="container mx-auto flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl">
             {children}
           </main>
           <Footer />
