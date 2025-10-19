@@ -14,6 +14,8 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
 }
 
 export default function ResourcesPage() {
+    const allResources = mockResources;
+
   return (
     <>
       <Header breadcrumbs={[{ href: '/resources', label: 'Resource Library' }]} />
@@ -34,7 +36,7 @@ export default function ResourcesPage() {
                       <Input placeholder="Search resources..." className="pl-10"/>
                   </div>
                   <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                      {mockResources.map(resource => (
+                      {allResources.map(resource => (
                           <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
                               <Card className="h-full hover:bg-muted/50 transition-colors">
                                   <CardHeader className="flex-row items-start gap-4 space-y-0">

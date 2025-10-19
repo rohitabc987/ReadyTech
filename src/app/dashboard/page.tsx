@@ -1,53 +1,61 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { mockInterviews } from '@/lib/mock-data';
+import { mockPosts } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Star } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
+import { mockUsers } from '@/lib/mock-data';
 
-function InterviewCard({ interview }: { interview: (typeof mockInterviews)[0] }) {
-  const userInitials = interview.author.name.split(' ').map(n => n[0]).join('');
+function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
+  const author = mockUsers.find(u => u.id === interview.main.authorId);
+  const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
+
   return (
     <Card className="hover:shadow-lg transition-shadow">
         <CardHeader>
             <div className="flex items-start justify-between gap-4">
                 <div>
                     <CardTitle className="font-headline text-lg mb-1">
-                        <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.title}</Link>
+                        <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
                     </CardTitle>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                         <Briefcase className="h-4 w-4" />
-                        <span>{interview.company}</span>
+                        <span>{interview.companyInfo.company}</span>
                         <span>&bull;</span>
-                        <span>{interview.role}</span>
+                        <span>{interview.companyInfo.role}</span>
                     </div>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-amber-500">
-                    <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
-                    <span className="font-semibold">{interview.rating.toFixed(1)}</span>
-                </div>
+                {interview.stats.avgRating && (
+                  <div className="flex items-center gap-1 text-sm text-amber-500">
+                      <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+                      <span className="font-semibold">{interview.stats.avgRating.toFixed(1)}</span>
+                  </div>
+                )}
             </div>
         </CardHeader>
         <CardContent>
-            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.experience}</p>
-            <div className="flex items-center gap-2 text-sm">
-                <Avatar className="h-8 w-8">
-                    <AvatarImage src={interview.author.avatarUrl} alt={interview.author.name} />
-                    <AvatarFallback>{userInitials}</AvatarFallback>
-                </Avatar>
-                <div>
-                    <p className="font-semibold">{interview.author.name}</p>
-                    <p className="text-xs text-muted-foreground">{new Date(interview.date).toLocaleDateString()}</p>
-                </div>
-            </div>
+            <p className="text-sm text-muted-foreground line-clamp-2 mb-4">{interview.main.description}</p>
+            {author && (
+              <div className="flex items-center gap-2 text-sm">
+                  <Avatar className="h-8 w-8">
+                      <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
+                      <AvatarFallback>{userInitials}</AvatarFallback>
+                  </Avatar>
+                  <div>
+                      <p className="font-semibold">{author.personal.name}</p>
+                      <p className="text-xs text-muted-foreground">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
+                  </div>
+              </div>
+            )}
         </CardContent>
     </Card>
   )
 }
 
 export default function DashboardPage() {
+  const mockInterviews = mockPosts.filter(p => p.main.type === 'interview');
 
   return (
     <>

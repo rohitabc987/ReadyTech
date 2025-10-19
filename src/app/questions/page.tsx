@@ -4,21 +4,21 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { mockInterviews } from '@/lib/mock-data';
+import { mockPosts } from '@/lib/mock-data';
 import { Filter, Search } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 
 export default function QuestionsPage() {
-    const allQuestions = mockInterviews.flatMap(interview => 
-        interview.questions.map(q => ({
+    const allQuestions = mockPosts.flatMap(interview => 
+        (interview.content.questions || []).map(q => ({
             ...q,
-            company: interview.company,
+            company: interview.companyInfo.company,
             interviewId: interview.id
         }))
     );
     // Deduplicate questions by question text
-    const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.question, q])).values());
+    const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.text, q])).values());
 
   return (
     <>
@@ -73,9 +73,9 @@ export default function QuestionsPage() {
                   </TableRow>
                 </TableHeader>
                 <TableBody>
-                  {uniqueQuestions.map((q) => (
-                    <TableRow key={q.id}>
-                      <TableCell className="font-medium">{q.question}</TableCell>
+                  {uniqueQuestions.map((q, i) => (
+                    <TableRow key={i}>
+                      <TableCell className="font-medium">{q.text}</TableCell>
                       <TableCell><Badge variant="secondary">{q.topic}</Badge></TableCell>
                       <TableCell>{q.company}</TableCell>
                       <TableCell className="text-right">

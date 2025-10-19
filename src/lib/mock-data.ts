@@ -1,4 +1,5 @@
-import type { User, Interview, Question, Resource, Comment } from './types';
+
+import type { User, Post, Question, Resource, Comment } from './types';
 import placeholderData from './placeholder-images.json';
 
 const { placeholderImages } = placeholderData;
@@ -6,20 +7,123 @@ const { placeholderImages } = placeholderData;
 const findImage = (id: string) => placeholderImages.find(p => p.id === id)?.imageUrl || '';
 
 export const mockUsers: User[] = [
-  { id: 'u1', name: 'Aarav Sharma', email: 'aarav.sharma@iitdh.ac.in', avatarUrl: findImage('user1'), institution: 'IIT Dharwad', graduationYear: 2023, bio: 'SWE at Google. Passionate about algorithms and system design. Happy to mentor folks breaking into tech.', isMentor: true },
-  { id: 'u2', name: 'Priya Patel', email: 'priya.patel@nit.ac.in', avatarUrl: findImage('user2'), institution: 'NIT Warangal', graduationYear: 2024, bio: 'Incoming PM at Microsoft. I love talking about product sense and interview prep.', isMentor: true },
-  { id: 'u3', name: 'Rohan Desai', email: 'rohan.desai@iitdh.ac.in', avatarUrl: findImage('user3'), institution: 'IIT Dharwad', graduationYear: 2025, bio: 'Aspiring software engineer, currently learning about cloud computing.', isMentor: false },
-  { id: 'u4', name: 'Sneha Reddy', email: 'sneha.reddy@nit.ac.in', avatarUrl: findImage('user4'), institution: 'NIT Trichy', graduationYear: 2023, bio: 'Data Scientist at Amazon. My interests include ML, NLP, and sharing knowledge.', isMentor: true },
-  { id: 'u5', name: 'Vikram Singh', email: 'vikram.singh@iitdh.ac.in', avatarUrl: findImage('user5'), institution: 'IIT Bombay', graduationYear: 2024, bio: 'Hardware engineer at NVIDIA. Happy to chat about low-level systems.', isMentor: true },
+  {
+    id: 'u1',
+    personal: {
+      name: 'Aarav Sharma',
+      email: 'aarav.sharma@iitdh.ac.in',
+      avatarUrl: findImage('user1'),
+      bio: 'SWE at Google. Passionate about algorithms and system design. Happy to mentor folks breaking into tech.',
+      createdAt: new Date('2022-08-15T10:00:00Z'),
+    },
+    academics: {
+      role: 'mentor',
+      institution: 'IIT',
+      branch: 'Computer Science',
+      graduationYear: 2023,
+      domainVerified: true,
+    },
+    expertise: {
+      expertiseAreas: ['DSA', 'System Design'],
+    },
+    social: {},
+    preferences: {},
+  },
+  {
+    id: 'u2',
+    personal: {
+      name: 'Priya Patel',
+      email: 'priya.patel@nit.ac.in',
+      avatarUrl: findImage('user2'),
+      bio: 'Incoming PM at Microsoft. I love talking about product sense and interview prep.',
+      createdAt: new Date('2022-09-01T11:00:00Z'),
+    },
+    academics: {
+      role: 'mentor',
+      institution: 'NIT',
+      branch: 'Electronics and Communication',
+      graduationYear: 2024,
+      domainVerified: true,
+    },
+    expertise: {
+      expertiseAreas: ['Product Management', 'Interview Prep'],
+    },
+    social: {},
+    preferences: {},
+  },
+  {
+    id: 'u3',
+    personal: {
+      name: 'Rohan Desai',
+      email: 'rohan.desai@iitdh.ac.in',
+      avatarUrl: findImage('user3'),
+      bio: 'Aspiring software engineer, currently learning about cloud computing.',
+      createdAt: new Date('2023-01-20T12:00:00Z'),
+    },
+    academics: {
+      role: 'learner',
+      institution: 'IIT',
+      branch: 'Mechanical Engineering',
+      graduationYear: 2025,
+      domainVerified: true,
+    },
+    expertise: {},
+    social: {},
+    preferences: {},
+  },
+  {
+    id: 'u4',
+    personal: {
+      name: 'Sneha Reddy',
+      email: 'sneha.reddy@nit.ac.in',
+      avatarUrl: findImage('user4'),
+      bio: 'Data Scientist at Amazon. My interests include ML, NLP, and sharing knowledge.',
+      createdAt: new Date('2022-07-10T14:00:00Z'),
+    },
+    academics: {
+      role: 'mentor',
+      institution: 'NIT',
+      branch: 'Computer Science',
+      graduationYear: 2023,
+      domainVerified: true,
+    },
+    expertise: {
+      expertiseAreas: ['Machine Learning', 'NLP', 'Data Science'],
+    },
+    social: {},
+    preferences: {},
+  },
+  {
+    id: 'u5',
+    personal: {
+      name: 'Vikram Singh',
+      email: 'vikram.singh@iitdh.ac.in',
+      avatarUrl: findImage('user5'),
+      bio: 'Hardware engineer at NVIDIA. Happy to chat about low-level systems.',
+      createdAt: new Date('2022-06-15T15:00:00Z'),
+    },
+    academics: {
+      role: 'mentor',
+      institution: 'IIT',
+      branch: 'Electrical Engineering',
+      graduationYear: 2024,
+      domainVerified: true,
+    },
+    expertise: {
+      expertiseAreas: ['Hardware', 'Embedded Systems'],
+    },
+    social: {},
+    preferences: {},
+  },
 ];
 
 export const mockCurrentUser = mockUsers[2];
 
 export const mockQuestions: Question[] = [
-  { id: 'q1', question: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees' },
-  { id: 'q2', question: 'Explain the difference between a process and a thread.', topic: 'Operating Systems' },
-  { id: 'q3', question: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design' },
-  { id: 'q4', question: 'Implement a LRU Cache.', topic: 'Data Structures' },
+  { text: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees', type: 'Coding', difficulty: 'Medium' },
+  { text: 'Explain the difference between a process and a thread.', topic: 'Operating Systems', type: 'Technical', difficulty: 'Easy' },
+  { text: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design', type: 'Technical', difficulty: 'Hard' },
+  { text: 'Implement a LRU Cache.', topic: 'Data Structures', type: 'Coding', difficulty: 'Medium' },
 ];
 
 export const mockResources: Resource[] = [
@@ -30,48 +134,93 @@ export const mockResources: Resource[] = [
 ];
 
 export const mockComments: Comment[] = [
-  { id: 'c1', author: mockUsers[1], text: 'This is a great breakdown, thanks for sharing!', date: '2024-05-20T10:30:00Z' },
-  { id: 'c2', author: mockUsers[3], text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', date: '2024-05-21T14:00:00Z' },
+  { id: 'c1', authorId: 'u2', text: 'This is a great breakdown, thanks for sharing!', createdAt: new Date('2024-05-20T10:30:00Z') },
+  { id: 'c2', authorId: 'u4', text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', createdAt: new Date('2024-05-21T14:00:00Z') },
 ];
 
-export const mockInterviews: Interview[] = [
+export const mockPosts: Post[] = [
   {
     id: 'i1',
-    title: 'My Interview Experience at Google for SDE-1',
-    company: 'Google',
-    role: 'SDE-1',
-    author: mockUsers[0],
-    date: '2024-05-20T09:00:00Z',
-    experience: 'The interview process consisted of 1 phone screen and 3 onsite rounds. The phone screen was a medium LeetCode question on arrays. The on-sites covered a range of topics including trees, graphs, and a system design question. Everyone was very friendly and the experience was positive overall. The recruiter was very helpful in guiding me through the process.',
-    questions: [mockQuestions[0], mockQuestions[2]],
-    resources: [mockResources[0]],
-    rating: 4.8,
-    comments: mockComments,
+    main: {
+        authorId: 'u1',
+        type: 'interview',
+        title: 'My Interview Experience at Google for SDE-1',
+        description: 'The interview process consisted of 1 phone screen and 3 onsite rounds. The phone screen was a medium LeetCode question on arrays. The on-sites covered a range of topics including trees, graphs, and a system design question. Everyone was very friendly and the experience was positive overall. The recruiter was very helpful in guiding me through the process.',
+        createdAt: new Date('2024-05-20T09:00:00Z'),
+        updatedAt: new Date('2024-05-20T09:00:00Z'),
+    },
+    companyInfo: {
+        company: 'Google',
+        role: 'SDE-1',
+        applicationType: 'Full-Time',
+        result: 'Selected',
+    },
+    content: {
+        questions: [mockQuestions[0], mockQuestions[2]],
+        resources: [mockResources[0]],
+    },
+    stats: {
+        views: 1250,
+        likes: 150,
+        comments: mockComments,
+        avgRating: 4.8,
+        ratingsCount: 42,
+    },
   },
   {
     id: 'i2',
-    title: 'Microsoft PM Interview - A Deep Dive',
-    company: 'Microsoft',
-    role: 'Product Manager',
-    author: mockUsers[1],
-    date: '2024-04-15T14:00:00Z',
-    experience: 'The process had 4 rounds. Round 1 was with a PM and focused on product sense. Round 2 was a technical round with an engineer. Round 3 was about behavioral questions and leadership principles. The final round was with a senior director about my past experiences and future goals. Be prepared to talk a lot about "why Microsoft".',
-    questions: [],
-    resources: [],
-    rating: 4.5,
-    comments: [],
+    main: {
+        authorId: 'u2',
+        type: 'interview',
+        title: 'Microsoft PM Interview - A Deep Dive',
+        description: 'The process had 4 rounds. Round 1 was with a PM and focused on product sense. Round 2 was a technical round with an engineer. Round 3 was about behavioral questions and leadership principles. The final round was with a senior director about my past experiences and future goals. Be prepared to talk a lot about "why Microsoft".',
+        createdAt: new Date('2024-04-15T14:00:00Z'),
+        updatedAt: new Date('2024-04-15T14:00:00Z'),
+    },
+    companyInfo: {
+        company: 'Microsoft',
+        role: 'Product Manager',
+        applicationType: 'Full-Time',
+        result: 'Selected',
+    },
+    content: {
+        questions: [],
+        resources: [],
+    },
+    stats: {
+        views: 980,
+        likes: 120,
+        comments: [],
+        avgRating: 4.5,
+        ratingsCount: 35,
+    },
   },
   {
     id: 'i3',
-    title: 'Amazon SDE Intern Interview',
-    company: 'Amazon',
-    role: 'SDE Intern',
-    author: mockUsers[3],
-    date: '2024-03-10T11:00:00Z',
-    experience: 'It was a 2-round process. First was an online assessment on HackerRank with 2 coding questions and a work-style simulation. The second round was a virtual interview with an SDE-2. We discussed my resume, a coding question on hashmaps, and some of Amazon\'s leadership principles. The coding question was about finding pairs in an array that sum to a target.',
-    questions: [mockQuestions[3]],
-    resources: [],
-    rating: 4.2,
-    comments: [],
+    main: {
+        authorId: 'u4',
+        type: 'interview',
+        title: 'Amazon SDE Intern Interview',
+        description: 'It was a 2-round process. First was an online assessment on HackerRank with 2 coding questions and a work-style simulation. The second round was a virtual interview with an SDE-2. We discussed my resume, a coding question on hashmaps, and some of Amazon\'s leadership principles. The coding question was about finding pairs in an array that sum to a target.',
+        createdAt: new Date('2024-03-10T11:00:00Z'),
+        updatedAt: new Date('2024-03-10T11:00:00Z'),
+    },
+    companyInfo: {
+        company: 'Amazon',
+        role: 'SDE Intern',
+        applicationType: 'Internship',
+        result: 'Selected',
+    },
+    content: {
+        questions: [mockQuestions[3]],
+        resources: [],
+    },
+    stats: {
+        views: 2100,
+        likes: 250,
+        comments: [],
+        avgRating: 4.2,
+        ratingsCount: 60,
+    },
   },
 ];
