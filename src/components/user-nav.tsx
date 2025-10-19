@@ -17,23 +17,22 @@ export function UserNav() {
   const user = mockCurrentUser;
   const userInitials = user.name.split(' ').map(n => n[0]).join('');
 
+  if (!user) {
+     return (
+        <Button asChild>
+            <Link href="/login">Login</Link>
+        </Button>
+     )
+  }
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant="ghost"
-          className="relative h-10 w-full justify-start gap-2 px-2"
-        >
+        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src={user.avatarUrl} alt={user.name} />
             <AvatarFallback>{userInitials}</AvatarFallback>
           </Avatar>
-          <div className="text-left group-data-[collapsible=icon]:hidden">
-            <p className="text-sm font-medium leading-none">{user.name}</p>
-            <p className="text-xs leading-none text-muted-foreground">
-              {user.email}
-            </p>
-          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>

@@ -1,6 +1,7 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import { TopHeader } from '@/components/top-header';
 
 export const metadata: Metadata = {
   title: 'ReadyTech',
@@ -20,7 +21,12 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700&family=Source+Code+Pro&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        {children}
+        <div className="flex flex-col min-h-screen">
+          <TopHeader />
+          <main className="flex-1 container mx-auto p-4 sm:p-6 lg:p-8">
+            {children}
+          </main>
+        </div>
         <Toaster />
       </body>
     </html>
