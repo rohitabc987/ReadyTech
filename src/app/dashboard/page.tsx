@@ -1,17 +1,22 @@
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { mockPosts } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockCurrentUser } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
-import { mockUsers } from '@/lib/mock-data';
 import { Separator } from '@/components/ui/separator';
+import { Textarea } from '@/components/ui/textarea';
 
 function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   const author = mockUsers.find(u => u.id === interview.main.authorId);
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
+  const [isCommenting, setIsCommenting] = useState(false);
+  const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -60,13 +65,26 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                   <ThumbsUp className="h-4 w-4" />
                   <span>Like ({interview.stats.likes})</span>
                 </Button>
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1" asChild>
-                  <Link href={`/interviews/${interview.id}#comments`}>
+                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1" onClick={() => setIsCommenting(!isCommenting)}>
                     <MessageSquare className="h-4 w-4" />
                     <span>Comment ({interview.stats.comments.length})</span>
-                  </Link>
                 </Button>
             </div>
+             {isCommenting && (
+              <div className="pt-4">
+                <Separator className="mb-4"/>
+                <div className="flex gap-4">
+                    <Avatar>
+                        <AvatarImage src={mockCurrentUser.personal.avatarUrl} />
+                        <AvatarFallback>{currentUserInitials}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-2">
+                        <Textarea placeholder="Add a comment..." />
+                        <Button>Post Comment</Button>
+                    </div>
+                </div>
+              </div>
+            )}
         </CardContent>
     </Card>
   )
