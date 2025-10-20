@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -17,6 +17,11 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
   const [isCommenting, setIsCommenting] = useState(false);
   const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
+  const [formattedDate, setFormattedDate] = useState('');
+
+  useEffect(() => {
+    setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString());
+  }, [interview.main.createdAt]);
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -40,7 +45,7 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                         <span>&bull;</span>
                         <span>{interview.companyInfo.role}</span>
                         <span>&bull;</span>
-                        <div className="flex items-center gap-1"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
+                        <div className="flex items-center gap-1"><Calendar className="h-4 w-4"/>{formattedDate}</div>
                     </div>
                 </div>
                 {interview.stats.avgRating && (
