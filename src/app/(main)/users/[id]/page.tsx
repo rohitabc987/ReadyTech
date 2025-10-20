@@ -2,7 +2,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockPostStats } from '@/lib/mock-data';
 import { Briefcase, Calendar, GraduationCap, Mail, MessageSquare, Star } from 'lucide-react';
 import Link from 'next/link';
 
@@ -52,7 +52,9 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
                             <CardTitle>Shared Experiences ({userInterviews.length})</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-4">
-                            {userInterviews.length > 0 ? userInterviews.map(interview => (
+                            {userInterviews.length > 0 ? userInterviews.map(interview => {
+                                const stats = mockPostStats.find(s => s.postId === interview.id);
+                                return (
                                 <div key={interview.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                                     <h3 className="font-semibold text-primary">
                                         <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
@@ -60,11 +62,11 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
                                     <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">
                                         <div className="flex items-center gap-1"><Briefcase className="h-3 w-3" />{interview.companyInfo.company}</div>
                                         <div className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(interview.main.createdAt).toLocaleDateString()}</div>
-                                        {interview.stats.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3" />{interview.stats.avgRating.toFixed(1)}</div>}
+                                        {stats?.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3" />{stats.avgRating.toFixed(1)}</div>}
                                     </div>
                                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{interview.main.description}</p>
                                 </div>
-                            )) : (
+                            )}) : (
                                 <p className="text-sm text-center text-muted-foreground py-8">
                                     {user.personal.name} has not shared any experiences yet.
                                 </p>

@@ -1,6 +1,5 @@
 
-
-import type { User, Post, Question, Resource, Comment, Testimonial } from './types';
+import type { User, Post, Question, Resource, Comment, Testimonial, PostStats } from './types';
 import placeholderData from './placeholder-images.json';
 
 const { placeholderImages } = placeholderData;
@@ -160,13 +159,6 @@ export const mockPosts: Post[] = [
         questions: [mockQuestions[0], mockQuestions[2]],
         resources: [mockResources[0]],
     },
-    stats: {
-        views: 1250,
-        likes: 150,
-        comments: mockComments,
-        avgRating: 4.8,
-        ratingsCount: 42,
-    },
   },
   {
     id: 'i2',
@@ -187,13 +179,6 @@ export const mockPosts: Post[] = [
     content: {
         questions: [],
         resources: [],
-    },
-    stats: {
-        views: 980,
-        likes: 120,
-        comments: [],
-        avgRating: 4.5,
-        ratingsCount: 35,
     },
   },
   {
@@ -216,14 +201,34 @@ export const mockPosts: Post[] = [
         questions: [mockQuestions[3]],
         resources: [],
     },
-    stats: {
+  },
+];
+
+export const mockPostStats: PostStats[] = [
+    {
+        postId: 'i1',
+        views: 1250,
+        likes: 150,
+        comments: mockComments,
+        avgRating: 4.8,
+        ratingsCount: 42,
+    },
+    {
+        postId: 'i2',
+        views: 980,
+        likes: 120,
+        comments: [],
+        avgRating: 4.5,
+        ratingsCount: 35,
+    },
+    {
+        postId: 'i3',
         views: 2100,
         likes: 250,
         comments: [],
         avgRating: 4.2,
         ratingsCount: 60,
-    },
-  },
+    }
 ];
 
 export const mockTestimonials: Testimonial[] = [
@@ -274,5 +279,3 @@ export const mockTestimonials: Testimonial[] = [
   },
 
 ];
-
-    

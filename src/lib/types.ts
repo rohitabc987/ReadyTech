@@ -71,7 +71,7 @@ export type PostStats = {
   postId: string;
   views: number;
   likes: number;
-  commentsCount: number;
+  comments: Comment[];
   avgRating?: number;
   ratingsCount?: number;
   upvotes?: number;
@@ -88,7 +88,7 @@ export type Post = {
 export type Question = {
   text: string;
   difficulty?: 'Easy' | 'Medium' | 'Hard';
-  type?: 'Coding' | 'Technical' | 'HR';
+  type?: 'Coding' | 'Technical' | 'HR' | 'Internship';
   topic?: string;
 };
 

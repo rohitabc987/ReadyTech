@@ -3,13 +3,23 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { mockPosts, mockCurrentUser, mockUsers } from '@/lib/mock-data';
+import { mockPosts, mockCurrentUser, mockUsers, mockPostStats } from '@/lib/mock-data';
 import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
+import { notFound } from 'next/navigation';
+
 
 export default function InterviewDetailPage({ params }: { params: { id: string } }) {
-    const interview = mockPosts.find(i => i.id === params.id) || mockPosts[0];
+    const interview = mockPosts.find(i => i.id === params.id);
+    if (!interview) {
+        notFound();
+    }
+    const stats = mockPostStats.find(s => s.postId === interview.id);
+    if (!stats) {
+        notFound();
+    }
+
     const author = mockUsers.find(u => u.id === interview.main.authorId);
     const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
     const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
@@ -32,7 +42,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                                 <CardTitle className="font-headline text-2xl">{interview.main.title}</CardTitle>
                                 <div className="flex items-center gap-2">
                                     {[...Array(5)].map((_, i) => (
-                                        <Star key={i} className={`h-6 w-6 cursor-pointer ${i < Math.round(interview.stats.avgRating || 0) ? 'fill-amber-400 text-amber-500' : 'fill-muted-foreground/50 text-muted-foreground'}`}/>
+                                        <Star key={i} className={`h-6 w-6 cursor-pointer ${i < Math.round(stats.avgRating || 0) ? 'fill-amber-400 text-amber-500' : 'fill-muted-foreground/50 text-muted-foreground'}`}/>
                                     ))}
                                 </div>
                             </div>
@@ -81,7 +91,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                     
                     <Card id="comments">
                         <CardHeader>
-                            <CardTitle>Comments ({interview.stats.comments.length})</CardTitle>
+                            <CardTitle>Comments ({stats.comments.length})</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             <div className="flex gap-4">
@@ -96,7 +106,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                             </div>
                             <Separator />
                             <div className="space-y-6">
-                            {interview.stats.comments.map(comment => {
+                            {stats.comments.map(comment => {
                                 const commentAuthor = mockUsers.find(u => u.id === comment.authorId);
                                 if (!commentAuthor) return null;
                                 return (

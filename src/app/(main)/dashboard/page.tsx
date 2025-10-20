@@ -4,16 +4,19 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { mockPosts, mockUsers, mockCurrentUser } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockCurrentUser, mockPostStats } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
+import type { Post } from '@/lib/types';
 
-function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
+
+function InterviewCard({ interview }: { interview: Post }) {
   const author = mockUsers.find(u => u.id === interview.main.authorId);
+  const stats = mockPostStats.find(s => s.postId === interview.id);
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
   const [isCommenting, setIsCommenting] = useState(false);
   const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
@@ -22,6 +25,10 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   useEffect(() => {
     setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
   }, [interview.main.createdAt]);
+
+  if (!stats) {
+    return null;
+  }
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -45,10 +52,10 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                         <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
                     </div>
                 </div>
-                {interview.stats.avgRating && (
+                {stats.avgRating && (
                   <div className="flex items-center gap-1 text-sm text-amber-500 shrink-0">
                       <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
-                      <span className="font-semibold">{interview.stats.avgRating.toFixed(1)}</span>
+                      <span className="font-semibold">{stats.avgRating.toFixed(1)}</span>
                   </div>
                 )}
             </div>
@@ -60,11 +67,11 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
                   <ThumbsUp className="h-4 w-4" />
-                  <span>Like ({interview.stats.likes})</span>
+                  <span>Like ({stats.likes})</span>
                 </Button>
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1" onClick={() => setIsCommenting(!isCommenting)}>
                     <MessageSquare className="h-4 w-4" />
-                    <span>Comment ({interview.stats.comments.length})</span>
+                    <span>Comment ({stats.comments.length})</span>
                 </Button>
             </div>
              {isCommenting && (
