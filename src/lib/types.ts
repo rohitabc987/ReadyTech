@@ -58,8 +58,8 @@ export type PostCompanyInfo = {
   role?: string;
   year?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
-  applicationType: 'Internship' | 'Full-Time'| 'Internship + FTE';
-  result: 'Selected' | 'Rejected' | 'In Process';
+  applicationType?: 'Internship' | 'Full-Time'| 'Internship + FTE';
+  result?: 'Selected' | 'Rejected' | 'In Process';
 };
 
 export type PostContent = {
@@ -68,9 +68,10 @@ export type PostContent = {
 };
 
 export type PostStats = {
+  postId: string;
   views: number;
   likes: number;
-  comments: Comment[];
+  commentsCount: number;
   avgRating?: number;
   ratingsCount?: number;
   upvotes?: number;
@@ -81,7 +82,7 @@ export type Post = {
   main: PostMain;
   companyInfo: PostCompanyInfo;
   content: PostContent;
-  stats: PostStats;
+  // Stats are stored in a subcollection: /posts/{postId}/stats/{statsId}
 };
 
 export type Question = {
