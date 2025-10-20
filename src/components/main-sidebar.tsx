@@ -7,21 +7,19 @@ import {
   Briefcase,
   LayoutDashboard,
   Library,
-  PlusCircle,
   User,
   Users,
 } from 'lucide-react';
 import {
-  Sidebar,
   SidebarContent,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
+  useSidebar
 } from '@/components/ui/sidebar';
 import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { UserNav } from './user-nav';
 
@@ -36,9 +34,10 @@ const menuItems = [
 
 export function MainSidebar() {
   const pathname = usePathname();
+  const { setOpenMobile } = useSidebar();
 
   return (
-    <Sidebar>
+    <>
       <SidebarHeader>
         <Logo />
       </SidebarHeader>
@@ -50,6 +49,7 @@ export function MainSidebar() {
                 asChild
                 isActive={pathname === item.href || (item.href !== '/dashboard' && pathname.startsWith(item.href))}
                 tooltip={item.label}
+                onClick={() => setOpenMobile(false)}
               >
                 <Link href={item.href}>
                   <item.icon />
@@ -64,6 +64,6 @@ export function MainSidebar() {
       <SidebarFooter>
         <UserNav />
       </SidebarFooter>
-    </Sidebar>
+    </>
   );
 }

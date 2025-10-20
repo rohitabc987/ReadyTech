@@ -35,7 +35,8 @@ A consistent visual identity is crucial.
 
 - **Component Library**: **Always** prefer using components from **ShadCN UI** (`@/components/ui`) when a suitable one exists. Do not build custom components for elements like buttons, cards, or inputs if a ShadCN equivalent is available.
 - **Styling**: Use **Tailwind CSS** for all styling. Avoid writing plain CSS or using CSS-in-JS libraries.
-- **Layout**: Use flexbox and grid for layouts. Ensure all layouts are responsive and work well on mobile, tablet, and desktop screens.
+- **Responsiveness**: All layouts must be responsive and work well on mobile, tablet, and desktop screens. Use Tailwind's responsive prefixes (`md:`, `lg:`, etc.) to build adaptive UIs. Test designs on multiple screen sizes.
+- **Layout**: Use flexbox and grid for layouts.
 - **Color Palette**: Adhere strictly to the color palette defined as CSS variables in `src/app/globals.css`. Use semantic variable names like `var(--primary)`, `var(--background)`, etc., instead of hardcoding hex values.
 - **Icons**: Use icons exclusively from the `lucide-react` library to maintain visual consistency.
 - **Fonts**: Use the established project fonts: `Poppins` for headlines and `Inter` for body text.

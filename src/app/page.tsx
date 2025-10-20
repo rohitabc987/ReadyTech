@@ -43,7 +43,7 @@ export default function LandingPage() {
               <p className="mt-6 text-lg leading-8 text-muted-foreground">
                 ReadyTech is a community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
+              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Button asChild size="lg">
                   <Link href="/dashboard">
                     Continue as College Student <ArrowRight className="ml-2 h-5 w-5" />
@@ -56,7 +56,7 @@ export default function LandingPage() {
         </section>
 
         {/* Features Section */}
-        <section className="w-full py-16 md:py-24 bg-background">
+        <section id="features" className="w-full py-16 md:py-24 bg-background">
           <div className="container mx-auto px-4 md:px-6">
             <div className="grid gap-8 md:grid-cols-3 text-center">
               <div className="flex flex-col items-center">
@@ -85,7 +85,7 @@ export default function LandingPage() {
         </section>
 
         {/* Testimonials Section */}
-        <section className="w-full py-16 md:py-24 bg-muted/30">
+        <section id="testimonials" className="w-full py-16 md:py-24 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
             <h2 className="text-3xl font-headline font-bold text-center mb-12">What Our Community Says</h2>
             <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">

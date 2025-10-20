@@ -60,9 +60,9 @@ export default function QuestionsPage() {
                           <SelectItem value="meta">Meta</SelectItem>
                       </SelectContent>
                   </Select>
-                  <Button variant="outline"><Filter className="mr-2 h-4 w-4" /> Filter</Button>
+                  <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Filter</Button>
               </div>
-            <div className="border rounded-lg">
+            <div className="hidden md:block border rounded-lg">
               <Table>
                 <TableHeader>
                   <TableRow>
@@ -87,6 +87,31 @@ export default function QuestionsPage() {
                   ))}
                 </TableBody>
               </Table>
+            </div>
+            <div className="grid md:hidden gap-4">
+              {uniqueQuestions.map((q, i) => (
+                <Card key={i} className="flex flex-col">
+                  <CardHeader>
+                    <CardDescription>Question</CardDescription>
+                    <CardTitle className="text-base">{q.text}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="flex-1 space-y-4">
+                    <div className="flex justify-between">
+                      <CardDescription>Topic</CardDescription>
+                      <Badge variant="secondary">{q.topic}</Badge>
+                    </div>
+                     <div className="flex justify-between">
+                      <CardDescription>Source Company</CardDescription>
+                      <span className="text-sm font-medium">{q.company}</span>
+                    </div>
+                  </CardContent>
+                  <div className="p-6 pt-0">
+                    <Button variant="outline" size="sm" asChild className="w-full">
+                      <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
+                    </Button>
+                  </div>
+                </Card>
+              ))}
             </div>
           </CardContent>
         </Card>

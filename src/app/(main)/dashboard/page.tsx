@@ -20,7 +20,7 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
-    setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString());
+    setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
   }, [interview.main.createdAt]);
 
   return (
@@ -39,13 +39,10 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
                     <CardTitle className="font-headline text-lg">
                         <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
                     </CardTitle>
-                     <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                        <Briefcase className="h-4 w-4" />
-                        <span>{interview.companyInfo.company}</span>
-                        <span>&bull;</span>
-                        <span>{interview.companyInfo.role}</span>
-                        <span>&bull;</span>
-                        <div className="flex items-center gap-1"><Calendar className="h-4 w-4"/>{formattedDate}</div>
+                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
+                        <div className="flex items-center gap-2"><Briefcase className="h-4 w-4" /><span>{interview.companyInfo.company}</span></div>
+                        <div className="flex items-center gap-2"><span>&bull;</span><span>{interview.companyInfo.role}</span></div>
+                        <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
                     </div>
                 </div>
                 {interview.stats.avgRating && (
@@ -57,15 +54,10 @@ function InterviewCard({ interview }: { interview: (typeof mockPosts)[0] }) {
             </div>
         </CardHeader>
         <CardContent>
-            <div className="relative mb-4">
-                <p className="text-sm text-muted-foreground line-clamp-2 pr-20">{interview.main.description}</p>
-                <Link href={`/interviews/${interview.id}`} className="absolute bottom-0 right-0 text-sm font-semibold text-primary hover:underline bg-background pl-2">
-                    ...Read More
-                </Link>
-            </div>
+            <p className="text-sm text-muted-foreground line-clamp-2">{interview.main.description} <Link href={`/interviews/${interview.id}`} className="text-sm font-semibold text-primary hover:underline">...Read More</Link></p>
             
-            <Separator />
-            <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground pt-4">
+            <Separator className="my-4" />
+            <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1">
                   <ThumbsUp className="h-4 w-4" />
                   <span>Like ({interview.stats.likes})</span>
@@ -133,7 +125,7 @@ export default function DashboardPage() {
                     <CardTitle>Interview Experiences</CardTitle>
                     <CardDescription>Browse experiences shared by the community.</CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-4 md:grid-cols-1">
+                <CardContent className="grid gap-4">
                     {mockInterviews.map((interview) => (
                     <InterviewCard key={interview.id} interview={interview} />
                     ))}

@@ -127,7 +127,8 @@ To maintain consistency and code quality, new features should be developed follo
 
 1.  **Define/Update Types**: If the feature involves new or modified data structures, update the relevant TypeScript types in `src/lib/types.ts` and the schemas in this architecture document.
 2.  **Create UI Components**: Build the necessary React components for the feature. Place reusable components in `src/components/ui/` (for generic elements) or `src/components/` (for feature-specific composites). The page itself will reside in `src/app/`.
-3.  **Implement Data Logic**:
+3.  **Ensure Responsiveness**: All UI components and pages must be fully responsive, providing a seamless experience on mobile, tablet, and desktop devices. Use Tailwind CSS's responsive prefixes (e.g., `sm:`, `md:`, `lg:`) to adapt layouts.
+4.  **Implement Data Logic**:
     - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. This improves performance by running data queries on the server.
     - **Data Mutations**: For creating, updating, or deleting data, use Firebase's client-side SDK (`firebase/firestore`) within client components (`'use client'`). Trigger these mutations based on user interactions like button clicks or form submissions.
-4.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).
+5.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).

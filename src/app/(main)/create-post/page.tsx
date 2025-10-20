@@ -25,7 +25,7 @@ export default function NewInterviewPage() {
                 <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
               </div>
               
-              <div className="grid md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                       <Label htmlFor="company">Company</Label>
                       <Input id="company" placeholder="e.g., Google" />
@@ -57,7 +57,7 @@ export default function NewInterviewPage() {
                           htmlFor="dropzone-file"
                           className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed rounded-lg cursor-pointer bg-muted/50 hover:bg-muted"
                       >
-                          <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <div className="flex flex-col items-center justify-center pt-5 pb-6 text-center">
                           <Upload className="w-8 h-8 mb-4 text-muted-foreground" />
                           <p className="mb-2 text-sm text-muted-foreground">
                               <span className="font-semibold">Click to upload</span> or drag and drop
@@ -69,7 +69,7 @@ export default function NewInterviewPage() {
                   </div>
               </div>
 
-              <div className="flex justify-end gap-2">
+              <div className="flex flex-col sm:flex-row justify-end gap-2">
                   <Button variant="outline" type="button">Save as Draft</Button>
                   <Button type="submit">Publish Post</Button>
               </div>
