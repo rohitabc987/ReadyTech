@@ -21,10 +21,10 @@ import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/interviews', label: 'Experiences', icon: Briefcase },
-  { href: '/mentors', label: 'Find a Mentor', icon: Users },
+  // { href: '/interviews', label: 'Experiences', icon: Briefcase },
   { href: '/questions', label: 'Question Bank', icon: Library },
   { href: '/resources', label: 'Resources', icon: BookOpen },
+  { href: '/mentors', label: 'Find a Mentor', icon: Users },
 ];
 
 function NavLink({ href, children, onClick }: { href: string, children: React.ReactNode, onClick?: () => void }) {
@@ -50,7 +50,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container flex h-14 max-w-7xl items-center">
+      <div className="container mx-auto flex h-14 items-center px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="mr-4 hidden md:flex">
           <Link href="/dashboard" className="mr-6 flex items-center space-x-2">
             <Logo />

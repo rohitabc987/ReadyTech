@@ -92,12 +92,6 @@ export default function DashboardPage() {
 
   return (
     <>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold font-headline">Dashboard</h1>
-        <Button asChild>
-          <Link href="/create-post">Create Post</Link>
-        </Button>
-      </div>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="lg:col-span-1">
           <Card>
