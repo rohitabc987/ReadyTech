@@ -6,7 +6,7 @@ import { Footer } from '@/components/footer';
 
 export const metadata: Metadata = {
   title: 'ReadyTech',
-  description: 'Your gateway to tech interview success.',
+  description: 'Your gateway to success in tech interviews and competitive exams.',
 };
 
 export default function RootLayout({

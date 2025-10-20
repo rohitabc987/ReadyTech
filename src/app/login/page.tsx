@@ -24,7 +24,7 @@ export default function LoginPage() {
         <CardHeader className="text-center space-y-4">
           <CardTitle className="font-headline">Welcome to ReadyTech</CardTitle>
           <CardDescription>
-            Your gateway to tech interview success. Sign in to continue.
+            A community for interview and exam preparation. Sign in to continue.
           </CardDescription>
         </CardHeader>
         <CardContent>
