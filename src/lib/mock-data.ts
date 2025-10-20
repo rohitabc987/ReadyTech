@@ -1,4 +1,3 @@
-
 import type { User, Post, Question, Resource, Comment, Testimonial, PostStats } from './types';
 import placeholderData from './placeholder-images.json';
 
@@ -177,10 +176,10 @@ export const mockPosts: Post[] = [
 ];
 
 export const mockQuestions: Question[] = [
-  { id: 'q1', postId: 'i1', authorId: 'u1', text: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees', type: 'Coding', difficulty: 'Medium' },
-  { id: 'q2', postId: 'i1', authorId: 'u1', text: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design', type: 'Technical', difficulty: 'Hard' },
-  { id: 'q3', postId: 'i3', authorId: 'u4', text: 'Implement a LRU Cache.', topic: 'Data Structures', type: 'Coding', difficulty: 'Medium' },
-  { id: 'q4', postId: 'i2', authorId: 'u2', text: 'Explain the difference between a process and a thread.', topic: 'Operating Systems', type: 'Technical', difficulty: 'Easy' },
+  { id: 'q1', postId: 'i1', text: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees', type: 'Coding', difficulty: 'Medium' },
+  { id: 'q2', postId: 'i1', text: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design', type: 'Technical', difficulty: 'Hard' },
+  { id: 'q3', postId: 'i3', text: 'Implement a LRU Cache.', topic: 'Data Structures', type: 'Coding', difficulty: 'Medium' },
+  { id: 'q4', postId: 'i2', text: 'Explain the difference between a process and a thread.', topic: 'Operating Systems', type: 'Technical', difficulty: 'Easy' },
 ];
 
 export const mockResources: Resource[] = [
@@ -191,8 +190,8 @@ export const mockResources: Resource[] = [
 ];
 
 export const mockComments: Comment[] = [
-  { id: 'c1', authorId: 'u2', text: 'This is a great breakdown, thanks for sharing!', createdAt: new Date('2024-05-20T10:30:00Z') },
-  { id: 'c2', authorId: 'u4', text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', createdAt: new Date('2024-05-21T14:00:00Z') },
+  { id: 'c1', postId: 'i1', authorId: 'u2', text: 'This is a great breakdown, thanks for sharing!', createdAt: new Date('2024-05-20T10:30:00Z') },
+  { id: 'c2', postId: 'i1', authorId: 'u4', text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', createdAt: new Date('2024-05-21T14:00:00Z') },
 ];
 
 export const mockPostStats: PostStats[] = [
@@ -200,7 +199,7 @@ export const mockPostStats: PostStats[] = [
         postId: 'i1',
         views: 1250,
         likes: 150,
-        comments: mockComments,
+        commentsCount: mockComments.filter(c => c.postId === 'i1').length,
         avgRating: 4.8,
         ratingsCount: 42,
     },
@@ -208,7 +207,7 @@ export const mockPostStats: PostStats[] = [
         postId: 'i2',
         views: 980,
         likes: 120,
-        comments: [],
+        commentsCount: mockComments.filter(c => c.postId === 'i2').length,
         avgRating: 4.5,
         ratingsCount: 35,
     },
@@ -216,7 +215,7 @@ export const mockPostStats: PostStats[] = [
         postId: 'i3',
         views: 2100,
         likes: 250,
-        comments: [],
+        commentsCount: mockComments.filter(c => c.postId === 'i3').length,
         avgRating: 4.2,
         ratingsCount: 60,
     }

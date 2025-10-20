@@ -71,7 +71,7 @@ export type PostStats = {
   postId: string;
   views: number;
   likes: number;
-  comments: Comment[];
+  commentsCount: number;
   avgRating?: number;
   ratingsCount?: number;
   upvotes?: number;
@@ -87,7 +87,7 @@ export type Post = {
 
 export type Question = {
   id: string;
-  authorId: string; // reference to users/{userId}
+  authorId?: string; // Optional: reference to users/{userId} if added directly
   postId: string; // reference to posts/{postId}
   text: string;
   difficulty?: 'Easy' | 'Medium' | 'Hard';
@@ -106,6 +106,7 @@ export type Resource = {
 
 export type Comment = {
   id:string;
+  postId: string; // reference to posts/{postId}
   authorId: string; // reference to users/{userId}
   text: string;
   createdAt: Date;

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers, mockCurrentUser, mockPostStats } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockCurrentUser, mockPostStats, mockComments } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
@@ -72,7 +72,7 @@ function InterviewCard({ interview }: { interview: Post }) {
                 </Button>
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1" onClick={() => setIsCommenting(!isCommenting)}>
                     <MessageSquare className="h-4 w-4" />
-                    <span>Comment ({stats.comments.length})</span>
+                    <span>Comment ({stats.commentsCount})</span>
                 </Button>
             </div>
              {isCommenting && (

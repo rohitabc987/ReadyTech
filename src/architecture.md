@@ -120,7 +120,7 @@ A root-level collection to store all individual questions. This allows for easie
 ```typescript
 {
     "id": "string",
-    "authorId": "string", // Reference to users/{userId} who posted it
+    "authorId": "string", // Optional: Reference to users/{userId} who posted it directly
     "postId": "string", // Reference to the original post/interview
     "text": "string",
     "difficulty": "'Easy' | 'Medium' | 'Hard'",
@@ -153,6 +153,7 @@ A subcollection for comments on a specific post.
 ```typescript
 {
     "id": "string",
+    "postId": "string", // Reference to posts/{postId}
     "authorId": "string", // Reference to users/{userId}
     "text": "string",
     "createdAt": "Timestamp"

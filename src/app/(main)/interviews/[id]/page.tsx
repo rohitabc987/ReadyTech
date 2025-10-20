@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources } from '@/lib/mock-data';
+import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources, mockComments } from '@/lib/mock-data';
 import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
@@ -26,6 +26,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
     
     const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
     const interviewResources = mockResources.filter(r => r.postId === interview.id);
+    const interviewComments = mockComments.filter(c => c.postId === interview.id);
 
     const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
         switch (type) {
@@ -94,7 +95,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                     
                     <Card id="comments">
                         <CardHeader>
-                            <CardTitle>Comments ({stats.comments.length})</CardTitle>
+                            <CardTitle>Comments ({stats.commentsCount})</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
                             <div className="flex gap-4">
@@ -109,7 +110,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                             </div>
                             <Separator />
                             <div className="space-y-6">
-                            {stats.comments.map(comment => {
+                            {interviewComments.map(comment => {
                                 const commentAuthor = mockUsers.find(u => u.id === comment.authorId);
                                 if (!commentAuthor) return null;
                                 return (
