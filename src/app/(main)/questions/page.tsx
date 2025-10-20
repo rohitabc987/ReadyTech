@@ -32,8 +32,23 @@ const companies = Array.from(new Set(uniqueQuestions.map(q => q.company).filter(
 function ComboboxFilter({ options, placeholder }: { options: string[], placeholder: string }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
+  const [inputValue, setInputValue] = React.useState('');
 
   const frameworkList = options.map(opt => ({ value: opt.toLowerCase(), label: opt }));
+
+  React.useEffect(() => {
+    // When the popover closes, if no item was selected,
+    // the input value becomes the actual value.
+    if (!open && inputValue) {
+        const selectedFramework = frameworkList.find(
+            (framework) => framework.label.toLowerCase() === inputValue.toLowerCase()
+        );
+        if (!selectedFramework) {
+            setValue(inputValue);
+        }
+    }
+  }, [open, inputValue, frameworkList]);
+
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -46,7 +61,7 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
         >
           <span className="truncate">
             {value
-              ? frameworkList.find((framework) => framework.value === value)?.label
+              ? frameworkList.find((framework) => framework.value === value)?.label || value
               : placeholder}
           </span>
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -54,7 +69,11 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder={placeholder} />
+          <CommandInput 
+            placeholder={placeholder}
+            value={inputValue}
+            onValueChange={setInputValue}
+          />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
@@ -64,6 +83,7 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
                   value={framework.value}
                   onSelect={(currentValue) => {
                     setValue(currentValue === value ? '' : currentValue);
+                    setInputValue(currentValue === value ? '' : framework.label)
                     setOpen(false);
                   }}
                 >
