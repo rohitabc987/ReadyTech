@@ -1,6 +1,7 @@
 
 'use client';
 
+import { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -8,6 +9,12 @@ import Link from 'next/link';
 import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
+import Autoplay from "embla-carousel-autoplay";
+import placeholderData from '@/lib/placeholder-images.json';
+
+const { placeholderImages } = placeholderData;
+
+const findImage = (id: string) => placeholderImages.find(p => p.id === id)?.imageUrl || '';
 
 function ComingSoonButton() {
   const { toast } = useToast();
@@ -27,6 +34,10 @@ function ComingSoonButton() {
 
 
 export function LandingPageContent() {
+  const plugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: true })
+  );
+
   return (
     <main className="flex-1">
       {/* Hero Section */}
@@ -128,18 +139,21 @@ export function LandingPageContent() {
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-headline font-bold text-center mb-12">What Our Community Says</h2>
           <Carousel
+            plugins={[plugin.current]}
             opts={{
               align: "start",
               loop: true,
             }}
-            className="w-full max-w-4xl mx-auto"
+            className="w-full max-w-6xl mx-auto"
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
               <CarouselItem className="md:basis-1/2 lg:basis-1/3">
                 <Card className="h-full">
                   <CardContent className="pt-6 flex flex-col items-center text-center">
                     <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src="https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarImage src={findImage('testimonial1')} />
                       <AvatarFallback>AS</AvatarFallback>
                     </Avatar>
                     <p className="font-semibold">Ananya Singh</p>
@@ -155,7 +169,7 @@ export function LandingPageContent() {
                 <Card className="h-full">
                   <CardContent className="pt-6 flex flex-col items-center text-center">
                     <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarImage src={findImage('testimonial2')} />
                       <AvatarFallback>RV</AvatarFallback>
                     </Avatar>
                     <p className="font-semibold">Rohan Verma</p>
@@ -171,7 +185,7 @@ export function LandingPageContent() {
                 <Card className="h-full">
                   <CardContent className="pt-6 flex flex-col items-center text-center">
                     <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarImage src={findImage('testimonial3')} />
                       <AvatarFallback>SK</AvatarFallback>
                     </Avatar>
                     <p className="font-semibold">Sneha Kumar</p>
@@ -180,6 +194,22 @@ export function LandingPageContent() {
                         {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
                     </div>
                     <p className="text-muted-foreground text-sm flex-1">"The question bank is amazing for JEE prep. The 'Coming Soon' for school students has me excited for more features!"</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <Card className="h-full">
+                  <CardContent className="pt-6 flex flex-col items-center text-center">
+                    <Avatar className="h-16 w-16 mb-4">
+                      <AvatarImage src={findImage('user1')} />
+                      <AvatarFallback>AS</AvatarFallback>
+                    </Avatar>
+                    <p className="font-semibold">Aarav Sharma</p>
+                    <p className="text-sm text-muted-foreground">IIT Bombay</p>
+                    <div className="flex gap-0.5 my-2">
+                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                    </div>
+                    <p className="text-muted-foreground text-sm flex-1">"A fantastic platform for finding mentors and getting real interview advice. Changed my prep entirely."</p>
                   </CardContent>
                 </Card>
               </CarouselItem>
