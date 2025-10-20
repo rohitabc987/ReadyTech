@@ -2,16 +2,15 @@
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { mockPosts, mockUsers, mockCurrentUser, mockPostStats } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
-import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post } from '@/lib/types';
+import { DashboardFilter } from '@/components/dashboard-filter';
 
 
 function InterviewCard({ interview }: { interview: Post }) {
@@ -23,7 +22,9 @@ function InterviewCard({ interview }: { interview: Post }) {
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
-    setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
+    if (interview.main.createdAt) {
+      setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
+    }
   }, [interview.main.createdAt]);
 
   if (!stats) {
@@ -101,30 +102,7 @@ export default function DashboardPage() {
     <>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         <aside className="lg:col-span-1">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-base">Filters</CardTitle>
-              <Button variant="link" className="text-primary p-0 h-auto">Clear</Button>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="space-y-2">
-                    <Label htmlFor="search-company">Company</Label>
-                    <Input id="search-company" placeholder="e.g. Google, Microsoft..." />
-                </div>
-                 <div className="space-y-2">
-                    <Label htmlFor="search-branch">Branch</Label>
-                    <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
-                </div>
-                 <div className="space-y-2">
-                    <Label htmlFor="search-year">Year</Label>
-                    <Input id="search-year" placeholder="e.g. 2024" />
-                </div>
-                 <div className="space-y-2">
-                    <Label htmlFor="search-college">College Name</Label>
-                    <Input id="search-college" placeholder="e.g. IIT Bombay..." />
-                </div>
-            </CardContent>
-          </Card>
+          <DashboardFilter />
         </aside>
         <div className="lg:col-span-3">
                 <CardContent className="grid gap-4">
