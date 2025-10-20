@@ -43,15 +43,6 @@ export function MainSidebar() {
         <Logo />
       </SidebarHeader>
       <SidebarContent className="p-2">
-        <div className="flex flex-col gap-2">
-          <Button asChild>
-            <Link href="/create-post">
-              <PlusCircle />
-              New Post
-            </Link>
-          </Button>
-        </div>
-
         <SidebarMenu>
           {menuItems.map((item) => (
             <SidebarMenuItem key={item.href}>
