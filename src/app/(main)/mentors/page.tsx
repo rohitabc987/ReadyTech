@@ -1,5 +1,3 @@
-
-import { Header } from '@/components/header';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -38,23 +36,20 @@ export default function MentorsPage() {
     const mentors = mockUsers.filter(user => user.academics.role === 'mentor');
 
   return (
-    <>
-      <Header breadcrumbs={[{ href: '/mentors', label: 'Mentors' }]} />
-      <main className="flex-1 mt-4">
-        <Card>
-            <CardHeader>
-                <CardTitle>Find a Mentor</CardTitle>
-                <CardDescription>Connect with experienced professionals from top companies and colleges.</CardDescription>
-            </CardHeader>
-            <CardContent>
-                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                    {mentors.map(mentor => (
-                        <MentorCard key={mentor.id} user={mentor} />
-                    ))}
-                </div>
-            </CardContent>
-        </Card>
-      </main>
-    </>
+    <main className="flex-1 mt-4">
+      <Card>
+          <CardHeader>
+              <CardTitle>Find a Mentor</CardTitle>
+              <CardDescription>Connect with experienced professionals from top companies and colleges.</CardDescription>
+          </CardHeader>
+          <CardContent>
+               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+                  {mentors.map(mentor => (
+                      <MentorCard key={mentor.id} user={mentor} />
+                  ))}
+              </div>
+          </CardContent>
+      </Card>
+    </main>
   );
 }

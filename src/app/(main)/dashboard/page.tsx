@@ -92,8 +92,14 @@ export default function DashboardPage() {
 
   return (
     <>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-2xl font-bold font-headline">Dashboard</h1>
+        <Button asChild>
+          <Link href="/create-post">Create Post</Link>
+        </Button>
+      </div>
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <div className="lg:col-span-1">
+        <aside className="lg:col-span-1">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-base">Filters</CardTitle>
@@ -118,7 +124,7 @@ export default function DashboardPage() {
                 </div>
             </CardContent>
           </Card>
-        </div>
+        </aside>
         <div className="lg:col-span-3">
             <Card>
                 <CardHeader>

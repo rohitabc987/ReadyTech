@@ -14,7 +14,11 @@ This document outlines the technical architecture, database structure, and devel
     - **Database**: Firestore
 - **Generative AI**: [Genkit](https://firebase.google.com/docs/genkit)
 
-## 2. Firestore Database Structure
+## 2. Navigation
+
+The application uses a header-only navigation system. The main header, located in `src/components/header.tsx`, contains all primary navigation links. There is no sidebar. This ensures a consistent and simple user experience across all devices. All pages within the main application layout have consistent horizontal padding managed by a container element.
+
+## 3. Firestore Database Structure
 
 The database is structured into top-level collections for core entities like users and posts.
 
@@ -121,7 +125,7 @@ A root-level collection to store user feedback.
 }
 ```
 
-## 3. Feature Development Workflow
+## 4. Feature Development Workflow
 
 To maintain consistency and code quality, new features should be developed following this standard process:
 

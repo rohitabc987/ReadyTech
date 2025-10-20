@@ -20,7 +20,7 @@ Organize files according to the established conventions to keep the project main
 - `src/app/`: All pages and routes. Each page should be in its own folder with a `page.tsx` file.
 - `src/components/`: Reusable React components.
     - `src/components/ui/`: Core, unstyled UI elements provided by ShadCN.
-    - `src/components/`: Application-specific composite components.
+    - `src/components/`: Application-specific composite components (e.g., `header.tsx`, `footer.tsx`).
 - `src/lib/`: Core utilities, type definitions, and mock data.
     - `src/lib/utils.ts`: General utility functions (e.g., `cn` for classnames).
     - `src/lib/types.ts`: Global TypeScript type definitions.
@@ -33,10 +33,11 @@ Organize files according to the established conventions to keep the project main
 
 A consistent visual identity is crucial.
 
+- **Navigation**: All primary navigation is handled by the main application header in `src/components/header.tsx`. No sidebars should be used.
 - **Component Library**: **Always** prefer using components from **ShadCN UI** (`@/components/ui`) when a suitable one exists. Do not build custom components for elements like buttons, cards, or inputs if a ShadCN equivalent is available.
 - **Styling**: Use **Tailwind CSS** for all styling. Avoid writing plain CSS or using CSS-in-JS libraries.
 - **Responsiveness**: All layouts must be responsive and work well on mobile, tablet, and desktop screens. Use Tailwind's responsive prefixes (`md:`, `lg:`, etc.) to build adaptive UIs. Test designs on multiple screen sizes.
-- **Layout**: Use flexbox and grid for layouts.
+- **Layout**: Use flexbox and grid for layouts. All pages should use a main container that provides consistent horizontal padding.
 - **Color Palette**: Adhere strictly to the color palette defined as CSS variables in `src/app/globals.css`. Use semantic variable names like `var(--primary)`, `var(--background)`, etc., instead of hardcoding hex values.
 - **Icons**: Use icons exclusively from the `lucide-react` library to maintain visual consistency.
 - **Fonts**: Use the established project fonts: `Poppins` for headlines and `Inter` for body text.
