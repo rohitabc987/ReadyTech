@@ -41,7 +41,7 @@ export function LandingPageContent() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-b from-primary/5 to-transparent">
+      <section id="join" className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
@@ -228,7 +228,7 @@ export function LandingPageContent() {
             </p>
             <div className="mt-8">
               <Button asChild size="lg">
-                <Link href="/dashboard">
+                <Link href="#join">
                   Join Now <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -244,3 +244,4 @@ export function LandingPageContent() {
     
 
     
+
