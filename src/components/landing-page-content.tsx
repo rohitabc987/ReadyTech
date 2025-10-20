@@ -37,8 +37,12 @@ function ComingSoonButton() {
 
 export function LandingPageContent() {
   const plugin = useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
-  );
+    Autoplay({
+      delay: 2000,
+      stopOnInteraction: false, // important: don't stop autoplay on hover
+      stopOnMouseEnter: false,
+    })
+  )
 
   return (
     <main className="flex-1">
@@ -147,8 +151,6 @@ export function LandingPageContent() {
               loop: true,
             }}
             className="w-full max-w-6xl mx-auto"
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
               {mockTestimonials.map((testimonial) => (
