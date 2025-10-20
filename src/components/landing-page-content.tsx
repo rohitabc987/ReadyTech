@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useRef } from 'react';
@@ -11,6 +12,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
 import placeholderData from '@/lib/placeholder-images.json';
+import { mockTestimonials } from '@/lib/mock-data';
 
 const { placeholderImages } = placeholderData;
 
@@ -149,70 +151,24 @@ export function LandingPageContent() {
             onMouseLeave={plugin.current.reset}
           >
             <CarouselContent>
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <Card className="h-full">
-                  <CardContent className="pt-6 flex flex-col items-center text-center">
-                    <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src={findImage('testimonial1')} />
-                      <AvatarFallback>AS</AvatarFallback>
-                    </Avatar>
-                    <p className="font-semibold">Ananya Singh</p>
-                    <p className="text-sm text-muted-foreground">IIT Delhi</p>
-                    <div className="flex gap-0.5 my-2">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
-                    </div>
-                    <p className="text-muted-foreground text-sm flex-1">"The interview experiences on ReadyTech were a game-changer for my placement preparation. Invaluable insights!"</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <Card className="h-full">
-                  <CardContent className="pt-6 flex flex-col items-center text-center">
-                    <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src={findImage('testimonial2')} />
-                      <AvatarFallback>RV</AvatarFallback>
-                    </Avatar>
-                    <p className="font-semibold">Rohan Verma</p>
-                    <p className="text-sm text-muted-foreground">NIT Trichy</p>
-                    <div className="flex gap-0.5 my-2">
-                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
-                    </div>
-                    <p className="text-muted-foreground text-sm flex-1">"Connecting with a mentor helped me build a clear roadmap for my career. Highly recommend this platform."</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <Card className="h-full">
-                  <CardContent className="pt-6 flex flex-col items-center text-center">
-                    <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src={findImage('testimonial3')} />
-                      <AvatarFallback>SK</AvatarFallback>
-                    </Avatar>
-                    <p className="font-semibold">Sneha Kumar</p>
-                    <p className="text-sm text-muted-foreground">JEE Aspirant</p>
-                    <div className="flex gap-0.5 my-2">
-                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
-                    </div>
-                    <p className="text-muted-foreground text-sm flex-1">"The question bank is amazing for JEE prep. The 'Coming Soon' for school students has me excited for more features!"</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-                <Card className="h-full">
-                  <CardContent className="pt-6 flex flex-col items-center text-center">
-                    <Avatar className="h-16 w-16 mb-4">
-                      <AvatarImage src={findImage('user1')} />
-                      <AvatarFallback>AS</AvatarFallback>
-                    </Avatar>
-                    <p className="font-semibold">Aarav Sharma</p>
-                    <p className="text-sm text-muted-foreground">IIT Bombay</p>
-                    <div className="flex gap-0.5 my-2">
-                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
-                    </div>
-                    <p className="text-muted-foreground text-sm flex-1">"A fantastic platform for finding mentors and getting real interview advice. Changed my prep entirely."</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
+              {mockTestimonials.map((testimonial) => (
+                <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
+                  <Card className="h-full">
+                    <CardContent className="pt-6 flex flex-col items-center text-center">
+                      <Avatar className="h-16 w-16 mb-4">
+                        <AvatarImage src={findImage(testimonial.avatarImageId)} />
+                        <AvatarFallback>{testimonial.avatarFallback}</AvatarFallback>
+                      </Avatar>
+                      <p className="font-semibold">{testimonial.name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonial.institution}</p>
+                      <div className="flex gap-0.5 my-2">
+                        {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                      </div>
+                      <p className="text-muted-foreground text-sm flex-1">{testimonial.quote}</p>
+                    </CardContent>
+                  </Card>
+                </CarouselItem>
+              ))}
             </CarouselContent>
           </Carousel>
         </div>

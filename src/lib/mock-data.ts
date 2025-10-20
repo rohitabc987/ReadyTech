@@ -1,5 +1,6 @@
 
-import type { User, Post, Question, Resource, Comment } from './types';
+
+import type { User, Post, Question, Resource, Comment, Testimonial } from './types';
 import placeholderData from './placeholder-images.json';
 
 const { placeholderImages } = placeholderData;
@@ -222,5 +223,44 @@ export const mockPosts: Post[] = [
         avgRating: 4.2,
         ratingsCount: 60,
     },
+  },
+];
+
+export const mockTestimonials: Testimonial[] = [
+  {
+    id: 't1',
+    name: 'Ananya Singh',
+    institution: 'IIT Delhi',
+    avatarImageId: 'testimonial1',
+    avatarFallback: 'AS',
+    rating: 5,
+    quote: '"The interview experiences on ReadyTech were a game-changer for my placement preparation. Invaluable insights!"',
+  },
+  {
+    id: 't2',
+    name: 'Rohan Verma',
+    institution: 'NIT Trichy',
+    avatarImageId: 'testimonial2',
+    avatarFallback: 'RV',
+    rating: 5,
+    quote: '"Connecting with a mentor helped me build a clear roadmap for my career. Highly recommend this platform."',
+  },
+  {
+    id: 't3',
+    name: 'Sneha Kumar',
+    institution: 'JEE Aspirant',
+    avatarImageId: 'testimonial3',
+    avatarFallback: 'SK',
+    rating: 5,
+    quote: '"The question bank is amazing for JEE prep. The \'Coming Soon\' for school students has me excited for more features!"',
+  },
+  {
+    id: 't4',
+    name: 'Aarav Sharma',
+    institution: 'IIT Bombay',
+    avatarImageId: 'user1',
+    avatarFallback: 'AS',
+    rating: 5,
+    quote: '"A fantastic platform for finding mentors and getting real interview advice. Changed my prep entirely."',
   },
 ];

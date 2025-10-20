@@ -1,4 +1,5 @@
 
+
 export type UserPersonal = {
   name: string;
   email: string; // verified institute email
@@ -108,4 +109,14 @@ export type Comment = {
 export type Feedback = {
   id: string; // email id of user
   content: string;
+};
+
+export type Testimonial = {
+  id: string;
+  name: string;
+  institution: string;
+  avatarImageId: string;
+  avatarFallback: string;
+  rating: number;
+  quote: string;
 };
