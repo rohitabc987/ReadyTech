@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 import { ArrowRight, BookOpen, Users, Briefcase } from 'lucide-react';
 import { LandingHeader } from '@/components/landing-header';
-import { Footer } from '@/components/footer';
+import { LandingFooter } from '@/components/landing-footer';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/hooks/use-toast';
 
@@ -140,7 +140,7 @@ export default function LandingPage() {
 
       </main>
 
-      <Footer />
+      <LandingFooter />
       <Toaster />
     </div>
   );
