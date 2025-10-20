@@ -1,63 +1,105 @@
+
+'use client';
+
+import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { mockPosts } from '@/lib/mock-data';
-import { Filter, Search } from 'lucide-react';
+import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { cn } from '@/lib/utils';
 
-export default function QuestionsPage() {
-    const allQuestions = mockPosts.flatMap(interview => 
-        (interview.content.questions || []).map(q => ({
-            ...q,
-            company: interview.companyInfo.company,
-            interviewId: interview.id
-        }))
-    );
-    // Deduplicate questions by question text
-    const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.text, q])).values());
+
+const allQuestions = mockPosts.flatMap(interview => 
+    (interview.content.questions || []).map(q => ({
+        ...q,
+        company: interview.companyInfo.company,
+        interviewId: interview.id
+    }))
+);
+// Deduplicate questions by question text
+const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.text, q])).values());
+
+const topics = Array.from(new Set(uniqueQuestions.map(q => q.topic).filter(Boolean))) as string[];
+const companies = Array.from(new Set(uniqueQuestions.map(q => q.company).filter(Boolean))) as string[];
+
+
+function ComboboxFilter({ options, placeholder }: { options: string[], placeholder: string }) {
+  const [open, setOpen] = React.useState(false);
+  const [value, setValue] = React.useState('');
+
+  const frameworkList = options.map(opt => ({ value: opt.toLowerCase(), label: opt }));
 
   return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <Button
+          variant="outline"
+          role="combobox"
+          aria-expanded={open}
+          className="w-full md:w-[200px] justify-between text-muted-foreground font-normal"
+        >
+          <span className="truncate">
+            {value
+              ? frameworkList.find((framework) => framework.value === value)?.label
+              : placeholder}
+          </span>
+          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-[200px] p-0">
+        <Command>
+          <CommandInput placeholder={placeholder} />
+          <CommandList>
+            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandGroup>
+              {frameworkList.map((framework) => (
+                <CommandItem
+                  key={framework.value}
+                  value={framework.value}
+                  onSelect={(currentValue) => {
+                    setValue(currentValue === value ? '' : currentValue);
+                    setOpen(false);
+                  }}
+                >
+                  <Check
+                    className={cn(
+                      'mr-2 h-4 w-4',
+                      value === framework.value ? 'opacity-100' : 'opacity-0'
+                    )}
+                  />
+                  {framework.label}
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </CommandList>
+        </Command>
+      </PopoverContent>
+    </Popover>
+  );
+}
+
+
+export default function QuestionsPage() {
+    
+  return (
     <main className="flex-1 mt-4">
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Question Bank</CardTitle>
-          <CardDescription>
-            Practice questions extracted from real interview experiences.
-          </CardDescription>
-        </CardHeader> */}
         <CardContent>
             <div className="flex flex-col md:flex-row gap-2 mb-4">
                 <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
                     <Input placeholder="Search questions..." className="pl-10"/>
                 </div>
-                <Select>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                        <SelectValue placeholder="Filter by Topic" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="trees">Trees</SelectItem>
-                        <SelectItem value="graphs">Graphs</SelectItem>
-                        <SelectItem value="arrays">Arrays</SelectItem>
-                        <SelectItem value="system-design">System Design</SelectItem>
-                        <SelectItem value="os">Operating Systems</SelectItem>
-                    </SelectContent>
-                </Select>
-                 <Select>
-                    <SelectTrigger className="w-full md:w-[180px]">
-                        <SelectValue placeholder="Filter by Company" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectItem value="google">Google</SelectItem>
-                        <SelectItem value="microsoft">Microsoft</SelectItem>
-                        <SelectItem value="amazon">Amazon</SelectItem>
-                        <SelectItem value="meta">Meta</SelectItem>
-                    </SelectContent>
-                </Select>
-                <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Filter</Button>
+                
+                <ComboboxFilter options={topics} placeholder="Filter by Topic" />
+                <ComboboxFilter options={companies} placeholder="Filter by Company" />
+
+                <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
           <div className="hidden md:block border rounded-lg">
             <Table>
@@ -111,7 +153,6 @@ export default function QuestionsPage() {
             ))}
           </div>
         </CardContent>
-      {/* </Card> */}
     </main>
   );
 }
