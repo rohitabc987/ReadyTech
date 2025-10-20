@@ -120,17 +120,11 @@ export default function DashboardPage() {
           </Card>
         </aside>
         <div className="lg:col-span-3">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Interview Experiences</CardTitle>
-                    <CardDescription>Browse experiences shared by the community.</CardDescription>
-                </CardHeader>
                 <CardContent className="grid gap-4">
                     {mockInterviews.map((interview) => (
                     <InterviewCard key={interview.id} interview={interview} />
                     ))}
                 </CardContent>
-            </Card>
         </div>
       </div>
     </>

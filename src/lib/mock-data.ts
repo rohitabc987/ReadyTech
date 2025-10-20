@@ -265,20 +265,14 @@ export const mockTestimonials: Testimonial[] = [
   },
   {
     id: 't5',
-    name: 'Suraj Kumar',
+    name: 'Surabh Kumar',
     institution: 'IIT Kanpur',
-    avatarImageId: 'testimonial3',
+    avatarImageId: 'testimonial2',
     avatarFallback: 'SK',
     rating: 5,
     quote: '"The question bank is amazing for JEE prep. The \'Coming Soon\' for school students has me excited for more features!"',
   },
-  {
-    id: 't6',
-    name: 'Aarav Mishra',
-    institution: 'IIT Madras',
-    avatarImageId: 'user1',
-    avatarFallback: 'AS',
-    rating: 5,
-    quote: '"A fantastic platform for finding mentors and getting real interview advice. Changed my prep entirely."',
-  },
+
 ];
+
+    

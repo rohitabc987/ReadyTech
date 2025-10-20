@@ -17,16 +17,7 @@ export default function ResourcesPage() {
 
   return (
     <main className="flex-1 mt-4">
-        <Card>
-            <CardHeader className="md:flex-row md:items-center md:justify-between">
-                <div>
-                    <CardTitle>Resource Library</CardTitle>
-                    <CardDescription>
-                        A curated collection of PDFs, videos, and links to help you prepare.
-                    </CardDescription>
-                </div>
-                <Button><PlusCircle className="mr-2 h-4 w-4"/> Add Resource</Button>
-            </CardHeader>
+       
             <CardContent>
                 <div className="relative mb-6">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
@@ -53,7 +44,6 @@ export default function ResourcesPage() {
                     ))}
                 </div>
             </CardContent>
-        </Card>
     </main>
   );
 }

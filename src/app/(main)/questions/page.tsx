@@ -21,13 +21,13 @@ export default function QuestionsPage() {
 
   return (
     <main className="flex-1 mt-4">
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Question Bank</CardTitle>
           <CardDescription>
             Practice questions extracted from real interview experiences.
           </CardDescription>
-        </CardHeader>
+        </CardHeader> */}
         <CardContent>
             <div className="flex flex-col md:flex-row gap-2 mb-4">
                 <div className="relative flex-1">
@@ -111,7 +111,7 @@ export default function QuestionsPage() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      {/* </Card> */}
     </main>
   );
 }

@@ -37,11 +37,10 @@ export default function MentorsPage() {
 
   return (
     <main className="flex-1 mt-4">
-      <Card>
-          <CardHeader>
-              <CardTitle>Find a Mentor</CardTitle>
-              <CardDescription>Connect with experienced professionals from top companies and colleges.</CardDescription>
-          </CardHeader>
+      {/* <Card> */}
+          {/* <CardHeader> */}
+              <div className="mb-5 mt-0" >Connect with experienced professionals from top companies and colleges.</div>
+          {/* </CardHeader> */}
           <CardContent>
                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {mentors.map(mentor => (
@@ -49,7 +48,7 @@ export default function MentorsPage() {
                   ))}
               </div>
           </CardContent>
-      </Card>
+      {/* </Card> */}
     </main>
   );
 }
