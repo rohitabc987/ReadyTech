@@ -37,17 +37,26 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
   const frameworkList = options.map(opt => ({ value: opt.toLowerCase(), label: opt }));
 
   React.useEffect(() => {
-    // When the popover closes, if no item was selected,
-    // the input value becomes the actual value.
-    if (!open && inputValue) {
+    if (!open) {
+        // Find if the input value matches a label in the list
         const selectedFramework = frameworkList.find(
             (framework) => framework.label.toLowerCase() === inputValue.toLowerCase()
         );
+        // If it doesn't match, or if the input is empty, set the value to the raw input value
         if (!selectedFramework) {
             setValue(inputValue);
         }
     }
   }, [open, inputValue, frameworkList]);
+
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        setValue(inputValue);
+        setOpen(false);
+    }
+  }
 
 
   return (
@@ -68,22 +77,24 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
-        <Command>
+        <Command shouldFilter={true}>
           <CommandInput 
             placeholder={placeholder}
             value={inputValue}
             onValueChange={setInputValue}
+            onKeyDown={handleKeyDown}
           />
           <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
+            <CommandEmpty></CommandEmpty>
             <CommandGroup>
               {frameworkList.map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
                   onSelect={(currentValue) => {
+                    const selectedLabel = frameworkList.find(f => f.value === currentValue)?.label || '';
                     setValue(currentValue === value ? '' : currentValue);
-                    setInputValue(currentValue === value ? '' : framework.label)
+                    setInputValue(currentValue === value ? '' : selectedLabel)
                     setOpen(false);
                   }}
                 >
