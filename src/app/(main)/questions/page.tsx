@@ -6,27 +6,13 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { mockPosts } from '@/lib/mock-data';
+import { uniqueQuestions, topics, companies } from '@/lib/question-data';
 import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
-
-
-const allQuestions = mockPosts.flatMap(interview => 
-    (interview.content.questions || []).map(q => ({
-        ...q,
-        company: interview.companyInfo.company,
-        interviewId: interview.id
-    }))
-);
-// Deduplicate questions by question text
-const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.text, q])).values());
-
-const topics = Array.from(new Set(uniqueQuestions.map(q => q.topic).filter(Boolean))) as string[];
-const companies = Array.from(new Set(uniqueQuestions.map(q => q.company).filter(Boolean))) as string[];
 
 
 function ComboboxFilter({ options, placeholder }: { options: string[], placeholder: string }) {
