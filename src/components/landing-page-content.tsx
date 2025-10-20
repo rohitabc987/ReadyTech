@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Briefcase } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 function ComingSoonButton() {
@@ -32,10 +32,10 @@ export function LandingPageContent() {
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
-              Your Gateway to Academic & Career Success
+              Ready, Set, Tech! Learn from Real Experiences, Not Just Books
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
-              ReadyTech is a community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
+              A community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg">
@@ -49,9 +49,52 @@ export function LandingPageContent() {
         </div>
       </section>
 
+      {/* Our Mission Section */}
+      <section id="mission" className="w-full py-16 md:py-24 bg-background">
+        <div className="container mx-auto px-4 md:px-6">
+            <div className="max-w-3xl mx-auto text-center">
+                <h2 className="text-3xl font-bold font-headline tracking-tight">Our Mission</h2>
+                <p className="mt-4 text-muted-foreground md:text-lg">
+                    We believe that the best way to prepare for the future is to learn from those who have already walked the path. ReadyTech was created to bridge the gap between academic learning and real-world success. We connect aspiring students with a community of experienced seniors and mentors, making preparation for competitive exams and tech interviews more transparent, accessible, and effective for everyone.
+                </p>
+            </div>
+        </div>
+      </section>
+      
+      {/* How It Works Section */}
+      <section id="how-it-works" className="w-full py-16 md:py-24 bg-muted/30">
+          <div className="container mx-auto px-4 md:px-6">
+              <h2 className="text-3xl font-headline font-bold text-center mb-12">How It Works</h2>
+              <div className="grid gap-8 md:grid-cols-3 text-center">
+                  <div className="flex flex-col items-center">
+                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+                          <UserCheck className="h-10 w-10 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-bold font-headline">1. Create Your Profile</h3>
+                      <p className="text-muted-foreground mt-2">Sign up with your institute email and tell us about your goals, whether you're a college student or a JEE aspirant.</p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+                          <Search className="h-10 w-10 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-bold font-headline">2. Explore & Learn</h3>
+                      <p className="text-muted-foreground mt-2">Browse interview experiences, search the question bank, and connect with mentors who fit your needs.</p>
+                  </div>
+                  <div className="flex flex-col items-center">
+                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+                          <FileText className="h-10 w-10 text-primary" />
+                      </div>
+                      <h3 className="text-xl font-bold font-headline">3. Share & Contribute</h3>
+                      <p className="text-muted-foreground mt-2">Give back to the community by sharing your own interview experiences and helping others on their journey.</p>
+                  </div>
+              </div>
+          </div>
+      </section>
+
       {/* Features Section */}
       <section id="features" className="w-full py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4 md:px-6">
+          <h2 className="text-3xl font-headline font-bold text-center mb-12">Explore Our Features</h2>
           <div className="grid gap-8 md:grid-cols-3 text-center">
             <div className="flex flex-col items-center">
               <div className="bg-primary/10 p-4 rounded-full mb-4">
