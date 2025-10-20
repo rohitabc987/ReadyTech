@@ -15,9 +15,7 @@ export default function MainAppLayout({
         <header className="sticky top-0 z-40 w-full border-b bg-background">
             <div className="container flex h-14 items-center max-w-7xl">
                 <div className="md:hidden">
-                    <SidebarTrigger asChild>
-                        <Button variant="ghost" size="icon" />
-                    </SidebarTrigger>
+                    <SidebarTrigger />
                 </div>
                 <div className="flex flex-1 items-center justify-end">
                     <TopHeader />
