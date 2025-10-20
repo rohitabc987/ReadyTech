@@ -5,8 +5,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
-import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText } from 'lucide-react';
+import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText, Star } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 
 function ComingSoonButton() {
   const { toast } = useToast();
@@ -126,57 +127,90 @@ export function LandingPageContent() {
       <section id="testimonials" className="w-full py-16 md:py-24 bg-muted/30">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-headline font-bold text-center mb-12">What Our Community Says</h2>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-12 w-12 mr-4">
-                    <AvatarImage src="https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080" />
-                    <AvatarFallback>AS</AvatarFallback>
-                  </Avatar>
-                  <div>
+          <Carousel
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+            className="w-full max-w-4xl mx-auto"
+          >
+            <CarouselContent>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <Card className="h-full">
+                  <CardContent className="pt-6 flex flex-col items-center text-center">
+                    <Avatar className="h-16 w-16 mb-4">
+                      <AvatarImage src="https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarFallback>AS</AvatarFallback>
+                    </Avatar>
                     <p className="font-semibold">Ananya Singh</p>
                     <p className="text-sm text-muted-foreground">IIT Delhi</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">"The interview experiences on ReadyTech were a game-changer for my placement preparation. Invaluable insights!"</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-12 w-12 mr-4">
-                    <AvatarImage src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
-                    <AvatarFallback>RV</AvatarFallback>
-                  </Avatar>
-                  <div>
+                    <div className="flex gap-0.5 my-2">
+                      {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                    </div>
+                    <p className="text-muted-foreground text-sm flex-1">"The interview experiences on ReadyTech were a game-changer for my placement preparation. Invaluable insights!"</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <Card className="h-full">
+                  <CardContent className="pt-6 flex flex-col items-center text-center">
+                    <Avatar className="h-16 w-16 mb-4">
+                      <AvatarImage src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarFallback>RV</AvatarFallback>
+                    </Avatar>
                     <p className="font-semibold">Rohan Verma</p>
                     <p className="text-sm text-muted-foreground">NIT Trichy</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">"Connecting with a mentor helped me build a clear roadmap for my career. Highly recommend this platform."</p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardContent className="pt-6">
-                <div className="flex items-center mb-4">
-                  <Avatar className="h-12 w-12 mr-4">
-                    <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
-                    <AvatarFallback>SK</AvatarFallback>
-                  </Avatar>
-                  <div>
+                    <div className="flex gap-0.5 my-2">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                    </div>
+                    <p className="text-muted-foreground text-sm flex-1">"Connecting with a mentor helped me build a clear roadmap for my career. Highly recommend this platform."</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+              <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+                <Card className="h-full">
+                  <CardContent className="pt-6 flex flex-col items-center text-center">
+                    <Avatar className="h-16 w-16 mb-4">
+                      <AvatarImage src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080" />
+                      <AvatarFallback>SK</AvatarFallback>
+                    </Avatar>
                     <p className="font-semibold">Sneha Kumar</p>
                     <p className="text-sm text-muted-foreground">JEE Aspirant</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground">"The question bank is amazing for JEE prep. The 'Coming Soon' for school students has me excited for more features!"</p>
-              </CardContent>
-            </Card>
+                    <div className="flex gap-0.5 my-2">
+                        {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                    </div>
+                    <p className="text-muted-foreground text-sm flex-1">"The question bank is amazing for JEE prep. The 'Coming Soon' for school students has me excited for more features!"</p>
+                  </CardContent>
+                </Card>
+              </CarouselItem>
+            </CarouselContent>
+          </Carousel>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section id="cta" className="w-full py-16 md:py-24 bg-background">
+        <div className="container mx-auto text-center px-4 md:px-6">
+          <div className="max-w-2xl mx-auto">
+            <h2 className="text-3xl font-headline font-bold tracking-tight">Ready to Kickstart Your Career?</h2>
+            <p className="mt-4 text-lg text-muted-foreground">
+              Join a thriving community of learners and mentors. Your journey to success starts here.
+            </p>
+            <div className="mt-8">
+              <Button asChild size="lg">
+                <Link href="/dashboard">
+                  Join Now <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
           </div>
         </div>
       </section>
+
     </main>
   );
 }
+
+    
 
     
