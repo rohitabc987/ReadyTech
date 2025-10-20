@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { mockPosts, mockCurrentUser, mockUsers, mockPostStats } from '@/lib/mock-data';
+import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources } from '@/lib/mock-data';
 import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
@@ -24,6 +24,9 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
     const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
     const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
     
+    const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
+    const interviewResources = mockResources.filter(r => r.postId === interview.id);
+
     const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
         switch (type) {
             case 'pdf': return <FileText className="h-4 w-4 text-destructive" />;
@@ -54,12 +57,12 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                         <CardContent>
                             <p className="whitespace-pre-wrap">{interview.main.description}</p>
                             
-                            {interview.content.questions && interview.content.questions.length > 0 && (
+                            {interviewQuestions.length > 0 && (
                                 <>
                                     <Separator className="my-6" />
                                     <h3 className="font-semibold text-lg mb-4">Questions Asked</h3>
                                     <div className="space-y-4">
-                                        {interview.content.questions.map((q, i) => (
+                                        {interviewQuestions.map((q, i) => (
                                             <div key={i} className="p-4 bg-muted/50 rounded-lg font-code">
                                                 <p>{q.text}</p>
                                                 {q.topic && <Badge variant="outline" className="mt-2">{q.topic}</Badge>}
@@ -69,12 +72,12 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                                 </>
                             )}
 
-                            {interview.content.resources && interview.content.resources.length > 0 && (
+                            {interviewResources.length > 0 && (
                                 <>
                                     <Separator className="my-6" />
                                     <h3 className="font-semibold text-lg mb-4">Helpful Resources</h3>
                                     <div className="space-y-2">
-                                        {interview.content.resources.map(r => (
+                                        {interviewResources.map(r => (
                                             <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50">
                                                 <ResourceIcon type={r.type} />
                                                 <div>

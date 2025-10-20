@@ -119,25 +119,6 @@ export const mockUsers: User[] = [
 
 export const mockCurrentUser = mockUsers[2];
 
-export const mockQuestions: Question[] = [
-  { text: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees', type: 'Coding', difficulty: 'Medium' },
-  { text: 'Explain the difference between a process and a thread.', topic: 'Operating Systems', type: 'Technical', difficulty: 'Easy' },
-  { text: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design', type: 'Technical', difficulty: 'Hard' },
-  { text: 'Implement a LRU Cache.', topic: 'Data Structures', type: 'Coding', difficulty: 'Medium' },
-];
-
-export const mockResources: Resource[] = [
-    { id: 'r1', title: 'Grokking the System Design Interview', type: 'link', url: '#', description: 'A comprehensive guide to prepare for system design interviews.' },
-    { id: 'r2', title: 'CSES Problem Set', type: 'link', url: '#', description: 'A great collection of competitive programming problems.' },
-    { id: 'r3', title: 'Google\'s C++ Style Guide', type: 'pdf', url: '#', description: 'Best practices for writing clean and maintainable C++ code.' },
-    { id: 'r4', title: 'Fireship.io - 100 Seconds of Code', type: 'video', url: '#', description: 'Quick and concise videos on a variety of tech topics.' },
-];
-
-export const mockComments: Comment[] = [
-  { id: 'c1', authorId: 'u2', text: 'This is a great breakdown, thanks for sharing!', createdAt: new Date('2024-05-20T10:30:00Z') },
-  { id: 'c2', authorId: 'u4', text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', createdAt: new Date('2024-05-21T14:00:00Z') },
-];
-
 export const mockPosts: Post[] = [
   {
     id: 'i1',
@@ -155,10 +136,7 @@ export const mockPosts: Post[] = [
         applicationType: 'Full-Time',
         result: 'Selected',
     },
-    content: {
-        questions: [mockQuestions[0], mockQuestions[2]],
-        resources: [mockResources[0]],
-    },
+    content: {},
   },
   {
     id: 'i2',
@@ -176,10 +154,7 @@ export const mockPosts: Post[] = [
         applicationType: 'Full-Time',
         result: 'Selected',
     },
-    content: {
-        questions: [],
-        resources: [],
-    },
+    content: {},
   },
   {
     id: 'i3',
@@ -197,11 +172,27 @@ export const mockPosts: Post[] = [
         applicationType: 'Internship',
         result: 'Selected',
     },
-    content: {
-        questions: [mockQuestions[3]],
-        resources: [],
-    },
+    content: {},
   },
+];
+
+export const mockQuestions: Question[] = [
+  { id: 'q1', postId: 'i1', authorId: 'u1', text: 'Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.', topic: 'Trees', type: 'Coding', difficulty: 'Medium' },
+  { id: 'q2', postId: 'i1', authorId: 'u1', text: 'How would you design a URL shortening service like TinyURL?', topic: 'System Design', type: 'Technical', difficulty: 'Hard' },
+  { id: 'q3', postId: 'i3', authorId: 'u4', text: 'Implement a LRU Cache.', topic: 'Data Structures', type: 'Coding', difficulty: 'Medium' },
+  { id: 'q4', postId: 'i2', authorId: 'u2', text: 'Explain the difference between a process and a thread.', topic: 'Operating Systems', type: 'Technical', difficulty: 'Easy' },
+];
+
+export const mockResources: Resource[] = [
+    { id: 'r1', postId: 'i1', title: 'Grokking the System Design Interview', type: 'link', url: '#', description: 'A comprehensive guide to prepare for system design interviews.' },
+    { id: 'r2', postId: 'i2', title: 'CSES Problem Set', type: 'link', url: '#', description: 'A great collection of competitive programming problems.' },
+    { id: 'r3', postId: 'i3', title: 'Google\'s C++ Style Guide', type: 'pdf', url: '#', description: 'Best practices for writing clean and maintainable C++ code.' },
+    { id: 'r4', postId: 'i3', title: 'Fireship.io - 100 Seconds of Code', type: 'video', url: '#', description: 'Quick and concise videos on a variety of tech topics.' },
+];
+
+export const mockComments: Comment[] = [
+  { id: 'c1', authorId: 'u2', text: 'This is a great breakdown, thanks for sharing!', createdAt: new Date('2024-05-20T10:30:00Z') },
+  { id: 'c2', authorId: 'u4', text: 'The question about system design was really helpful. I have an interview coming up and this gives me a good starting point.', createdAt: new Date('2024-05-21T14:00:00Z') },
 ];
 
 export const mockPostStats: PostStats[] = [

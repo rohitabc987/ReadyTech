@@ -63,8 +63,8 @@ export type PostCompanyInfo = {
 };
 
 export type PostContent = {
-  questions?: Question[];
-  resources?: Resource[];
+  // Questions are now in a top-level /questions collection
+  // Resources are now in a subcollection: /posts/{postId}/resources
 };
 
 export type PostStats = {
@@ -86,6 +86,9 @@ export type Post = {
 };
 
 export type Question = {
+  id: string;
+  authorId: string; // reference to users/{userId}
+  postId: string; // reference to posts/{postId}
   text: string;
   difficulty?: 'Easy' | 'Medium' | 'Hard';
   type?: 'Coding' | 'Technical' | 'HR' | 'Internship';
@@ -94,6 +97,7 @@ export type Question = {
 
 export type Resource = {
   id: string;
+  postId: string; // reference to posts/{postId}
   title: string;
   type: 'pdf' | 'video' | 'link';
   url: string;
@@ -101,7 +105,7 @@ export type Resource = {
 };
 
 export type Comment = {
-  id: string;
+  id:string;
   authorId: string; // reference to users/{userId}
   text: string;
   createdAt: Date;

@@ -1,18 +1,18 @@
-import { mockPosts } from '@/lib/mock-data';
+import { mockPosts, mockQuestions } from '@/lib/mock-data';
 
-// This file processes raw post data to extract structured information for the UI.
+// This file provides structured data for the UI, derived from mock data.
 
-// Extract all questions from all interviews, adding company and interview context.
-const allQuestions = mockPosts.flatMap(interview => 
-    (interview.content.questions || []).map(q => ({
+// Since questions are now in their own collection, we can use them directly.
+// We map over them to add the company name for display purposes.
+export const uniqueQuestions = mockQuestions.map(q => {
+    const post = mockPosts.find(p => p.id === q.postId);
+    return {
         ...q,
-        company: interview.companyInfo.company,
-        interviewId: interview.id
-    }))
-);
+        company: post?.companyInfo.company || 'N/A',
+        interviewId: q.postId
+    }
+});
 
-// Create a unique list of questions based on the question text to avoid duplicates.
-export const uniqueQuestions = Array.from(new Map(allQuestions.map(q => [q.text, q])).values());
 
 // Static list of topics for filtering.
 export const topics: string[] = [

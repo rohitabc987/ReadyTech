@@ -93,14 +93,39 @@ This collection stores all types of content, including interviews, resources, an
     "applicationType": "'Internship' | 'Full-Time' | 'Internship + FTE'",
     "result": "'Selected' | 'Rejected' | 'In Process'"
   },
-  "content": {
-    "questions": [
-      { "text": "string", "difficulty": "'Easy' | 'Medium' | 'Hard'", "type": "'Coding' | 'Technical' | 'HR'", "topic": "string" }
-    ],
-    "resources": [
-      { "id": "string", "title": "string", "url": "string", "type": "'pdf'|'video'|'link'" }
-    ]
-  }
+  "content": {}
+}
+```
+
+### `/posts/{postId}/resources/{resourceId}`
+
+A subcollection for resources associated with a specific post.
+
+**Schema: `Resource`**
+```typescript
+{
+  "id": "string",
+  "title": "string",
+  "url": "string",
+  "type": "'pdf' | 'video' | 'link'",
+  "description": "string"
+}
+```
+
+### `/questions/{questionId}`
+
+A root-level collection to store all individual questions. This allows for easier querying and reuse of questions across different contexts.
+
+**Schema: `Question`**
+```typescript
+{
+    "id": "string",
+    "authorId": "string", // Reference to users/{userId} who posted it
+    "postId": "string", // Reference to the original post/interview
+    "text": "string",
+    "difficulty": "'Easy' | 'Medium' | 'Hard'",
+    "type": "'Coding' | 'Technical' | 'HR'",
+    "topic": "string"
 }
 ```
 
@@ -115,7 +140,6 @@ This subcollection stores engagement metrics for each post to separate frequentl
   "likes": "number",
   "commentsCount": "number",
   "avgRating": "number",
-be",
   "ratingsCount": "number",
   "upvotes": "number"
 }
