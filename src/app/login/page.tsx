@@ -1,6 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Logo } from '@/components/logo';
+import { LandingHeader } from '@/components/landing-header';
 
 export default function LoginPage() {
   const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -19,26 +20,32 @@ export default function LoginPage() {
   );
 
   return (
-    <div className="flex min-h-screen  items-center justify-center  p-4">
-      <Card className="w-full max-w-md  mx-auto shadow-xl">
-        <CardHeader className="text-center space-y-4">
-          <CardTitle className="font-headline">Welcome to ReadyTech</CardTitle>
-          <CardDescription>
-            A community for interview and exam preparation. Sign in to continue.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="flex flex-col gap-4">
-            <Button className="w-full">
-              <GoogleIcon className="h-5 w-5 mr-2" />
-              Sign In with Google
-            </Button>
-            <p className="text-xs text-center text-muted-foreground px-4">
-              Access is restricted to verified institutional emails (e.g., @iitdh.ac.in, @nit.ac.in).
-            </p>
-          </div>
-        </CardContent>
-      </Card>
+    <div className="flex flex-col min-h-screen">
+      <LandingHeader />
+      <main className="flex-1 flex items-center justify-center p-4 bg-muted/20">
+        <Card className="w-full max-w-md  mx-auto shadow-xl">
+          <CardHeader className="text-center space-y-4 pt-8">
+            <div className="mx-auto">
+              <Logo />
+            </div>
+            <CardTitle className="font-headline text-2xl">Welcome to ReadyTech</CardTitle>
+            <CardDescription>
+              A community for interview and exam preparation. Sign in to continue.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="pb-8 px-8">
+            <div className="flex flex-col gap-4">
+              <Button className="w-full">
+                <GoogleIcon className="h-5 w-5 mr-2" />
+                Sign In with Google
+              </Button>
+              <p className="text-xs text-center text-muted-foreground px-4">
+                Access is restricted to verified institutional emails (e.g., @iitdh.ac.in, @nit.ac.in).
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
     </div>
   );
 }
