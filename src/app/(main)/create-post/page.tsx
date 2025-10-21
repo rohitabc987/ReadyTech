@@ -351,7 +351,7 @@ export default function NewPostPage() {
                   </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-center gap-2 pt-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
                   <Button variant="outline" type="button">Save as Draft</Button>
                   <Button type="submit">Publish Post</Button>
               </div>

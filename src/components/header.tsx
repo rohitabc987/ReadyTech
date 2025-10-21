@@ -17,7 +17,7 @@ import { Logo } from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import { UserNav } from './user-nav';
 import { cn } from '@/lib/utils';
-import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -74,6 +74,9 @@ export function Header() {
             </Button>
           </SheetTrigger>
           <SheetContent side="left" className="pr-0">
+             <SheetHeader className="items-start">
+                <SheetTitle className="sr-only">Navigation</SheetTitle>
+             </SheetHeader>
              <Link
                 href="/dashboard"
                 className="mb-4 flex items-center"
