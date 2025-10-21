@@ -1,13 +1,21 @@
 
+'use client';
+
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/componentsui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Upload } from 'lucide-react';
+import { ComboboxInput } from '@/components/combobox-input';
+import { companies, roles } from '@/lib/data/company-data';
 
 export default function NewPostPage() {
+    const [company, setCompany] = useState('');
+    const [role, setRole] = useState('');
+
   return (
     <main className="flex-1 mt-4">
       <Card>
@@ -41,11 +49,23 @@ export default function NewPostPage() {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="company">Company</Label>
-                        <Input id="company" placeholder="e.g., Google" />
+                        <ComboboxInput
+                            id="company"
+                            options={companies}
+                            placeholder="e.g., Google"
+                            value={company}
+                            onChange={setCompany}
+                        />
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="role">Role / Position</Label>
-                        <Input id="role" placeholder="e.g., Software Engineer Intern" />
+                        <ComboboxInput
+                            id="role"
+                            options={roles}
+                            placeholder="e.g., Software Engineer Intern"
+                            value={role}
+                            onChange={setRole}
+                        />
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="difficulty">Difficulty</Label>

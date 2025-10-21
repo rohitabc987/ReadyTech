@@ -1,0 +1,37 @@
+
+export const companies: string[] = [
+    "Google",
+    "Microsoft",
+    "Amazon",
+    "Meta",
+    "Apple",
+    "Netflix",
+    "Uber",
+    "Airbnb",
+    "Atlassian",
+    "Salesforce",
+    "Oracle",
+    "Adobe",
+    "Nvidia",
+    "Intel",
+    "Flipkart",
+    "Zomato",
+    "Swiggy",
+];
+
+export const roles: string[] = [
+    "Software Engineer",
+    "SDE-1",
+    "SDE-2",
+    "SDE-3",
+    "Software Engineer Intern",
+    "Product Manager",
+    "Data Scientist",
+    "Data Analyst",
+    "Machine Learning Engineer",
+    "Frontend Developer",
+    "Backend Developer",
+    "Full Stack Developer",
+    "DevOps Engineer",
+    "Site Reliability Engineer (SRE)",
+];
