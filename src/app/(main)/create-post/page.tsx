@@ -13,45 +13,32 @@ export default function NewPostPage() {
       <Card>
         <CardHeader>
           <CardTitle>Share Your Knowledge & Experience</CardTitle>
-          <CardDescription>
-            Help the community by sharing your insights. Fill out the details below.
-          </CardDescription>
+          <CardDescription>Start by providing the core details of the experience you're sharing.</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                    <Label htmlFor="title">Title</Label>
-                    <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
-                </div>
-                <div className="space-y-2">
-                    <Label htmlFor="post-type">Type of Post</Label>
-                    <Select>
-                        <SelectTrigger id="post-type">
-                            <SelectValue placeholder="Select a post type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="technical-interview">Technical Interview</SelectItem>
-                            <SelectItem value="hr-interview">HR Interview</SelectItem>
-                            <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
-                            <SelectItem value="online-assessment">Online Assessment</SelectItem>
-                            <SelectItem value="technical-test">Technical Test</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="description">Description / Your Experience</Label>
-              <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" />
-            </div>
 
             <Card className="bg-muted/30">
                 <CardHeader>
-                    <CardTitle className="text-lg">Company & Role Details</CardTitle>
+                    <CardTitle className="text-lg">Core Details</CardTitle>
                     <CardDescription>This information helps others filter and find relevant experiences.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <Label htmlFor="post-type">Type of Post</Label>
+                        <Select>
+                            <SelectTrigger id="post-type">
+                                <SelectValue placeholder="Select a post type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="technical-interview">Technical Interview</SelectItem>
+                                <SelectItem value="hr-interview">HR Interview</SelectItem>
+                                <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
+                                <SelectItem value="online-assessment">Online Assessment</SelectItem>
+                                <SelectItem value="technical-test">Technical Test</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
                     <div className="space-y-2">
                         <Label htmlFor="company">Company</Label>
                         <Input id="company" placeholder="e.g., Google" />
@@ -86,7 +73,7 @@ export default function NewPostPage() {
                             </SelectContent>
                         </Select>
                     </div>
-                    <div className="space-y-2 md:col-span-2">
+                    <div className="space-y-2">
                         <Label htmlFor="result">Result</Label>
                         <Select>
                             <SelectTrigger id="result">
@@ -101,6 +88,16 @@ export default function NewPostPage() {
                     </div>
                 </CardContent>
             </Card>
+
+            <div className="space-y-2">
+                <Label htmlFor="title">Title</Label>
+                <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="description">Description / Your Experience</Label>
+              <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" />
+            </div>
 
             <div className="space-y-4">
                 <Label>Questions Asked (Optional)</Label>
