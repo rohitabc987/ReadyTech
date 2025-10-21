@@ -27,9 +27,6 @@ export default function NewPostPage() {
           <form className="space-y-6">
 
             <Card className="bg-muted/30">
-                <CardHeader>
-                    <CardTitle className="text-lg">Core Details</CardTitle>
-                </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
                         <Label htmlFor="post-type">Type</Label>
