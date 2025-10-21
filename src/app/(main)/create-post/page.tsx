@@ -21,7 +21,7 @@ export default function NewPostPage() {
       <Card>
         <CardHeader>
           <CardTitle>Share Your Knowledge & Experience</CardTitle>
-          <CardDescription>Start by providing the core details of the experience you're sharing.</CardDescription>
+          <CardDescription>Start by providing the core details of the experience you're sharing. Fields marked with <span className="text-destructive">*</span> are required.</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6">
@@ -29,7 +29,7 @@ export default function NewPostPage() {
             <Card className="bg-muted/30">
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                     <div className="space-y-2">
-                        <Label htmlFor="post-type">Type</Label>
+                        <Label htmlFor="post-type">Type <span className="text-destructive">*</span></Label>
                         <Select required>
                             <SelectTrigger id="post-type">
                                 <SelectValue placeholder="Select a type" />
@@ -45,7 +45,7 @@ export default function NewPostPage() {
                         </Select>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="company">Company</Label>
+                        <Label htmlFor="company">Company <span className="text-destructive">*</span></Label>
                         <ComboboxInput
                             id="company"
                             options={companies}
@@ -56,7 +56,7 @@ export default function NewPostPage() {
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="role">Role / Position</Label>
+                        <Label htmlFor="role">Role / Position <span className="text-destructive">*</span></Label>
                         <ComboboxInput
                             id="role"
                             options={roles}
@@ -67,7 +67,7 @@ export default function NewPostPage() {
                         />
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="difficulty">Difficulty</Label>
+                        <Label htmlFor="difficulty">Difficulty <span className="text-destructive">*</span></Label>
                         <Select required>
                             <SelectTrigger id="difficulty">
                                 <SelectValue placeholder="Select difficulty" />
@@ -80,7 +80,7 @@ export default function NewPostPage() {
                         </Select>
                     </div>
                      <div className="space-y-2">
-                        <Label htmlFor="application-type">Application Type</Label>
+                        <Label htmlFor="application-type">Application Type <span className="text-destructive">*</span></Label>
                         <Select required>
                             <SelectTrigger id="application-type">
                                 <SelectValue placeholder="Select application type" />
@@ -93,7 +93,7 @@ export default function NewPostPage() {
                         </Select>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="result">Result</Label>
+                        <Label htmlFor="result">Result <span className="text-destructive">*</span></Label>
                         <Select required>
                             <SelectTrigger id="result">
                                 <SelectValue placeholder="Select the outcome" />
@@ -109,12 +109,12 @@ export default function NewPostPage() {
             </Card>
 
             <div className="space-y-2">
-                <Label htmlFor="title">Title</Label>
+                <Label htmlFor="title">Title <span className="text-destructive">*</span></Label>
                 <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" required />
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="description">Description / Your Experience</Label>
+              <Label htmlFor="description">Description / Your Experience <span className="text-destructive">*</span></Label>
               <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" required />
             </div>
 
