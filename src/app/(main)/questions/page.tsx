@@ -7,6 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { companies } from '@/lib/data/question-data';
+import { roles } from '@/lib/data/company-data';
 import { getAllQuestions } from '@/lib/firebase/questions';
 import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -127,6 +128,7 @@ export default function QuestionsPage() {
                 </div>
                 
                 <ComboboxFilter options={companies} placeholder="Filter by Company" />
+                <ComboboxFilter options={roles} placeholder="Filter by Role" />
 
                 <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
