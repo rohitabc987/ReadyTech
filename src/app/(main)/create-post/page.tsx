@@ -17,6 +17,7 @@ import { companies, roles } from '@/lib/data/company-data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 
 const postFormSchema = z.object({
   postType: z.string({ required_error: "Type is required." }).min(1, "Type is required."),
@@ -35,7 +36,7 @@ type FormQuestion = {
   id: number;
   text: string;
   isMCQ: boolean;
-  options: { id: number; text: string }[];
+  options: { id: number; text: string; isCorrect: boolean }[];
 };
 
 let questionCounter = 2;
@@ -79,11 +80,11 @@ export default function NewPostPage() {
     };
 
     const toggleMCQ = (questionId: number) => {
-        setQuestions(questions.map(q => q.id === questionId ? { ...q, isMCQ: !q.isMCQ, options: q.isMCQ ? [] : [{id: optionCounter++, text: ''}] } : q));
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, isMCQ: !q.isMCQ, options: q.isMCQ ? [] : [{id: optionCounter++, text: '', isCorrect: false}] } : q));
     };
 
     const addOption = (questionId: number) => {
-        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: [...q.options, { id: optionCounter++, text: '' }] } : q));
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: [...q.options, { id: optionCounter++, text: '', isCorrect: false }] } : q));
     };
 
     const removeOption = (questionId: number, optionId: number) => {
@@ -95,6 +96,14 @@ export default function NewPostPage() {
             q.id === questionId 
             ? { ...q, options: q.options.map(opt => opt.id === optionId ? { ...opt, text } : opt) } 
             : q
+        ));
+    };
+    
+    const handleCorrectOptionChange = (questionId: number, correctOptionId: number) => {
+        setQuestions(questions.map(q =>
+            q.id === questionId
+                ? { ...q, options: q.options.map(opt => ({ ...opt, isCorrect: opt.id === correctOptionId })) }
+                : q
         ));
     };
 
@@ -303,26 +312,33 @@ export default function NewPostPage() {
                                       </label>
                                   </div>
                                   {question.isMCQ && (
-                                      <div className="pl-6 space-y-3">
-                                          <Label>Options</Label>
-                                          {question.options.map((option, oIndex) => (
-                                              <div key={option.id} className="flex gap-2 items-center">
-                                                  <Input 
-                                                      placeholder={`Option ${oIndex + 1}`}
-                                                      value={option.text}
-                                                      onChange={(e) => handleOptionChange(question.id, option.id, e.target.value)}
-                                                  />
-                                                  {question.options.length > 1 && (
-                                                      <Button variant="ghost" size="icon" type="button" onClick={() => removeOption(question.id, option.id)}>
-                                                          <Trash2 className="h-4 w-4 text-destructive" />
-                                                      </Button>
-                                                  )}
-                                              </div>
-                                          ))}
-                                          <Button variant="outline" size="sm" type="button" onClick={() => addOption(question.id)}>
-                                              <PlusCircle className="mr-2 h-4 w-4" /> Add Option
-                                          </Button>
-                                      </div>
+                                    <div className="pl-6 space-y-3">
+                                        <Label>Options (select the correct answer)</Label>
+                                        <RadioGroup
+                                            onValueChange={(value) => handleCorrectOptionChange(question.id, parseInt(value))}
+                                            className="space-y-2"
+                                        >
+                                            {question.options.map((option, oIndex) => (
+                                                <div key={option.id} className="flex gap-2 items-center">
+                                                    <RadioGroupItem value={option.id.toString()} id={`q${question.id}-o${option.id}`} />
+                                                    <Input 
+                                                        placeholder={`Option ${oIndex + 1}`}
+                                                        value={option.text}
+                                                        onChange={(e) => handleOptionChange(question.id, option.id, e.target.value)}
+                                                        className="flex-1"
+                                                    />
+                                                    {question.options.length > 1 && (
+                                                        <Button variant="ghost" size="icon" type="button" onClick={() => removeOption(question.id, option.id)}>
+                                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                                        </Button>
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </RadioGroup>
+                                        <Button variant="outline" size="sm" type="button" onClick={() => addOption(question.id)}>
+                                            <PlusCircle className="mr-2 h-4 w-4" /> Add Option
+                                        </Button>
+                                    </div>
                                   )}
                               </div>
                           ))}

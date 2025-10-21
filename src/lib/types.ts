@@ -86,7 +86,7 @@ export type Post = {
 
 export type QuestionOption = {
   text: string;
-  isCorrect?: boolean; // Optional: to mark the correct answer
+  isCorrect?: boolean;
 };
 
 export type Question = {
