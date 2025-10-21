@@ -21,9 +21,11 @@ export function DashboardFilter() {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="interview">Interview Experience</SelectItem>
-                  <SelectItem value="resource">Resource</SelectItem>
-                  <SelectItem value="question">Question</SelectItem>
+                  <SelectItem value="technical-interview">Technical Interview</SelectItem>
+                  <SelectItem value="hr-interview">HR Interview</SelectItem>
+                  <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
+                  <SelectItem value="online-assessment">Online Assessment</SelectItem>
+                  <SelectItem value="technical-test">Technical Test</SelectItem>
                 </SelectContent>
               </Select>
           </div>
@@ -38,10 +40,6 @@ export function DashboardFilter() {
             <div className="space-y-2">
               <Label htmlFor="search-branch">Branch</Label>
               <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
-          </div>
-            <div className="space-y-2">
-              <Label htmlFor="search-year">Year</Label>
-              <Input id="search-year" placeholder="e.g. 2024" />
           </div>
             <div className="space-y-2">
               <Label htmlFor="search-college">College Name</Label>

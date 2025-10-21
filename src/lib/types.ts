@@ -45,7 +45,7 @@ export type User = {
 
 export type PostMain = {
   authorId: string; // reference to users/{userId}
-  type: 'interview' | 'resource' | 'mock' | 'question';
+  type: 'Online Assessment' | 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Technical Test';
   title: string;
   description: string;
   coverImage?: string;
@@ -56,7 +56,6 @@ export type PostMain = {
 export type PostCompanyInfo = {
   company?: string;
   role?: string;
-  year?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   applicationType?: 'Internship' | 'Full-Time'| 'Internship + FTE';
   result?: 'Selected' | 'Rejected' | 'In Process';

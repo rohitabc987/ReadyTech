@@ -1,5 +1,7 @@
 
 import type { User, Post, Question, Resource, Comment, PostStats } from '../types';
+import placeholderImages from './placeholder-images.json';
+
 
 export const mockUsers: User[] = [
   {
@@ -119,7 +121,7 @@ export const mockPosts: Post[] = [
     id: 'i1',
     main: {
         authorId: 'u1',
-        type: 'interview',
+        type: 'Technical Interview',
         title: 'My Interview Experience at Google for SDE-1',
         description: 'The interview process consisted of 1 phone screen and 3 onsite rounds. The phone screen was a medium LeetCode question on arrays. The on-sites covered a range of topics including trees, graphs, and a system design question. Everyone was very friendly and the experience was positive overall. The recruiter was very helpful in guiding me through the process.',
         createdAt: new Date('2024-05-20T09:00:00Z'),
@@ -137,7 +139,7 @@ export const mockPosts: Post[] = [
     id: 'i2',
     main: {
         authorId: 'u2',
-        type: 'interview',
+        type: 'Managerial Interview',
         title: 'Microsoft PM Interview - A Deep Dive',
         description: 'The process had 4 rounds. Round 1 was with a PM and focused on product sense. Round 2 was a technical round with an engineer. Round 3 was about behavioral questions and leadership principles. The final round was with a senior director about my past experiences and future goals. Be prepared to talk a lot about "why Microsoft".',
         createdAt: new Date('2024-04-15T14:00:00Z'),
@@ -155,9 +157,9 @@ export const mockPosts: Post[] = [
     id: 'i3',
     main: {
         authorId: 'u4',
-        type: 'interview',
-        title: 'Amazon SDE Intern Interview',
-        description: 'It was a 2-round process. First was an online assessment on HackerRank with 2 coding questions and a work-style simulation. The second round was a virtual interview with an SDE-2. We discussed my resume, a coding question on hashmaps, and some of Amazon\'s leadership principles. The coding question was about finding pairs in an array that sum to a target.',
+        type: 'Online Assessment',
+        title: 'Amazon SDE Intern Online Assessment',
+        description: 'It was a 2-part online assessment on HackerRank. Part 1 had 2 coding questions (1 easy, 1 medium) and a work-style simulation. Part 2 was a technical quiz on core CS fundamentals. The coding questions were about finding pairs in an array that sum to a target, and a variation of the balanced parentheses problem.',
         createdAt: new Date('2024-03-10T11:00:00Z'),
         updatedAt: new Date('2024-03-10T11:00:00Z'),
     },

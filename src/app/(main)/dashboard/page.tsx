@@ -43,6 +43,9 @@ function PostCard({ post }: { post: EnrichedPost }) {
   
   const detailLink = `/interviews/${post.id}`; // This can be made dynamic later if other post types have detail pages
 
+  const interviewTypes: Post['main']['type'][] = ['Technical Interview', 'HR Interview', 'Managerial Interview'];
+  const showCompanyInfo = post.companyInfo?.company && interviewTypes.includes(post.main.type);
+
   return (
     <Card className="hover:shadow-lg transition-shadow">
         <CardHeader>
@@ -61,16 +64,14 @@ function PostCard({ post }: { post: EnrichedPost }) {
 
                     </CardTitle>
                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
-                        {post.main.type === 'interview' && post.companyInfo.company && (
+                        <div className="flex items-center gap-2"><span>{post.main.type}</span></div>
+                        {showCompanyInfo && (
                           <>
-                            <div className="flex items-center gap-2"><Briefcase className="h-4 w-4" /><span>{post.companyInfo.company}</span></div>
-                            <div className="flex items-center gap-2"><span>&bull;</span><span>{post.companyInfo.role}</span></div>
-                            <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><Briefcase className="h-4 w-4" /><span>{post.companyInfo!.company}</span></div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><span>{post.companyInfo!.role}</span></div>
                           </>
                         )}
-                         {post.main.type !== 'interview' && (
-                            <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{formattedDate}</div>
-                         )}
+                         <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
                     </div>
                 </div>
                 {stats.avgRating && (

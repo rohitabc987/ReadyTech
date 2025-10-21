@@ -80,17 +80,16 @@ This collection stores all types of content, including interviews, resources, an
   "id": "string",
   "main": {
     "authorId": "string", // Reference to users/{userId}
-    "type": "'interview' | 'resource' | 'mock' | 'question'",
+    "type": "'Online Assessment' | 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Technical Test'",
     "title": "string",
     "description": "string",
     "coverImage": "string",
     "createdAt": "Timestamp",
     "updatedAt": "Timestamp"
   },
-  "companyInfo": { // Primarily for 'interview' type posts
+  "companyInfo": { // Primarily for interview type posts
     "company": "string",
     "role": "string",
-    "year": "string",
     "difficulty": "'easy' | 'medium' | 'hard'",
     "applicationType": "'Internship' | 'Full-Time' | 'Internship + FTE'",
     "result": "'Selected' | 'Rejected' | 'In Process'"
@@ -184,6 +183,6 @@ To maintain consistency and code quality, new features should be developed follo
 2.  **Create UI Components**: Build the necessary React components for the feature. Place reusable components in `src/components/ui/` (for generic elements) or `src/components/` (for feature-specific composites). The page itself will reside in `src/app/`.
 3.  **Ensure Responsiveness**: All UI components and pages must be fully responsive, providing a seamless experience on mobile, tablet, and desktop devices. Use Tailwind CSS's responsive prefixes (e.g., `sm:`, `md:`, `lg:`) to adapt layouts.
 4.  **Implement Data Logic**:
-    - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. This improves performance by running data queries on the server. For client-side fetching (e.g., on the dashboard), create abstracted functions in `src/lib/firebase/`.
+    - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. For client-side fetching (e.g., on the dashboard), create abstracted functions in `src/lib/firebase/`.
     - **Data Mutations**: For creating, updating, or deleting data, use Firebase's client-side SDK (`firebase/firestore`) within client components (`'use client'`). Trigger these mutations based on user interactions like button clicks or form submissions.
 5.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).
