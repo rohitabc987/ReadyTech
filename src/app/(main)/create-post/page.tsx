@@ -1,45 +1,109 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
 import { PlusCircle, Upload } from 'lucide-react';
 
-export default function NewInterviewPage() {
+export default function NewPostPage() {
   return (
     <main className="flex-1 mt-4">
       <Card>
         <CardHeader>
-          <CardTitle>Share Your Interview Experience</CardTitle>
+          <CardTitle>Share Your Knowledge & Experience</CardTitle>
           <CardDescription>
-            Help the community by sharing your knowledge. Fill out the details below.
+            Help the community by sharing your insights. Fill out the details below.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="title">Title</Label>
-              <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
-            </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
-                    <Input id="company" placeholder="e.g., Google" />
+                    <Label htmlFor="title">Title</Label>
+                    <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="role">Role / Position</Label>
-                    <Input id="role" placeholder="e.g., Software Engineer Intern" />
+                    <Label htmlFor="post-type">Type of Post</Label>
+                    <Select>
+                        <SelectTrigger id="post-type">
+                            <SelectValue placeholder="Select a post type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="technical-interview">Technical Interview</SelectItem>
+                            <SelectItem value="hr-interview">HR Interview</SelectItem>
+                            <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
+                            <SelectItem value="online-assessment">Online Assessment</SelectItem>
+                            <SelectItem value="technical-test">Technical Test</SelectItem>
+                        </SelectContent>
+                    </Select>
                 </div>
             </div>
-
+            
             <div className="space-y-2">
-              <Label htmlFor="experience">Your Experience</Label>
-              <Textarea id="experience" placeholder="Describe the interview process, rounds, questions asked, and any tips you have." className="min-h-[200px]" />
+              <Label htmlFor="description">Description / Your Experience</Label>
+              <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" />
             </div>
 
+            <Card className="bg-muted/30">
+                <CardHeader>
+                    <CardTitle className="text-lg">Company & Role Details</CardTitle>
+                    <CardDescription>This information helps others filter and find relevant experiences.</CardDescription>
+                </CardHeader>
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                        <Label htmlFor="company">Company</Label>
+                        <Input id="company" placeholder="e.g., Google" />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="role">Role / Position</Label>
+                        <Input id="role" placeholder="e.g., Software Engineer Intern" />
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="difficulty">Difficulty</Label>
+                        <Select>
+                            <SelectTrigger id="difficulty">
+                                <SelectValue placeholder="Select difficulty" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="easy">Easy</SelectItem>
+                                <SelectItem value="medium">Medium</SelectItem>
+                                <SelectItem value="hard">Hard</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                     <div className="space-y-2">
+                        <Label htmlFor="application-type">Application Type</Label>
+                        <Select>
+                            <SelectTrigger id="application-type">
+                                <SelectValue placeholder="Select application type" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Internship">Internship</SelectItem>
+                                <SelectItem value="Full-Time">Full-Time</SelectItem>
+                                <SelectItem value="Internship + FTE">Internship + FTE</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                    <div className="space-y-2 md:col-span-2">
+                        <Label htmlFor="result">Result</Label>
+                        <Select>
+                            <SelectTrigger id="result">
+                                <SelectValue placeholder="Select the outcome" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="Selected">Selected</SelectItem>
+                                <SelectItem value="Rejected">Rejected</SelectItem>
+                                <SelectItem value="In Process">In Process</SelectItem>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </CardContent>
+            </Card>
+
             <div className="space-y-4">
-                <Label>Questions Asked</Label>
+                <Label>Questions Asked (Optional)</Label>
                 <div className="space-y-2">
                     <Input placeholder="Question 1..."/>
                     <Input placeholder="Question 2..."/>
@@ -48,7 +112,7 @@ export default function NewInterviewPage() {
             </div>
             
             <div className="space-y-4">
-                <Label>Resources & Attachments</Label>
+                <Label>Cover Image & Resources (Optional)</Label>
                 <div className="flex items-center justify-center w-full">
                     <Label
                         htmlFor="dropzone-file"
@@ -59,7 +123,7 @@ export default function NewInterviewPage() {
                         <p className="mb-2 text-sm text-muted-foreground">
                             <span className="font-semibold">Click to upload</span> or drag and drop
                         </p>
-                        <p className="text-xs text-muted-foreground">PDF, links, or other resources</p>
+                        <p className="text-xs text-muted-foreground">Cover image, PDFs, or other resources</p>
                         </div>
                         <Input id="dropzone-file" type="file" className="hidden" />
                     </Label>

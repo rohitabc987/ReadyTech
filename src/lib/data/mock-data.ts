@@ -1,7 +1,5 @@
 
 import type { User, Post, Question, Resource, Comment, PostStats } from '../types';
-import placeholderImages from './placeholder-images.json';
-
 
 export const mockUsers: User[] = [
   {

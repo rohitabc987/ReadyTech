@@ -14,7 +14,7 @@ export function DashboardFilter() {
       </CardHeader>
       <CardContent className="space-y-4">
           <div className="space-y-2">
-              <Label htmlFor="search-type">Post Type</Label>
+              <Label htmlFor="search-type">Type</Label>
                <Select>
                 <SelectTrigger id="search-type">
                   <SelectValue placeholder="All" />
@@ -41,7 +41,11 @@ export function DashboardFilter() {
               <Label htmlFor="search-branch">Branch</Label>
               <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
           </div>
-            <div className="space-y-2">
+          <div className="space-y-2">
+              <Label htmlFor="search-year">Year</Label>
+              <Input id="search-year" placeholder="e.g. 2024" />
+          </div>
+          <div className="space-y-2">
               <Label htmlFor="search-college">College Name</Label>
               <Input id="search-college" placeholder="e.g. IIT Bombay..." />
           </div>
