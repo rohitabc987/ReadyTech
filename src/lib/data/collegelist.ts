@@ -1,38 +1,43 @@
 
-export type CollegeType = 'IIT' | 'NIT' | 'IIIT' | 'Private' | 'School';
+export type CollegeType = 'IIT' | 'NIT' | 'IIIT' | 'Private';
+
+export const iitList: string[] = [
+  'IIT Bombay',
+  'IIT Delhi',
+  'IIT Madras',
+  'IIT Kanpur',
+  'IIT Kharagpur',
+  'IIT Roorkee',
+  'IIT Guwahati',
+];
+
+export const nitList: string[] = [
+  'NIT Tiruchirappalli',
+  'NIT Warangal',
+  'NIT Surathkal',
+  'NIT Calicut',
+  'NIT Rourkela',
+];
+
+export const iiitList: string[] = [
+  'IIIT Allahabad',
+  'IIIT Hyderabad',
+  'IIIT Bangalore',
+  'IIIT Gwalior',
+];
+
+export const privateList: string[] = [
+  'BITS Pilani',
+  'VIT Vellore',
+  'Manipal Institute of Technology',
+  'Thapar Institute of Engineering and Technology',
+];
+
+export const collegeTypes: CollegeType[] = ['IIT', 'NIT', 'IIIT', 'Private'];
 
 export const collegeList: Record<CollegeType, string[]> = {
-  'IIT': [
-    'IIT Bombay',
-    'IIT Delhi',
-    'IIT Madras',
-    'IIT Kanpur',
-    'IIT Kharagpur',
-    'IIT Roorkee',
-    'IIT Guwahati',
-  ],
-  'NIT': [
-    'NIT Tiruchirappalli',
-    'NIT Warangal',
-    'NIT Surathkal',
-    'NIT Calicut',
-    'NIT Rourkela',
-  ],
-  'IIIT': [
-    'IIIT Allahabad',
-    'IIIT Hyderabad',
-    'IIIT Bangalore',
-    'IIIT Gwalior',
-  ],
-  'Private': [
-    'BITS Pilani',
-    'VIT Vellore',
-    'Manipal Institute of Technology',
-    'Thapar Institute of Engineering and Technology',
-  ],
-  'School': [
-    // This can be populated if needed for the school student portal
-  ]
+  'IIT': iitList,
+  'NIT': nitList,
+  'IIIT': iiitList,
+  'Private': privateList,
 };
-
-export const collegeTypes = Object.keys(collegeList) as CollegeType[];
