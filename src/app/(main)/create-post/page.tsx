@@ -19,8 +19,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
 const postFormSchema = z.object({
-  postType: z.string({ required_error: "Post type is required." }),
-  company: z.string().min(1, "Company is required."),
+  postType: z.string({ required_error: "Type is required." }),
+  company: z.string().min(1, "Company name is required."),
   role: z.string().min(1, "Role is required."),
   difficulty: z.string({ required_error: "Difficulty is required." }),
   applicationType: z.string({ required_error: "Application type is required." }),
@@ -39,13 +39,20 @@ type FormQuestion = {
 };
 
 export default function NewPostPage() {
-    const [questions, setQuestions] = useState<FormQuestion[]>([]);
+    const [questions, setQuestions] = useState<FormQuestion[]>([
+        { id: Date.now(), text: '', isMCQ: false, options: [] },
+        { id: Date.now() + 1, text: '', isMCQ: false, options: [] }
+    ]);
 
     const form = useForm<PostFormValues>({
         resolver: zodResolver(postFormSchema),
         defaultValues: {
+            postType: '',
             company: '',
             role: '',
+            difficulty: '',
+            applicationType: '',
+            result: '',
             title: '',
             description: '',
         },
