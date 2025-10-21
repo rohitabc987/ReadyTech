@@ -21,14 +21,13 @@ export default function NewPostPage() {
             <Card className="bg-muted/30">
                 <CardHeader>
                     <CardTitle className="text-lg">Core Details</CardTitle>
-                    <CardDescription>This information helps others filter and find relevant experiences.</CardDescription>
                 </CardHeader>
                 <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                        <Label htmlFor="post-type">Type of Post</Label>
+                        <Label htmlFor="post-type">Type</Label>
                         <Select>
                             <SelectTrigger id="post-type">
-                                <SelectValue placeholder="Select a post type" />
+                                <SelectValue placeholder="Select a type" />
                             </SelectTrigger>
                             <SelectContent>
                                 <SelectItem value="technical-interview">Technical Interview</SelectItem>
@@ -36,6 +35,7 @@ export default function NewPostPage() {
                                 <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
                                 <SelectItem value="online-assessment">Online Assessment</SelectItem>
                                 <SelectItem value="technical-test">Technical Test</SelectItem>
+                                <SelectItem value="other">Other</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>

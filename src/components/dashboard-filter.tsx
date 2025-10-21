@@ -26,6 +26,7 @@ export function DashboardFilter() {
                   <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
                   <SelectItem value="online-assessment">Online Assessment</SelectItem>
                   <SelectItem value="technical-test">Technical Test</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
           </div>

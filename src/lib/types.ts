@@ -45,7 +45,7 @@ export type User = {
 
 export type PostMain = {
   authorId: string; // reference to users/{userId}
-  type: 'Online Assessment' | 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Technical Test';
+  type: 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Online Assessment' | 'Technical Test' | 'Other';
   title: string;
   description: string;
   coverImage?: string;
