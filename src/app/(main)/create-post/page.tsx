@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Upload, Trash2 } from 'lucide-react';
+import { PlusCircle, Upload, Trash2, Puzzle, FileText, HelpCircle, FolderArchive } from 'lucide-react';
 import { ComboboxInput } from '@/components/combobox-input';
 import { companies, roles } from '@/lib/data/company-data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -107,223 +107,233 @@ export default function NewPostPage() {
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-
-              <Card className="bg-muted/30">
-                  <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
-                      <FormField
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><Puzzle className="h-5 w-5 text-primary" /> 🧩 Basic Info</h3>
+                <Card className="bg-muted/30 border-dashed">
+                    <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
+                        <FormField
+                            control={form.control}
+                            name="postType"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Type <span className="text-destructive">*</span></FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select a type" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="technical-interview">Technical Interview</SelectItem>
+                                            <SelectItem value="hr-interview">HR Interview</SelectItem>
+                                            <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
+                                            <SelectItem value="online-assessment">Online Assessment</SelectItem>
+                                            <SelectItem value="technical-test">Technical Test</SelectItem>
+                                            <SelectItem value="other">Other</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
                           control={form.control}
-                          name="postType"
-                          render={({ field }) => (
-                              <FormItem>
-                                  <FormLabel>Type <span className="text-destructive">*</span></FormLabel>
-                                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                      <FormControl>
-                                          <SelectTrigger>
-                                              <SelectValue placeholder="Select a type" />
-                                          </SelectTrigger>
-                                      </FormControl>
-                                      <SelectContent>
-                                          <SelectItem value="technical-interview">Technical Interview</SelectItem>
-                                          <SelectItem value="hr-interview">HR Interview</SelectItem>
-                                          <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
-                                          <SelectItem value="online-assessment">Online Assessment</SelectItem>
-                                          <SelectItem value="technical-test">Technical Test</SelectItem>
-                                          <SelectItem value="other">Other</SelectItem>
-                                      </SelectContent>
-                                  </Select>
-                                  <FormMessage />
-                              </FormItem>
-                          )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="company"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Company <span className="text-destructive">*</span></FormLabel>
-                            <FormControl>
-                                <ComboboxInput
-                                    options={companies}
-                                    placeholder="e.g., Google"
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                        control={form.control}
-                        name="role"
-                        render={({ field }) => (
-                          <FormItem>
-                            <FormLabel>Role / Position <span className="text-destructive">*</span></FormLabel>
-                             <FormControl>
-                                <ComboboxInput
-                                    options={roles}
-                                    placeholder="e.g., Software Engineer Intern"
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
-                      <FormField
-                          control={form.control}
-                          name="difficulty"
+                          name="company"
                           render={({ field }) => (
                             <FormItem>
-                                  <FormLabel>Difficulty <span className="text-destructive">*</span></FormLabel>
-                                  <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                      <FormControl>
-                                          <SelectTrigger>
-                                              <SelectValue placeholder="Select difficulty" />
-                                          </SelectTrigger>
-                                      </FormControl>
-                                      <SelectContent>
-                                          <SelectItem value="easy">Easy</SelectItem>
-                                          <SelectItem value="medium">Medium</SelectItem>
-                                          <SelectItem value="hard">Hard</SelectItem>
-                                      </SelectContent>
-                                  </Select>
-                                  <FormMessage />
-                              </FormItem>
-                          )}
-                      />
-                      <FormField
-                          control={form.control}
-                          name="applicationType"
-                          render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Application Type <span className="text-destructive">*</span></FormLabel>
-                                <Select onValueChange={field.onChange} defaultValue={field.value}>
-                                    <FormControl>
-                                        <SelectTrigger>
-                                            <SelectValue placeholder="Select application type" />
-                                        </SelectTrigger>
-                                    </FormControl>
-                                    <SelectContent>
-                                        <SelectItem value="Internship">Internship</SelectItem>
-                                        <SelectItem value="Full-Time">Full-Time</SelectItem>
-                                        <SelectItem value="Internship + FTE">Internship + FTE</SelectItem>
-                                        <SelectItem value="Other">Other</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                                <FormMessage />
+                              <FormLabel>Company <span className="text-destructive">*</span></FormLabel>
+                              <FormControl>
+                                  <ComboboxInput
+                                      options={companies}
+                                      placeholder="e.g., Google"
+                                      value={field.value}
+                                      onChange={field.onChange}
+                                  />
+                              </FormControl>
+                              <FormMessage />
                             </FormItem>
                           )}
-                      />
-                      <FormField
+                        />
+                        <FormField
                           control={form.control}
-                          name="result"
+                          name="role"
                           render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Role / Position <span className="text-destructive">*</span></FormLabel>
+                               <FormControl>
+                                  <ComboboxInput
+                                      options={roles}
+                                      placeholder="e.g., Software Engineer Intern"
+                                      value={field.value}
+                                      onChange={field.onChange}
+                                  />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="difficulty"
+                            render={({ field }) => (
                               <FormItem>
-                                  <FormLabel>Result <span className="text-destructive">*</span></FormLabel>
+                                    <FormLabel>Difficulty <span className="text-destructive">*</span></FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select difficulty" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="easy">Easy</SelectItem>
+                                            <SelectItem value="medium">Medium</SelectItem>
+                                            <SelectItem value="hard">Hard</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="applicationType"
+                            render={({ field }) => (
+                              <FormItem>
+                                  <FormLabel>Application Type <span className="text-destructive">*</span></FormLabel>
                                   <Select onValueChange={field.onChange} defaultValue={field.value}>
                                       <FormControl>
                                           <SelectTrigger>
-                                              <SelectValue placeholder="Select the outcome" />
+                                              <SelectValue placeholder="Select application type" />
                                           </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
-                                          <SelectItem value="Selected">Selected</SelectItem>
-                                          <SelectItem value="Rejected">Rejected</SelectItem>
-                                          <SelectItem value="In Process">In Process</SelectItem>
+                                          <SelectItem value="Internship">Internship</SelectItem>
+                                          <SelectItem value="Full-Time">Full-Time</SelectItem>
+                                          <SelectItem value="Internship + FTE">Internship + FTE</SelectItem>
+                                          <SelectItem value="Other">Other</SelectItem>
                                       </SelectContent>
                                   </Select>
                                   <FormMessage />
                               </FormItem>
-                          )}
-                      />
-                  </CardContent>
-              </Card>
+                            )}
+                        />
+                        <FormField
+                            control={form.control}
+                            name="result"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Result <span className="text-destructive">*</span></FormLabel>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <FormControl>
+                                            <SelectTrigger>
+                                                <SelectValue placeholder="Select the outcome" />
+                                            </SelectTrigger>
+                                        </FormControl>
+                                        <SelectContent>
+                                            <SelectItem value="Selected">Selected</SelectItem>
+                                            <SelectItem value="Rejected">Rejected</SelectItem>
+                                            <SelectItem value="In Process">In Process</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+                    </CardContent>
+                </Card>
+              </div>
 
-              <FormField
-                control={form.control}
-                name="title"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Title <span className="text-destructive">*</span></FormLabel>
-                    <FormControl>
-                      <Input placeholder="e.g., My Interview Experience at Google for SDE-1" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><FileText className="h-5 w-5 text-primary" /> 🗒 Description & Details</h3>
+                <div className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Title <span className="text-destructive">*</span></FormLabel>
+                          <FormControl>
+                            <Input placeholder="e.g., My Interview Experience at Google for SDE-1" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description / Your Experience <span className="text-destructive">*</span></FormLabel>
+                          <FormControl>
+                            <Textarea placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                </div>
+              </div>
               
-              <FormField
-                control={form.control}
-                name="description"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Description / Your Experience <span className="text-destructive">*</span></FormLabel>
-                    <FormControl>
-                      <Textarea placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><HelpCircle className="h-5 w-5 text-primary" /> ❓ Questions Asked</h3>
+                <Card className="bg-muted/30 border-dashed">
+                  <CardContent className="gap-6 pt-6">
+                      <div className="space-y-4">
+                          {questions.map((question, qIndex) => (
+                              <div key={question.id} className="p-4 border rounded-lg bg-background/50 space-y-4">
+                                  <div className="flex gap-4 items-start">
+                                      <Input 
+                                          placeholder={qIndex === 0 ? "e.g., Tell me about a time you had a conflict with a team member." : "e.g., How does a hash map work internally?"} 
+                                          value={question.text} 
+                                          onChange={(e) => handleQuestionChange(question.id, e.target.value)}
+                                          className="flex-grow"
+                                      />
+                                      <Button variant="ghost" size="icon" type="button" onClick={() => removeQuestion(question.id)}>
+                                          <Trash2 className="h-4 w-4 text-destructive" />
+                                      </Button>
+                                  </div>
+                                  <div className="flex items-center space-x-2">
+                                      <Checkbox id={`is-mcq-${question.id}`} checked={question.isMCQ} onCheckedChange={() => toggleMCQ(question.id)} />
+                                      <label htmlFor={`is-mcq-${question.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                          This is an MCQ
+                                      </label>
+                                  </div>
+                                  {question.isMCQ && (
+                                      <div className="pl-6 space-y-3">
+                                          <Label>Options</Label>
+                                          {question.options.map((option, oIndex) => (
+                                              <div key={option.id} className="flex gap-2 items-center">
+                                                  <Input 
+                                                      placeholder={`Option ${oIndex + 1}`}
+                                                      value={option.text}
+                                                      onChange={(e) => handleOptionChange(question.id, option.id, e.target.value)}
+                                                  />
+                                                  {question.options.length > 1 && (
+                                                      <Button variant="ghost" size="icon" type="button" onClick={() => removeOption(question.id, option.id)}>
+                                                          <Trash2 className="h-4 w-4 text-destructive" />
+                                                      </Button>
+                                                  )}
+                                              </div>
+                                          ))}
+                                          <Button variant="outline" size="sm" type="button" onClick={() => addOption(question.id)}>
+                                              <PlusCircle className="mr-2 h-4 w-4" /> Add Option
+                                          </Button>
+                                      </div>
+                                  )}
+                              </div>
+                          ))}
+                      </div>
+                      <Button variant="outline" size="sm" type="button" onClick={addQuestion} className="mt-4"><PlusCircle className="mr-2 h-4 w-4" /> Add Question</Button>
+                  </CardContent>
+                </Card>
+              </div>
               
-              <Card className="bg-muted/30">
-                <CardContent className="gap-6 pt-6">
-                    <Label>Questions Asked</Label>
-                    <div className="space-y-4 mt-4">
-                        {questions.map((question, qIndex) => (
-                            <div key={question.id} className="p-4 border rounded-lg bg-background/50 space-y-4">
-                                <div className="flex gap-4 items-start">
-                                    <Input 
-                                        placeholder={`Question ${qIndex + 1}`} 
-                                        value={question.text} 
-                                        onChange={(e) => handleQuestionChange(question.id, e.target.value)}
-                                        className="flex-grow"
-                                    />
-                                    <Button variant="ghost" size="icon" type="button" onClick={() => removeQuestion(question.id)}>
-                                        <Trash2 className="h-4 w-4 text-destructive" />
-                                    </Button>
-                                </div>
-                                <div className="flex items-center space-x-2">
-                                    <Checkbox id={`is-mcq-${question.id}`} checked={question.isMCQ} onCheckedChange={() => toggleMCQ(question.id)} />
-                                    <label htmlFor={`is-mcq-${question.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                        This is an MCQ
-                                    </label>
-                                </div>
-                                {question.isMCQ && (
-                                    <div className="pl-6 space-y-3">
-                                        <Label>Options</Label>
-                                        {question.options.map((option, oIndex) => (
-                                            <div key={option.id} className="flex gap-2 items-center">
-                                                <Input 
-                                                    placeholder={`Option ${oIndex + 1}`}
-                                                    value={option.text}
-                                                    onChange={(e) => handleOptionChange(question.id, option.id, e.target.value)}
-                                                />
-                                                {question.options.length > 1 && (
-                                                    <Button variant="ghost" size="icon" type="button" onClick={() => removeOption(question.id, option.id)}>
-                                                        <Trash2 className="h-4 w-4 text-destructive" />
-                                                    </Button>
-                                                )}
-                                            </div>
-                                        ))}
-                                        <Button variant="outline" size="sm" type="button" onClick={() => addOption(question.id)}>
-                                            <PlusCircle className="mr-2 h-4 w-4" /> Add Option
-                                        </Button>
-                                    </div>
-                                )}
-                            </div>
-                        ))}
-                    </div>
-                    <Button variant="outline" size="sm" type="button" onClick={addQuestion} className="mt-4"><PlusCircle className="mr-2 h-4 w-4" /> Add Question</Button>
-                </CardContent>
-              </Card>
-              
-              <div className="space-y-4">
-                  <Label>Cover Image & Resources </Label>
+              <div>
+                  <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><FolderArchive className="h-5 w-5 text-primary" /> 📁 Cover Image & Resources</h3>
                   <div className="flex items-center justify-center w-full">
                       <Label
                           htmlFor="dropzone-file"
@@ -341,7 +351,7 @@ export default function NewPostPage() {
                   </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-end gap-2">
+              <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
                   <Button variant="outline" type="button">Save as Draft</Button>
                   <Button type="submit">Publish Post</Button>
               </div>
