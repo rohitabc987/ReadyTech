@@ -10,12 +10,7 @@ import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText, St
 import { useToast } from '@/hooks/use-toast';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
-import placeholderData from '@/lib/data/placeholder-images.json';
 import { mockTestimonials } from '@/lib/data/mock-data';
-
-const { placeholderImages } = placeholderData;
-
-const findImage = (id: string) => placeholderImages.find(p => p.id === id)?.imageUrl || '';
 
 function ComingSoonButton() {
   const { toast } = useToast();
@@ -157,7 +152,7 @@ export function LandingPageContent() {
                   <Card className="h-full">
                     <CardContent className="pt-6 flex flex-col items-center text-center">
                       <Avatar className="h-16 w-16 mb-4">
-                        <AvatarImage src={findImage(testimonial.avatarImageId)} />
+                        <AvatarImage src={testimonial.avatarImageId} />
                         <AvatarFallback>{testimonial.avatarFallback}</AvatarFallback>
                       </Avatar>
                       <p className="font-semibold">{testimonial.name}</p>

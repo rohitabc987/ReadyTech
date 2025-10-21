@@ -1,10 +1,5 @@
 
 import type { User, Post, Question, Resource, Comment, Testimonial, PostStats } from '../types';
-import placeholderData from './placeholder-images.json';
-
-const { placeholderImages } = placeholderData;
-
-const findImage = (id: string) => placeholderImages.find(p => p.id === id)?.imageUrl || '';
 
 export const mockUsers: User[] = [
   {
@@ -12,7 +7,7 @@ export const mockUsers: User[] = [
     personal: {
       name: 'Aarav Sharma',
       email: 'aarav.sharma@iitdh.ac.in',
-      avatarUrl: findImage('user1'),
+      avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'SWE at Google. Passionate about algorithms and system design. Happy to mentor folks breaking into tech.',
       createdAt: new Date('2022-08-15T10:00:00Z'),
     },
@@ -34,7 +29,7 @@ export const mockUsers: User[] = [
     personal: {
       name: 'Priya Patel',
       email: 'priya.patel@nit.ac.in',
-      avatarUrl: findImage('user2'),
+      avatarUrl: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Incoming PM at Microsoft. I love talking about product sense and interview prep.',
       createdAt: new Date('2022-09-01T11:00:00Z'),
     },
@@ -56,7 +51,7 @@ export const mockUsers: User[] = [
     personal: {
       name: 'Rohan Desai',
       email: 'rohan.desai@iitdh.ac.in',
-      avatarUrl: findImage('user3'),
+      avatarUrl: 'https://images.unsplash.com/photo-1542596768-5d1d21f1cf98?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw2fHxwZXJzb24lMjBzbWlsaW5nfGVufDB8fHx8MTc2MDg2MDcxNXww&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Aspiring software engineer, currently learning about cloud computing.',
       createdAt: new Date('2023-01-20T12:00:00Z'),
     },
@@ -76,7 +71,7 @@ export const mockUsers: User[] = [
     personal: {
       name: 'Sneha Reddy',
       email: 'sneha.reddy@nit.ac.in',
-      avatarUrl: findImage('user4'),
+      avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Data Scientist at Amazon. My interests include ML, NLP, and sharing knowledge.',
       createdAt: new Date('2022-07-10T14:00:00Z'),
     },
@@ -98,7 +93,7 @@ export const mockUsers: User[] = [
     personal: {
       name: 'Vikram Singh',
       email: 'vikram.singh@iitdh.ac.in',
-      avatarUrl: findImage('user5'),
+      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Hardware engineer at NVIDIA. Happy to chat about low-level systems.',
       createdAt: new Date('2022-06-15T15:00:00Z'),
     },
@@ -227,7 +222,7 @@ export const mockTestimonials: Testimonial[] = [
     id: 't1',
     name: 'Ananya Singh',
     institution: 'IIT Delhi',
-    avatarImageId: 'testimonial1',
+    avatarImageId: 'https://images.unsplash.com/photo-1592621385612-4d7129426394?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080',
     avatarFallback: 'AS',
     rating: 5,
     quote: '"The interview experiences on ReadyTech were a game-changer for my placement preparation. Invaluable insights!"',
@@ -236,7 +231,7 @@ export const mockTestimonials: Testimonial[] = [
     id: 't2',
     name: 'Rohan Verma',
     institution: 'NIT Trichy',
-    avatarImageId: 'testimonial2',
+    avatarImageId: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     avatarFallback: 'RV',
     rating: 5,
     quote: '"Connecting with a mentor helped me build a clear roadmap for my career. Highly recommend this platform."',
@@ -245,7 +240,7 @@ export const mockTestimonials: Testimonial[] = [
     id: 't3',
     name: 'Sneha Kumar',
     institution: 'JEE Aspirant',
-    avatarImageId: 'testimonial3',
+    avatarImageId: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     avatarFallback: 'SK',
     rating: 5,
     quote: '"The question bank is amazing for JEE prep. The \'Coming Soon\' for school students has me excited for more features!"',
@@ -254,7 +249,7 @@ export const mockTestimonials: Testimonial[] = [
     id: 't4',
     name: 'Aarav Sharma',
     institution: 'IIT Bombay',
-    avatarImageId: 'user1',
+    avatarImageId: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     avatarFallback: 'AS',
     rating: 5,
     quote: '"A fantastic platform for finding mentors and getting real interview advice. Changed my prep entirely."',
@@ -263,7 +258,7 @@ export const mockTestimonials: Testimonial[] = [
     id: 't5',
     name: 'Surabh Kumar',
     institution: 'IIT Kanpur',
-    avatarImageId: 'testimonial2',
+    avatarImageId: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
     avatarFallback: 'SK',
     rating: 5,
     quote: '"The question bank is amazing for JEE prep. The \'Coming Soon\' for school students has me excited for more features!"',
