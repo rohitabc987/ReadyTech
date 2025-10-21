@@ -122,7 +122,7 @@ export function DashboardFilter() {
                     onChange={(e) => handleFilterChange('college', e.target.value)}
                   />
               </div>
-              <div className="flex justify-end pt-4">
+              <div className="flex justify-center pt-4">
                 <Button variant="default" onClick={handleApplyFilters}>Apply Filters</Button>
               </div>
           </CardContent>
