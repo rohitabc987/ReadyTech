@@ -121,7 +121,7 @@ export type Testimonial = {
   id: string;
   name: string;
   institution: string;
-  avatarImageId: string;
+  avatarUrl: string;
   avatarFallback: string;
   rating: number;
   quote: string;
