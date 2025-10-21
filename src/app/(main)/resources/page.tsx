@@ -2,7 +2,7 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { mockResources } from '@/lib/data/mock-data';
+import { getAllResources } from '@/lib/firebase/resources';
 import { FileText, Link as LinkIcon, Search, Video, PlusCircle } from 'lucide-react';
 
 const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
@@ -13,8 +13,8 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
     }
 }
 
-export default function ResourcesPage() {
-    const allResources = mockResources;
+export default async function ResourcesPage() {
+    const allResources = await getAllResources();
 
   return (
     <main className="flex-1 mt-4">

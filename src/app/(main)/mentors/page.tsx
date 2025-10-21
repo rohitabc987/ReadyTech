@@ -3,11 +3,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockUsers } from '@/lib/data/mock-data';
+import { getMentors } from '@/lib/firebase/users';
+import type { User } from '@/lib/types';
 import { GraduationCap, Mail, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
-function MentorCard({ user }: { user: (typeof mockUsers)[0] }) {
+function MentorCard({ user }: { user: User }) {
     const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
 
     return (
@@ -33,8 +34,8 @@ function MentorCard({ user }: { user: (typeof mockUsers)[0] }) {
     )
 }
 
-export default function MentorsPage() {
-    const mentors = mockUsers.filter(user => user.academics.role === 'mentor');
+export default async function MentorsPage() {
+    const mentors = await getMentors();
 
   return (
     <main className="flex-1 mt-4">

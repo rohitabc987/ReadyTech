@@ -6,13 +6,17 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { uniqueQuestions, topics, companies } from '@/lib/data/question-data';
+import { topics, companies } from '@/lib/data/question-data';
+import { getAllQuestions } from '@/lib/firebase/questions';
 import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
+import type { Question } from '@/lib/types';
+
+type QuestionWithCompany = Question & { company: string; interviewId: string };
 
 
 function ComboboxFilter({ options, placeholder }: { options: string[], placeholder: string }) {
@@ -103,6 +107,15 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
 
 
 export default function QuestionsPage() {
+  const [questions, setQuestions] = React.useState<QuestionWithCompany[]>([]);
+
+  React.useEffect(() => {
+    const loadQuestions = async () => {
+      const allQuestions = await getAllQuestions();
+      setQuestions(allQuestions);
+    };
+    loadQuestions();
+  }, []);
     
   return (
     <main className="flex-1 mt-4">
@@ -129,7 +142,7 @@ export default function QuestionsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {uniqueQuestions.map((q, i) => (
+                {questions.map((q, i) => (
                   <TableRow key={i}>
                     <TableCell className="font-medium">{q.text}</TableCell>
                     <TableCell><Badge variant="secondary">{q.topic}</Badge></TableCell>
@@ -145,7 +158,7 @@ export default function QuestionsPage() {
             </Table>
           </div>
           <div className="grid md:hidden gap-4">
-            {uniqueQuestions.map((q, i) => (
+            {questions.map((q, i) => (
               <Card key={i} className="flex flex-col">
                 <CardHeader>
                   <CardDescription>Question</CardDescription>

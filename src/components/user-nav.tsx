@@ -1,4 +1,6 @@
 
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,13 +12,22 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { getCurrentUser } from '@/lib/firebase/users';
+import type { User as UserType } from '@/lib/types';
 import { LogOut, Mail, PlusCircle, User } from 'lucide-react';
-import { mockCurrentUser } from '@/lib/data/mock-data';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 export function UserNav() {
-  const user = mockCurrentUser;
-  const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
+  const [user, setUser] = useState<UserType | null>(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const currentUser = await getCurrentUser();
+      setUser(currentUser);
+    };
+    fetchUser();
+  }, []);
 
   if (!user) {
      return (
@@ -25,6 +36,8 @@ export function UserNav() {
         </Button>
      )
   }
+
+  const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
 
   return (
     <DropdownMenu>

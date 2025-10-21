@@ -4,30 +4,38 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources, mockComments } from '@/lib/data/mock-data';
+import { getPostComments, getPostDetails, getPostResources, getPostStats } from '@/lib/firebase/posts';
+import { getCurrentUser, getUserProfile } from '@/lib/firebase/users';
 import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
 import { notFound } from 'next/navigation';
+import { mockQuestions } from '@/lib/data/mock-data';
 
 
-export default function InterviewDetailPage({ params }: { params: { id: string } }) {
-    const interview = mockPosts.find(i => i.id === params.id);
+export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
+    const interview = await getPostDetails(params.id);
     if (!interview) {
         notFound();
     }
-    const stats = mockPostStats.find(s => s.postId === interview.id);
+    
+    const stats = await getPostStats(params.id);
     if (!stats) {
         notFound();
     }
 
-    const author = mockUsers.find(u => u.id === interview.main.authorId);
-    const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
-    const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
+    const author = await getUserProfile(interview.main.authorId);
+    const currentUser = await getCurrentUser();
     
+    const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
+    const currentUserInitials = currentUser.personal.name.split(' ').map(n => n[0]).join('');
+    
+    // This part still uses mock-data directly, which is fine for now
+    // as we transition. A real implementation would fetch from a 'questions' collection.
     const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
-    const interviewResources = mockResources.filter(r => r.postId === interview.id);
-    const interviewComments = mockComments.filter(c => c.postId === interview.id);
+
+    const interviewResources = await getPostResources(params.id);
+    const interviewComments = await getPostComments(params.id);
 
     const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
         switch (type) {
@@ -101,7 +109,7 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                         <CardContent className="space-y-6">
                             <div className="flex gap-4">
                                 <Avatar>
-                                    <AvatarImage src={mockCurrentUser.personal.avatarUrl} />
+                                    <AvatarImage src={currentUser.personal.avatarUrl} />
                                     <AvatarFallback>{currentUserInitials}</AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 space-y-2">
@@ -111,8 +119,8 @@ export default function InterviewDetailPage({ params }: { params: { id: string }
                             </div>
                             <Separator />
                             <div className="space-y-6">
-                            {interviewComments.map(comment => {
-                                const commentAuthor = mockUsers.find(u => u.id === comment.authorId);
+                            {interviewComments.map(async comment => {
+                                const commentAuthor = await getUserProfile(comment.authorId);
                                 if (!commentAuthor) return null;
                                 return (
                                     <div key={comment.id} className="flex gap-4">

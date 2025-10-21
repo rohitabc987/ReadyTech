@@ -4,29 +4,38 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers, mockCurrentUser, mockPostStats } from '@/lib/data/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
-import type { Post } from '@/lib/types';
+import type { Post, PostStats, User } from '@/lib/types';
 import { DashboardFilter } from '@/components/dashboard-filter';
+import { getInterviewPosts } from '@/lib/firebase/posts';
+import { getCurrentUser } from '@/lib/firebase/users';
 
 
-function InterviewCard({ interview }: { interview: Post }) {
-  const author = mockUsers.find(u => u.id === interview.main.authorId);
-  const stats = mockPostStats.find(s => s.postId === interview.id);
+type EnrichedPost = Post & { stats: PostStats; author: User | undefined; };
+
+function InterviewCard({ interview }: { interview: EnrichedPost }) {
+  const { author, stats } = interview;
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
   const [isCommenting, setIsCommenting] = useState(false);
-  const currentUserInitials = mockCurrentUser.personal.name.split(' ').map(n => n[0]).join('');
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
     if (interview.main.createdAt) {
       setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
     }
+    const fetchUser = async () => {
+      const user = await getCurrentUser();
+      setCurrentUser(user);
+    };
+    fetchUser();
   }, [interview.main.createdAt]);
+
+  const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
 
   if (!stats) {
     return null;
@@ -77,12 +86,12 @@ function InterviewCard({ interview }: { interview: Post }) {
                     <span>Comment ({stats.commentsCount})</span>
                 </Button>
             </div>
-             {isCommenting && (
+             {isCommenting && currentUser && (
               <div className="pt-4">
                 <Separator className="mb-4"/>
                 <div className="flex gap-4">
                     <Avatar>
-                        <AvatarImage src={mockCurrentUser.personal.avatarUrl} />
+                        <AvatarImage src={currentUser.personal.avatarUrl} />
                         <AvatarFallback>{currentUserInitials}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 space-y-2">
@@ -98,7 +107,15 @@ function InterviewCard({ interview }: { interview: Post }) {
 }
 
 export default function DashboardPage() {
-  const mockInterviews = mockPosts.filter(p => p.main.type === 'interview');
+  const [interviews, setInterviews] = useState<EnrichedPost[]>([]);
+
+  useEffect(() => {
+    const loadData = async () => {
+      const interviewData = await getInterviewPosts();
+      setInterviews(interviewData);
+    };
+    loadData();
+  }, []);
 
   return (
     <>
@@ -108,8 +125,8 @@ export default function DashboardPage() {
         </aside>
         <div className="lg:col-span-3">
                 <CardContent className="grid gap-4">
-                    {mockInterviews.map((interview) => (
-                    <InterviewCard key={interview.id} interview={interview} />
+                    {interviews.map((interview) => (
+                      <InterviewCard key={interview.id} interview={interview} />
                     ))}
                 </CardContent>
         </div>

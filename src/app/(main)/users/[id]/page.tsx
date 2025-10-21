@@ -3,14 +3,20 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers, mockPostStats } from '@/lib/data/mock-data';
+import { getPostStats, getPostsByUserId } from '@/lib/firebase/posts';
+import { getUserProfile } from '@/lib/firebase/users';
 import { Briefcase, Calendar, GraduationCap, Mail, MessageSquare, Star } from 'lucide-react';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 
-export default function UserProfilePage({ params }: { params: { id: string } }) {
-    const user = mockUsers.find(u => u.id === params.id) || mockUsers[0];
+export default async function UserProfilePage({ params }: { params: { id: string } }) {
+    const user = await getUserProfile(params.id);
+    if (!user) {
+        notFound();
+    }
+
     const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
-    const userInterviews = mockPosts.filter(i => i.main.authorId === user.id && i.main.type === 'interview');
+    const userInterviews = await getPostsByUserId(user.id);
 
     return (
         <main className="flex-1 mt-4">
@@ -53,8 +59,8 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
                             <CardTitle>Shared Experiences ({userInterviews.length})</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-4">
-                            {userInterviews.length > 0 ? userInterviews.map(interview => {
-                                const stats = mockPostStats.find(s => s.postId === interview.id);
+                            {userInterviews.length > 0 ? (await Promise.all(userInterviews.map(async interview => {
+                                const stats = await getPostStats(interview.id);
                                 return (
                                 <div key={interview.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
                                     <h3 className="font-semibold text-primary">
@@ -67,7 +73,7 @@ export default function UserProfilePage({ params }: { params: { id: string } }) 
                                     </div>
                                     <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{interview.main.description}</p>
                                 </div>
-                            )}) : (
+                            )}))) : (
                                 <p className="text-sm text-center text-muted-foreground py-8">
                                     {user.personal.name} has not shared any experiences yet.
                                 </p>

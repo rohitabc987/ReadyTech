@@ -5,11 +5,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
-import { mockCurrentUser } from '@/lib/data/mock-data';
+import { getCurrentUser } from '@/lib/firebase/users';
 import { Switch } from '@/components/ui/switch';
 
-export default function ProfilePage() {
-    const user = mockCurrentUser;
+export default async function ProfilePage() {
+    const user = await getCurrentUser();
     const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
 
   return (
