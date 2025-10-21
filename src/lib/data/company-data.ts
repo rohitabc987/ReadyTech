@@ -21,10 +21,7 @@ export const companies: string[] = [
 
 export const roles: string[] = [
     "Software Engineer",
-    "SDE-1",
-    "SDE-2",
-    "SDE-3",
-    "Software Engineer Intern",
+    "SDE",
     "Product Manager",
     "Data Scientist",
     "Data Analyst",
