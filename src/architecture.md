@@ -14,13 +14,15 @@ This document outlines the technical architecture, database structure, and devel
     - **Database**: Firestore
 - **Generative AI**: [Genkit](https://firebase.google.com/docs/genkit)
 
-## 2. Navigation
+## 2. Navigation & Layout
 
-The application uses a header-only navigation system. The main header, located in `src/components/header.tsx`, contains all primary navigation links. There is no sidebar. This ensures a consistent and simple user experience across all devices. All pages within the main application layout have consistent horizontal padding managed by a container element.
+- **Main Navigation**: The application uses a header-only navigation system. The main header, located in `src/components/header.tsx`, contains all primary navigation links.
+- **Dashboard**: The dashboard (`/dashboard`) serves as the main feed, displaying all post types (interviews, resources, questions). Users can filter this feed by post type, company, role, and other criteria.
+- **Layout**: All pages within the main application layout have consistent horizontal padding managed by a container element.
 
 ## 3. Firestore Database Structure
 
-The database is structured into top-level collections for core entities like users and posts.
+The database is structured into top-level collections for core entities like users, posts, and questions.
 
 ### `/users/{userId}`
 
@@ -67,7 +69,7 @@ This collection stores all user-related information, organized into sub-objects.
 
 ### `/posts/{postId}`
 
-This collection stores all types of content, including interviews, resources, and questions, using a flexible structure.
+This collection stores all types of content, including interviews, resources, and more, using a flexible structure.
 
 - **Path**: `/posts/{postId}`
 - **`postId`**: A unique, auto-generated ID.
@@ -85,7 +87,7 @@ This collection stores all types of content, including interviews, resources, an
     "createdAt": "Timestamp",
     "updatedAt": "Timestamp"
   },
-  "companyInfo": {
+  "companyInfo": { // Primarily for 'interview' type posts
     "company": "string",
     "role": "string",
     "year": "string",
@@ -93,7 +95,7 @@ This collection stores all types of content, including interviews, resources, an
     "applicationType": "'Internship' | 'Full-Time' | 'Internship + FTE'",
     "result": "'Selected' | 'Rejected' | 'In Process'"
   },
-  "content": {}
+  "content": {} // Core content like questions/resources are in subcollections
 }
 ```
 
@@ -114,13 +116,13 @@ A subcollection for resources associated with a specific post.
 
 ### `/questions/{questionId}`
 
-A root-level collection to store all individual questions. This allows for easier querying and reuse of questions across different contexts.
+A root-level collection to store all individual questions. This allows for easier querying and reuse of questions across different contexts, such as the main Question Bank page.
 
 **Schema: `Question`**
 ```typescript
 {
     "id": "string",
-    "authorId": "string", // Optional: Reference to users/{userId} who posted it directly
+    "authorId": "string", // Optional: Reference to users/{userId} if posted directly
     "postId": "string", // Reference to the original post/interview
     "text": "string",
     "difficulty": "'Easy' | 'Medium' | 'Hard'",
@@ -182,6 +184,6 @@ To maintain consistency and code quality, new features should be developed follo
 2.  **Create UI Components**: Build the necessary React components for the feature. Place reusable components in `src/components/ui/` (for generic elements) or `src/components/` (for feature-specific composites). The page itself will reside in `src/app/`.
 3.  **Ensure Responsiveness**: All UI components and pages must be fully responsive, providing a seamless experience on mobile, tablet, and desktop devices. Use Tailwind CSS's responsive prefixes (e.g., `sm:`, `md:`, `lg:`) to adapt layouts.
 4.  **Implement Data Logic**:
-    - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. This improves performance by running data queries on the server.
+    - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. This improves performance by running data queries on the server. For client-side fetching (e.g., on the dashboard), create abstracted functions in `src/lib/firebase/`.
     - **Data Mutations**: For creating, updating, or deleting data, use Firebase's client-side SDK (`firebase/firestore`) within client components (`'use client'`). Trigger these mutations based on user interactions like button clicks or form submissions.
 5.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).

@@ -1,7 +1,9 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export function DashboardFilter() {
   return (
@@ -11,6 +13,20 @@ export function DashboardFilter() {
         <Button variant="link" className="text-primary p-0 h-auto">Clear</Button>
       </CardHeader>
       <CardContent className="space-y-4">
+          <div className="space-y-2">
+              <Label htmlFor="search-type">Post Type</Label>
+               <Select>
+                <SelectTrigger id="search-type">
+                  <SelectValue placeholder="All" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="interview">Interview Experience</SelectItem>
+                  <SelectItem value="resource">Resource</SelectItem>
+                  <SelectItem value="question">Question</SelectItem>
+                </SelectContent>
+              </Select>
+          </div>
           <div className="space-y-2">
               <Label htmlFor="search-company">Company</Label>
               <Input id="search-company" placeholder="e.g. Google, Microsoft..." />

@@ -11,35 +11,37 @@ import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStats, User } from '@/lib/types';
 import { DashboardFilter } from '@/components/dashboard-filter';
-import { getInterviewPosts } from '@/lib/firebase/posts';
+import { getPosts } from '@/lib/firebase/posts';
 import { getCurrentUser } from '@/lib/firebase/users';
 
 
 type EnrichedPost = Post & { stats: PostStats; author: User | undefined; };
 
-function InterviewCard({ interview }: { interview: EnrichedPost }) {
-  const { author, stats } = interview;
+function PostCard({ post }: { post: EnrichedPost }) {
+  const { author, stats } = post;
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
   const [isCommenting, setIsCommenting] = useState(false);
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
-    if (interview.main.createdAt) {
-      setFormattedDate(new Date(interview.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
+    if (post.main.createdAt) {
+      setFormattedDate(new Date(post.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
     }
     const fetchUser = async () => {
       const user = await getCurrentUser();
       setCurrentUser(user);
     };
     fetchUser();
-  }, [interview.main.createdAt]);
+  }, [post.main.createdAt]);
 
   const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
 
   if (!stats) {
     return null;
   }
+  
+  const detailLink = `/interviews/${post.id}`; // This can be made dynamic later if other post types have detail pages
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
@@ -55,13 +57,20 @@ function InterviewCard({ interview }: { interview: EnrichedPost }) {
                 )}
                 <div className="flex-1">
                     <CardTitle className="font-headline text-lg">
-                        <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
+                        <Link href={detailLink} className="hover:underline">{post.main.title}</Link>
 
                     </CardTitle>
                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
-                        <div className="flex items-center gap-2"><Briefcase className="h-4 w-4" /><span>{interview.companyInfo.company}</span></div>
-                        <div className="flex items-center gap-2"><span>&bull;</span><span>{interview.companyInfo.role}</span></div>
-                        <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
+                        {post.main.type === 'interview' && post.companyInfo.company && (
+                          <>
+                            <div className="flex items-center gap-2"><Briefcase className="h-4 w-4" /><span>{post.companyInfo.company}</span></div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><span>{post.companyInfo.role}</span></div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
+                          </>
+                        )}
+                         {post.main.type !== 'interview' && (
+                            <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{formattedDate}</div>
+                         )}
                     </div>
                 </div>
                 {stats.avgRating && (
@@ -73,7 +82,7 @@ function InterviewCard({ interview }: { interview: EnrichedPost }) {
             </div>
         </CardHeader>
         <CardContent>
-            <p className="text-sm text-muted-foreground line-clamp-2">{interview.main.description} <Link href={`/interviews/${interview.id}`} className="text-sm font-semibold text-primary hover:underline">...Read More</Link></p>
+            <p className="text-sm text-muted-foreground line-clamp-2">{post.main.description} <Link href={detailLink} className="text-sm font-semibold text-primary hover:underline">...Read More</Link></p>
             
             <Separator className="my-4" />
             <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
@@ -107,12 +116,12 @@ function InterviewCard({ interview }: { interview: EnrichedPost }) {
 }
 
 export default function DashboardPage() {
-  const [interviews, setInterviews] = useState<EnrichedPost[]>([]);
+  const [posts, setPosts] = useState<EnrichedPost[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
-      const interviewData = await getInterviewPosts();
-      setInterviews(interviewData);
+      const allPosts = await getPosts();
+      setPosts(allPosts);
     };
     loadData();
   }, []);
@@ -125,8 +134,8 @@ export default function DashboardPage() {
         </aside>
         <div className="lg:col-span-3">
                 <CardContent className="grid gap-4">
-                    {interviews.map((interview) => (
-                      <InterviewCard key={interview.id} interview={interview} />
+                    {posts.map((post) => (
+                      <PostCard key={post.id} post={post} />
                     ))}
                 </CardContent>
         </div>

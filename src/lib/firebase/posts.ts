@@ -6,18 +6,18 @@ import { mockPosts, mockPostStats, mockResources, mockComments, mockUsers } from
 import type { Post, PostStats, Resource, Comment, User } from '@/lib/types';
 
 /**
- * Fetches all posts of type 'interview' and combines them with their stats.
- * This simulates fetching from the 'posts' collection and joining with 'postStats'.
+ * Fetches all posts and combines them with their stats and author info.
+ * This simulates fetching from the 'posts' collection and joining with other data.
  */
-export async function getInterviewPosts(): Promise<(Post & { stats: PostStats; author: User | undefined; })[]> {
-  const interviewPosts = mockPosts.filter(p => p.main.type === 'interview');
+export async function getPosts(): Promise<(Post & { stats: PostStats; author: User | undefined; })[]> {
+  const allPosts = mockPosts;
   
-  const enrichedPosts = interviewPosts.map(post => {
+  const enrichedPosts = allPosts.map(post => {
     const stats = mockPostStats.find(s => s.postId === post.id);
     const author = mockUsers.find(u => u.id === post.main.authorId);
     return {
       ...post,
-      stats: stats || { postId: post.id, likes: 0 },
+      stats: stats || { postId: post.id, likes: 0, commentsCount: 0 },
       author: author,
     };
   });
@@ -65,5 +65,5 @@ export async function getPostComments(postId: string): Promise<Comment[]> {
  * @param userId The ID of the user.
  */
 export async function getPostsByUserId(userId: string): Promise<Post[]> {
-    return mockPosts.filter(p => p.main.authorId === userId && p.main.type === 'interview');
+    return mockPosts.filter(p => p.main.authorId === userId);
 }
