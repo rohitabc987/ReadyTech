@@ -69,12 +69,11 @@ export function DashboardFilter() {
           <CardContent className="space-y-4">
               <div className="space-y-2">
                   <Label htmlFor="search-type">Type</Label>
-                   <Select value={filters.type} onValueChange={(value) => handleFilterChange('type', value)}>
+                   <Select value={filters.type} onValueChange={(value) => handleFilterChange('type', value || '')}>
                     <SelectTrigger id="search-type">
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="">All Types</SelectItem>
                       <SelectItem value="technical-interview">Technical Interview</SelectItem>
                       <SelectItem value="hr-interview">HR Interview</SelectItem>
                       <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
