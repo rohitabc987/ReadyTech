@@ -17,6 +17,8 @@ export const companies: string[] = [
     "Flipkart",
     "Zomato",
     "Swiggy",
+    "Texas Instrument",
+    "Other",
 ];
 
 export const roles: string[] = [
@@ -31,4 +33,5 @@ export const roles: string[] = [
     "Full Stack Developer",
     "DevOps Engineer",
     "Site Reliability Engineer (SRE)",
+    "Other"
 ];

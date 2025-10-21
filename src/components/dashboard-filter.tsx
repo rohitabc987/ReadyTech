@@ -58,10 +58,6 @@ export function DashboardFilter() {
                 onChange={setRole}
               />
           </div>
-            <div className="space-y-2">
-              <Label htmlFor="search-branch">Branch</Label>
-              <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
-          </div>
           <div className="space-y-2">
               <Label htmlFor="search-year">Year</Label>
               <Input id="search-year" placeholder="e.g. 2024" />

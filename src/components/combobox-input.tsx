@@ -15,9 +15,10 @@ interface ComboboxInputProps {
   value: string;
   onChange: (value: string) => void;
   id?: string;
+  required?: boolean;
 }
 
-export function ComboboxInput({ options, placeholder, value, onChange, id }: ComboboxInputProps) {
+export function ComboboxInput({ options, placeholder, value, onChange, id, required }: ComboboxInputProps) {
   const [open, setOpen] = React.useState(false);
   const [inputValue, setInputValue] = React.useState(value);
 
@@ -31,7 +32,8 @@ export function ComboboxInput({ options, placeholder, value, onChange, id }: Com
     if (!open) {
       onChange(inputValue);
     }
-  }, [open, inputValue, onChange]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open, inputValue]);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter') {
@@ -55,6 +57,7 @@ export function ComboboxInput({ options, placeholder, value, onChange, id }: Com
                 autoComplete="off"
                 role="combobox"
                 aria-expanded={open}
+                required={required}
             />
             <ChevronsUpDown 
                 className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 shrink-0 opacity-50 cursor-pointer"

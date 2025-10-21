@@ -27,10 +27,10 @@ export default function NewPostPage() {
           <form className="space-y-6">
 
             <Card className="bg-muted/30">
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                     <div className="space-y-2">
                         <Label htmlFor="post-type">Type</Label>
-                        <Select>
+                        <Select required>
                             <SelectTrigger id="post-type">
                                 <SelectValue placeholder="Select a type" />
                             </SelectTrigger>
@@ -52,6 +52,7 @@ export default function NewPostPage() {
                             placeholder="e.g., Google"
                             value={company}
                             onChange={setCompany}
+                            required
                         />
                     </div>
                     <div className="space-y-2">
@@ -62,11 +63,12 @@ export default function NewPostPage() {
                             placeholder="e.g., Software Engineer Intern"
                             value={role}
                             onChange={setRole}
+                            required
                         />
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="difficulty">Difficulty</Label>
-                        <Select>
+                        <Select required>
                             <SelectTrigger id="difficulty">
                                 <SelectValue placeholder="Select difficulty" />
                             </SelectTrigger>
@@ -79,7 +81,7 @@ export default function NewPostPage() {
                     </div>
                      <div className="space-y-2">
                         <Label htmlFor="application-type">Application Type</Label>
-                        <Select>
+                        <Select required>
                             <SelectTrigger id="application-type">
                                 <SelectValue placeholder="Select application type" />
                             </SelectTrigger>
@@ -92,7 +94,7 @@ export default function NewPostPage() {
                     </div>
                     <div className="space-y-2">
                         <Label htmlFor="result">Result</Label>
-                        <Select>
+                        <Select required>
                             <SelectTrigger id="result">
                                 <SelectValue placeholder="Select the outcome" />
                             </SelectTrigger>
@@ -108,16 +110,16 @@ export default function NewPostPage() {
 
             <div className="space-y-2">
                 <Label htmlFor="title">Title</Label>
-                <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" />
+                <Input id="title" placeholder="e.g., My Interview Experience at Google for SDE-1" required />
             </div>
             
             <div className="space-y-2">
               <Label htmlFor="description">Description / Your Experience</Label>
-              <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" />
+              <Textarea id="description" placeholder="Describe the process, rounds, questions asked, and any tips you have." className="min-h-[200px]" required />
             </div>
 
             <div className="space-y-4">
-                <Label>Questions Asked (Optional)</Label>
+                <Label>Questions Asked </Label>
                 <div className="space-y-2">
                     <Input placeholder="Question 1..."/>
                     <Input placeholder="Question 2..."/>
