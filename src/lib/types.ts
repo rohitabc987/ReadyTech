@@ -57,7 +57,7 @@ export type PostCompanyInfo = {
   company?: string;
   role?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
-  applicationType?: 'Internship' | 'Full-Time'| 'Internship + FTE';
+  applicationType?: 'Internship' | 'Full-Time'| 'Internship + FTE' | 'Other';
   result?: 'Selected' | 'Rejected' | 'In Process';
 };
 

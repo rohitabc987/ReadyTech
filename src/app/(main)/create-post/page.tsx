@@ -9,13 +9,14 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Upload } from 'lucide-react';
+import { PlusCircle, Upload, Trash2 } from 'lucide-react';
 import { ComboboxInput } from '@/components/combobox-input';
 import { companies, roles } from '@/lib/data/company-data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Label } from '@/components/ui/label';
 
 const postFormSchema = z.object({
   postType: z.string({ required_error: "Post type is required." }),
@@ -30,7 +31,16 @@ const postFormSchema = z.object({
 
 type PostFormValues = z.infer<typeof postFormSchema>;
 
+type FormQuestion = {
+  id: number;
+  text: string;
+  isMCQ: boolean;
+  options: { id: number; text: string }[];
+};
+
 export default function NewPostPage() {
+    const [questions, setQuestions] = useState<FormQuestion[]>([]);
+
     const form = useForm<PostFormValues>({
         resolver: zodResolver(postFormSchema),
         defaultValues: {
@@ -42,9 +52,41 @@ export default function NewPostPage() {
     });
 
     function onSubmit(data: PostFormValues) {
-        console.log(data);
+        console.log({ ...data, questions });
         // Here you would handle form submission, e.g., saving to Firestore
     }
+
+    const addQuestion = () => {
+        setQuestions([...questions, { id: Date.now(), text: '', isMCQ: false, options: [] }]);
+    };
+
+    const removeQuestion = (questionId: number) => {
+        setQuestions(questions.filter(q => q.id !== questionId));
+    };
+
+    const handleQuestionChange = (questionId: number, text: string) => {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, text } : q));
+    };
+
+    const toggleMCQ = (questionId: number) => {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, isMCQ: !q.isMCQ, options: q.isMCQ ? [] : [{id: Date.now(), text: ''}] } : q));
+    };
+
+    const addOption = (questionId: number) => {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: [...q.options, { id: Date.now(), text: '' }] } : q));
+    };
+
+    const removeOption = (questionId: number, optionId: number) => {
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: q.options.filter(opt => opt.id !== optionId) } : q));
+    };
+
+    const handleOptionChange = (questionId: number, optionId: number, text: string) => {
+        setQuestions(questions.map(q => 
+            q.id === questionId 
+            ? { ...q, options: q.options.map(opt => opt.id === optionId ? { ...opt, text } : opt) } 
+            : q
+        ));
+    };
 
   return (
     <main className="flex-1 mt-4">
@@ -158,6 +200,7 @@ export default function NewPostPage() {
                                         <SelectItem value="Internship">Internship</SelectItem>
                                         <SelectItem value="Full-Time">Full-Time</SelectItem>
                                         <SelectItem value="Internship + FTE">Internship + FTE</SelectItem>
+                                        <SelectItem value="Other">Other</SelectItem>
                                     </SelectContent>
                                 </Select>
                                 <FormMessage />
@@ -216,18 +259,61 @@ export default function NewPostPage() {
                   </FormItem>
                 )}
               />
-
-              <div className="space-y-4">
-                  <Label>Questions Asked</Label>
-                  <div className="space-y-2">
-                      <Input placeholder="Question 1..."/>
-                      <Input placeholder="Question 2..."/>
-                  </div>
-                  <Button variant="outline" size="sm" type="button"><PlusCircle className="mr-2 h-4 w-4" /> Add Question</Button>
-              </div>
+              
+              <Card className="bg-muted/30">
+                <CardContent className="gap-6 pt-6">
+                    <Label>Questions Asked</Label>
+                    <div className="space-y-4 mt-4">
+                        {questions.map((question, qIndex) => (
+                            <div key={question.id} className="p-4 border rounded-lg bg-background/50 space-y-4">
+                                <div className="flex gap-4 items-start">
+                                    <Input 
+                                        placeholder={`Question ${qIndex + 1}`} 
+                                        value={question.text} 
+                                        onChange={(e) => handleQuestionChange(question.id, e.target.value)}
+                                        className="flex-grow"
+                                    />
+                                    <Button variant="ghost" size="icon" type="button" onClick={() => removeQuestion(question.id)}>
+                                        <Trash2 className="h-4 w-4 text-destructive" />
+                                    </Button>
+                                </div>
+                                <div className="flex items-center space-x-2">
+                                    <Checkbox id={`is-mcq-${question.id}`} checked={question.isMCQ} onCheckedChange={() => toggleMCQ(question.id)} />
+                                    <label htmlFor={`is-mcq-${question.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+                                        This is an MCQ
+                                    </label>
+                                </div>
+                                {question.isMCQ && (
+                                    <div className="pl-6 space-y-3">
+                                        <Label>Options</Label>
+                                        {question.options.map((option, oIndex) => (
+                                            <div key={option.id} className="flex gap-2 items-center">
+                                                <Input 
+                                                    placeholder={`Option ${oIndex + 1}`}
+                                                    value={option.text}
+                                                    onChange={(e) => handleOptionChange(question.id, option.id, e.target.value)}
+                                                />
+                                                {question.options.length > 1 && (
+                                                    <Button variant="ghost" size="icon" type="button" onClick={() => removeOption(question.id, option.id)}>
+                                                        <Trash2 className="h-4 w-4 text-destructive" />
+                                                    </Button>
+                                                )}
+                                            </div>
+                                        ))}
+                                        <Button variant="outline" size="sm" type="button" onClick={() => addOption(question.id)}>
+                                            <PlusCircle className="mr-2 h-4 w-4" /> Add Option
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <Button variant="outline" size="sm" type="button" onClick={addQuestion} className="mt-4"><PlusCircle className="mr-2 h-4 w-4" /> Add Question</Button>
+                </CardContent>
+              </Card>
               
               <div className="space-y-4">
-                  <Label>Cover Image & Resources (Optional)</Label>
+                  <Label>Cover Image & Resources </Label>
                   <div className="flex items-center justify-center w-full">
                       <Label
                           htmlFor="dropzone-file"
