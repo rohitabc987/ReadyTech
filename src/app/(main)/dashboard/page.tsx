@@ -13,6 +13,7 @@ import type { Post, PostStats, User } from '@/lib/types';
 import { DashboardFilter } from '@/components/dashboard-filter';
 import { getPosts } from '@/lib/firebase/posts';
 import { getCurrentUser } from '@/lib/firebase/users';
+import { formatDistanceToNow } from 'date-fns';
 
 
 type EnrichedPost = Post & { stats: PostStats; author: User | undefined; };
@@ -26,7 +27,7 @@ function PostCard({ post }: { post: EnrichedPost }) {
 
   useEffect(() => {
     if (post.main.createdAt) {
-      setFormattedDate(new Date(post.main.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' }));
+      setFormattedDate(formatDistanceToNow(new Date(post.main.createdAt), { addSuffix: true }));
     }
     const fetchUser = async () => {
       const user = await getCurrentUser();

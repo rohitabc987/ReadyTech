@@ -313,7 +313,7 @@ export default function NewPostPage() {
                                   </div>
                                   {question.isMCQ && (
                                     <div className="pl-6 space-y-3">
-                                        <Label>Options (select the correct answer)</Label>
+                                        <Label>Options (Mark the correct answer)</Label>
                                         <RadioGroup
                                             onValueChange={(value) => handleCorrectOptionChange(question.id, parseInt(value))}
                                             className="space-y-2"
