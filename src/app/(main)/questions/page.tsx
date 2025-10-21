@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { topics, companies } from '@/lib/data/question-data';
+import { companies } from '@/lib/data/question-data';
 import { getAllQuestions } from '@/lib/firebase/questions';
 import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -126,7 +126,6 @@ export default function QuestionsPage() {
                     <Input placeholder="Search questions..." className="pl-10"/>
                 </div>
                 
-                <ComboboxFilter options={topics} placeholder="Filter by Topic" />
                 <ComboboxFilter options={companies} placeholder="Filter by Company" />
 
                 <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>

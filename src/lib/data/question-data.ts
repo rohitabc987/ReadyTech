@@ -3,21 +3,6 @@
 import { getAllQuestions } from '@/lib/firebase/questions';
 
 
-// Static list of topics for filtering.
-export const topics: string[] = [
-    "Arrays",
-    "Strings",
-    "Linked Lists",
-    "Trees",
-    "Graphs",
-    "Dynamic Programming",
-    "System Design",
-    "Operating Systems",
-    "Databases",
-    "Product Sense",
-    "Behavioral"
-];
-
 // Static list of companies for filtering.
 export const companies: string[] = [
     "Google",
