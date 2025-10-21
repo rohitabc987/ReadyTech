@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Upload, Trash2, Puzzle, FileText, HelpCircle, FolderArchive } from 'lucide-react';
+import { PlusCircle, Upload, Trash2 } from 'lucide-react';
 import { ComboboxInput } from '@/components/combobox-input';
 import { companies, roles } from '@/lib/data/company-data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -110,7 +110,7 @@ export default function NewPostPage() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               
               <div>
-                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><Puzzle className="h-5 w-5 text-primary" /> 🧩 Basic Info</h3>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"> 🧩 Basic Info</h3>
                 <Card className="bg-muted/30 border-dashed">
                     <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
                         <FormField
@@ -246,7 +246,7 @@ export default function NewPostPage() {
               </div>
 
               <div>
-                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><FileText className="h-5 w-5 text-primary" /> 🗒 Description & Details</h3>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">🗒 Description & Details</h3>
                 <div className="space-y-6">
                     <FormField
                       control={form.control}
@@ -279,7 +279,7 @@ export default function NewPostPage() {
               </div>
               
               <div>
-                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><HelpCircle className="h-5 w-5 text-primary" /> ❓ Questions Asked</h3>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"> ❓ Questions Asked</h3>
                 <Card className="bg-muted/30 border-dashed">
                   <CardContent className="gap-6 pt-6">
                       <div className="space-y-4">
@@ -333,7 +333,7 @@ export default function NewPostPage() {
               </div>
               
               <div>
-                  <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"><FolderArchive className="h-5 w-5 text-primary" /> 📁 Cover Image & Resources</h3>
+                  <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">📁 Pdf & Resources</h3>
                   <div className="flex items-center justify-center w-full">
                       <Label
                           htmlFor="dropzone-file"
@@ -351,7 +351,7 @@ export default function NewPostPage() {
                   </div>
               </div>
 
-              <div className="flex flex-col sm:flex-row justify-end gap-2 pt-4">
+              <div className="flex flex-col sm:flex-row justify-center gap-2 pt-4">
                   <Button variant="outline" type="button">Save as Draft</Button>
                   <Button type="submit">Publish Post</Button>
               </div>
