@@ -1,9 +1,10 @@
+
 'use client';
 
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers, mockCurrentUser, mockPostStats, mockComments } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockCurrentUser, mockPostStats } from '@/lib/data/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
@@ -46,6 +47,7 @@ function InterviewCard({ interview }: { interview: Post }) {
                 <div className="flex-1">
                     <CardTitle className="font-headline text-lg">
                         <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
+
                     </CardTitle>
                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
                         <div className="flex items-center gap-2"><Briefcase className="h-4 w-4" /><span>{interview.companyInfo.company}</span></div>

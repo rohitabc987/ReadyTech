@@ -1,7 +1,8 @@
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { mockResources } from '@/lib/mock-data';
+import { mockResources } from '@/lib/data/mock-data';
 import { FileText, Link as LinkIcon, Search, Video, PlusCircle } from 'lucide-react';
 
 const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {

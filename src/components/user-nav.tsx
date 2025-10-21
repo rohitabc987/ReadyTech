@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -10,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { LogOut, Mail, PlusCircle, User } from 'lucide-react';
-import { mockCurrentUser } from '@/lib/mock-data';
+import { mockCurrentUser } from '@/lib/data/mock-data';
 import Link from 'next/link';
 
 export function UserNav() {

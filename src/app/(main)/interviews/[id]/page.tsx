@@ -1,9 +1,10 @@
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources, mockComments } from '@/lib/mock-data';
+import { mockPosts, mockCurrentUser, mockUsers, mockPostStats, mockQuestions, mockResources, mockComments } from '@/lib/data/mock-data';
 import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';

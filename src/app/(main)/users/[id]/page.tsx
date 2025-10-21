@@ -1,8 +1,9 @@
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { mockPosts, mockUsers, mockPostStats } from '@/lib/mock-data';
+import { mockPosts, mockUsers, mockPostStats } from '@/lib/data/mock-data';
 import { Briefcase, Calendar, GraduationCap, Mail, MessageSquare, Star } from 'lucide-react';
 import Link from 'next/link';
 

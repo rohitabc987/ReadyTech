@@ -69,9 +69,9 @@ export type PostContent = {
 
 export type PostStats = {
   postId: string;
-  views: number;
+  views?: number;
   likes: number;
-  commentsCount: number;
+  commentsCount?: number;
   avgRating?: number;
   ratingsCount?: number;
   upvotes?: number;

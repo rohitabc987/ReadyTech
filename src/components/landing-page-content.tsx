@@ -1,5 +1,4 @@
 
-
 'use client';
 
 import { useRef } from 'react';
@@ -11,8 +10,8 @@ import { ArrowRight, BookOpen, Users, Briefcase, UserCheck, Search, FileText, St
 import { useToast } from '@/hooks/use-toast';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
-import placeholderData from '@/lib/placeholder-images.json';
-import { mockTestimonials } from '@/lib/mock-data';
+import placeholderData from '@/lib/data/placeholder-images.json';
+import { mockTestimonials } from '@/lib/data/mock-data';
 
 const { placeholderImages } = placeholderData;
 
