@@ -124,6 +124,10 @@ A root-level collection to store all individual questions. This allows for easie
     "authorId": "string", // Optional: Reference to users/{userId} if posted directly
     "postId": "string", // Reference to the original post/interview
     "text": "string",
+    "isMCQ": "boolean", // Flag for Multiple Choice Questions
+    "options": [ // Optional array of options for MCQs
+      { "text": "string", "isCorrect": "boolean" }
+    ],
     "difficulty": "'Easy' | 'Medium' | 'Hard'",
     "type": "'Coding' | 'Technical' | 'HR'",
     "topic": "string"

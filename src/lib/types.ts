@@ -84,11 +84,18 @@ export type Post = {
   // Stats are stored in a subcollection: /posts/{postId}/stats/{statsId}
 };
 
+export type QuestionOption = {
+  text: string;
+  isCorrect?: boolean; // Optional: to mark the correct answer
+};
+
 export type Question = {
   id: string;
   authorId?: string; // Optional: reference to users/{userId} if added directly
   postId: string; // reference to posts/{postId}
   text: string;
+  isMCQ?: boolean;
+  options?: QuestionOption[];
   difficulty?: 'Easy' | 'Medium' | 'Hard';
   type?: 'Coding' | 'Technical' | 'HR' | 'Internship';
   topic?: string;

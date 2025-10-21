@@ -95,7 +95,7 @@ This collection stores all types of content, including interviews, resources, an
   },
   "content": {
     "questions": [
-      { "text": "string", "difficulty": "'Easy' | 'Medium' | 'Hard'", "type": "'Coding' | 'Technical' | 'HR'", "topic": "string" }
+      { "text": "string", "isMCQ": "boolean", "options": [{ "text": "string" }], "difficulty": "'Easy' | 'Medium' | 'Hard'", "type": "'Coding' | 'Technical' | 'HR'", "topic": "string" }
     ],
     "resources": [
       { "id": "string", "title": "string", "url": "string", "type": "'pdf'|'video'|'link'" }
