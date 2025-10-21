@@ -19,12 +19,12 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 
 const postFormSchema = z.object({
-  postType: z.string({ required_error: "Type is required." }),
+  postType: z.string({ required_error: "Type is required." }).min(1, "Type is required."),
   company: z.string().min(1, "Company name is required."),
   role: z.string().min(1, "Role is required."),
-  difficulty: z.string({ required_error: "Difficulty is required." }),
-  applicationType: z.string({ required_error: "Application type is required." }),
-  result: z.string({ required_error: "Result is required." }),
+  difficulty: z.string({ required_error: "Difficulty is required." }).min(1, "Difficulty is required."),
+  applicationType: z.string({ required_error: "Application type is required." }).min(1, "Application type is required."),
+  result: z.string({ required_error: "Result is required." }).min(1, "Result is required."),
   title: z.string().min(1, "Title is required."),
   description: z.string().min(1, "Description is required."),
 });
@@ -38,10 +38,13 @@ type FormQuestion = {
   options: { id: number; text: string }[];
 };
 
+let questionCounter = 2;
+let optionCounter = 0;
+
 export default function NewPostPage() {
     const [questions, setQuestions] = useState<FormQuestion[]>([
-        { id: Date.now(), text: '', isMCQ: false, options: [] },
-        { id: Date.now() + 1, text: '', isMCQ: false, options: [] }
+        { id: 0, text: '', isMCQ: false, options: [] },
+        { id: 1, text: '', isMCQ: false, options: [] }
     ]);
 
     const form = useForm<PostFormValues>({
@@ -64,7 +67,7 @@ export default function NewPostPage() {
     }
 
     const addQuestion = () => {
-        setQuestions([...questions, { id: Date.now(), text: '', isMCQ: false, options: [] }]);
+        setQuestions([...questions, { id: questionCounter++, text: '', isMCQ: false, options: [] }]);
     };
 
     const removeQuestion = (questionId: number) => {
@@ -76,11 +79,11 @@ export default function NewPostPage() {
     };
 
     const toggleMCQ = (questionId: number) => {
-        setQuestions(questions.map(q => q.id === questionId ? { ...q, isMCQ: !q.isMCQ, options: q.isMCQ ? [] : [{id: Date.now(), text: ''}] } : q));
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, isMCQ: !q.isMCQ, options: q.isMCQ ? [] : [{id: optionCounter++, text: ''}] } : q));
     };
 
     const addOption = (questionId: number) => {
-        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: [...q.options, { id: Date.now(), text: '' }] } : q));
+        setQuestions(questions.map(q => q.id === questionId ? { ...q, options: [...q.options, { id: optionCounter++, text: '' }] } : q));
     };
 
     const removeOption = (questionId: number, optionId: number) => {
