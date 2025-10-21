@@ -74,6 +74,7 @@ export function DashboardFilter() {
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
                     <SelectContent>
+                      <SelectItem value="all">All Types</SelectItem>
                       <SelectItem value="technical-interview">Technical Interview</SelectItem>
                       <SelectItem value="hr-interview">HR Interview</SelectItem>
                       <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
