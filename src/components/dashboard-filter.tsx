@@ -63,6 +63,10 @@ export function DashboardFilter() {
               <Input id="search-branch" placeholder="e.g. CSE, ECE..." />
           </div>
           <div className="space-y-2">
+              <Label htmlFor="search-year">Year</Label>
+              <Input id="search-year" placeholder="e.g. 2024" />
+          </div>
+          <div className="space-y-2">
               <Label htmlFor="search-college">College Name</Label>
               <Input id="search-college" placeholder="e.g. IIT Bombay..." />
           </div>
