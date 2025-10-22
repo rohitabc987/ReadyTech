@@ -14,7 +14,6 @@ import { formatDistanceToNow } from 'date-fns';
 
 export type EnrichedPost = Post & { 
   stats: PostStats;
-  authorInitial: string;
 };
 
 interface PostCardProps {
@@ -23,8 +22,8 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, currentUser }: PostCardProps) {
-  const { authorInitial, stats } = post;
-  const { authorName, authorAvatarUrl, company, role, type, createdAt } = post.main;
+  const { stats } = post;
+  const { authorName, authorAvatar, company, role, type, createdAt } = post.main;
   
   const [isCommenting, setIsCommenting] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
@@ -34,6 +33,9 @@ export function PostCard({ post, currentUser }: PostCardProps) {
       setFormattedDate(formatDistanceToNow(new Date(createdAt), { addSuffix: true }));
     }
   }, [createdAt]);
+  
+  const isAvatarUrl = authorAvatar?.startsWith('http');
+  const avatarInitials = isAvatarUrl ? '' : authorAvatar?.split(' ').map(n => n[0]).join('') || '';
 
   const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
 
@@ -52,8 +54,8 @@ export function PostCard({ post, currentUser }: PostCardProps) {
             <div className="flex items-start gap-4">
                 <Link href={`/users/${post.main.authorId}`}>
                     <Avatar>
-                        <AvatarImage src={authorAvatarUrl} alt={authorName} />
-                        <AvatarFallback>{authorInitial}</AvatarFallback>
+                        <AvatarImage src={isAvatarUrl ? authorAvatar : undefined} alt={authorName} />
+                        <AvatarFallback>{avatarInitials || authorName.split(' ').map(n=>n[0]).join('')}</AvatarFallback>
                     </Avatar>
                 </Link>
                 <div className="flex-1">

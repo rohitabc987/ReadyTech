@@ -74,12 +74,11 @@ export default function NewPostPage() {
             main: {
                 authorId: user.id,
                 authorName: user.personal.name,
-                authorAvatarUrl: user.personal.avatarUrl,
+                authorAvatar: user.personal.avatarUrl || user.personal.name,
                 type: data.postType,
                 title: data.title,
                 description: data.description,
                 createdAt: new Date(),
-                updatedAt: new Date(),
                 company: data.company,
                 role: data.role,
             },
@@ -89,6 +88,7 @@ export default function NewPostPage() {
                 result: data.result,
             },
             questions: questions,
+            updatedAt: new Date(),
         };
 
         console.log("Submitting Post Data:", postData);

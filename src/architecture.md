@@ -1,3 +1,4 @@
+
 # ReadyTech Architecture
 
 This document outlines the technical architecture, database structure, and development workflow for the ReadyTech platform.
@@ -38,7 +39,7 @@ This collection stores all user-related information, organized into sub-objects.
   "personal": {
     "name": "string",
     "email": "string", // Verified institute email
-    "avatarUrl": "string",
+    "avatarUrl": "string", // Optional URL to user's photo
     "mobile": "string",
     "bio": "string",
     "createdAt": "Timestamp",
@@ -78,18 +79,17 @@ This collection stores all types of content. It is denormalized to include key i
 ```typescript
 {
   "id": "string",
+  "updatedAt": "Timestamp", // Moved to root level
   "main": {
     "authorId": "string", // Reference to users/{userId}
     "authorName": "string", // Denormalized for quick access
-    "authorAvatarUrl": "string", // Denormalized for quick access
+    "authorAvatar": "string", // Denormalized: stores URL or name as fallback
     "type": "'Online Assessment' | 'Technical Interview' | ...",
     "title": "string",
     "description": "string",
     "company": "string", // Denormalized for quick access
     "role": "string", // Denormalized for quick access
-    "coverImage": "string",
-    "createdAt": "Timestamp",
-    "updatedAt": "Timestamp"
+    "createdAt": "Timestamp"
   },
   "companyInfo": { // Extra details for interview type posts
     "difficulty": "'easy' | 'medium' | 'hard'",

@@ -1,25 +1,24 @@
+
 /**
  * This file simulates fetching post-related data from Firestore.
  * In a real app, you would replace the mock data logic with actual Firestore queries.
  */
-import { mockPosts, mockPostStats, mockResources, mockComments, mockUsers } from '@/lib/data/mock-data';
-import type { Post, PostStats, Resource, Comment, User } from '@/lib/types';
+import { mockPosts, mockPostStats, mockResources, mockComments } from '@/lib/data/mock-data';
+import type { Post, PostStats, Resource, Comment } from '@/lib/types';
 
 /**
  * Fetches all posts and combines them with their stats.
  * This simulates fetching from the 'posts' collection and joining with other data.
  */
-export async function getPosts(): Promise<(Post & { stats: PostStats; authorInitial: string; })[]> {
+export async function getPosts(): Promise<(Post & { stats: PostStats })[]> {
   const allPosts = mockPosts;
   
   const enrichedPosts = allPosts.map(post => {
     const stats = mockPostStats.find(s => s.postId === post.id);
-    const authorInitial = post.main.authorName.split(' ').map(n => n[0]).join('');
 
     return {
       ...post,
       stats: stats || { postId: post.id, likes: 0, commentsCount: 0 },
-      authorInitial: authorInitial,
     };
   });
   return enrichedPosts;

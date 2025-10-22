@@ -46,13 +46,11 @@ export type User = {
 export type PostMain = {
   authorId: string; // reference to users/{userId}
   authorName: string; // Denormalized for quick access
-  authorAvatarUrl?: string; // Denormalized for quick access
+  authorAvatar?: string; // Denormalized: URL or Name for fallback
   type: 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Online Assessment' | 'Technical Test' | 'Other';
   title: string;
   description: string;
-  coverImage?: string;
   createdAt: Date;
-  updatedAt: Date;
   company?: string; // Denormalized for quick access
   role?: string; // Denormalized for quick access
 };
@@ -80,10 +78,10 @@ export type PostStats = {
 
 export type Post = {
   id: string;
+  updatedAt: Date;
   main: PostMain;
   companyInfo: PostCompanyInfo;
   content: PostContent;
-  // Stats are stored in a subcollection: /posts/{postId}/stats/{statsId}
 };
 
 export type QuestionOption = {
@@ -96,7 +94,7 @@ export type Question = {
   authorId?: string; // Optional: reference to users/{userId} if added directly
   postId: string; // reference to posts/{postId}
   text: string;
-  isMCQ?: boolean;
+  isMCQ: boolean;
   options?: QuestionOption[];
   difficulty?: 'Easy' | 'Medium' | 'Hard';
   type?: 'Coding' | 'Technical' | 'HR' | 'Internship';
