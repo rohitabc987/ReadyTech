@@ -15,27 +15,32 @@ import { mockQuestions } from '@/lib/data/mock-data';
 
 export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
     const { id } = params;
-    const interview = await getPostDetails(id);
-    if (!interview) {
+
+    const [
+        interview,
+        stats,
+        interviewResources,
+        interviewComments,
+        currentUser
+    ] = await Promise.all([
+        getPostDetails(id),
+        getPostStats(id),
+        getPostResources(id),
+        getPostComments(id),
+        getCurrentUser()
+    ]);
+    
+    if (!interview || !stats || !currentUser) {
         notFound();
     }
     
-    const stats = await getPostStats(id);
-    if (!stats) {
-        notFound();
-    }
-
     const author = await getUserProfile(interview.main.authorId);
-    const currentUser = await getCurrentUser();
     
     const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
     
     // This part still uses mock-data directly, which is fine for now
     // as we transition. A real implementation would fetch from a 'questions' collection.
     const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
-
-    const interviewResources = await getPostResources(id);
-    const interviewComments = await getPostComments(id);
 
     const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
         switch (type) {
