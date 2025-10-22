@@ -28,7 +28,6 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     const currentUser = await getCurrentUser();
     
     const authorInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
-    const currentUserInitials = currentUser.personal.name.split(' ').map(n => n[0]).join('');
     
     // This part still uses mock-data directly, which is fine for now
     // as we transition. A real implementation would fetch from a 'questions' collection.
@@ -110,7 +109,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                             <div className="flex gap-4">
                                 <Avatar>
                                     <AvatarImage src={currentUser.personal.avatarUrl} />
-                                    <AvatarFallback>{currentUserInitials}</AvatarFallback>
+                                    <AvatarFallback>{currentUser.personal.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
                                 </Avatar>
                                 <div className="flex-1 space-y-2">
                                     <Textarea placeholder="Add a comment..." />
