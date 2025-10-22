@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { ComboboxInput } from './combobox-input';
 import { companies, roles } from '@/lib/data/company-data';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
-import { Filter } from 'lucide-react';
+import { Filter, XCircle } from 'lucide-react';
 
 export type FilterState = {
   type: string;
@@ -39,13 +39,26 @@ export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: D
     setIsSheetOpen(false);
   }
 
-  // Check if any of the "advanced" filters inside the sheet are active
+  const areFiltersActive = Object.values(filters).some(value => value !== '');
   const areAdvancedFiltersActive = filters.year !== '' || filters.college !== '';
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Filter Posts</CardTitle>
+        <div className="flex justify-between items-center">
+          <CardTitle>Filter Posts</CardTitle>
+          {areFiltersActive && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onClear}
+              className="text-destructive hover:text-destructive hover:bg-destructive/10 h-auto px-2 py-1"
+            >
+              <XCircle className="mr-1 h-4 w-4" />
+              Clear
+            </Button>
+          )}
+        </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="space-y-2">
@@ -160,8 +173,15 @@ export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: D
                     />
                 </div>
             </div>
-            <SheetFooter>
-              <Button onClick={applyAndClose} className="w-full">Apply Filters</Button>
+            <SheetFooter className="gap-2 sm:justify-between">
+              <Button 
+                variant="outline"
+                onClick={onClear}
+                className="w-full sm:w-auto"
+              >
+                Clear All
+              </Button>
+              <Button onClick={applyAndClose} className="w-full sm:w-auto">Apply Filters</Button>
             </SheetFooter>
           </SheetContent>
         </Sheet>

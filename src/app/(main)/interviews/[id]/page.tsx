@@ -65,7 +65,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                                 </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
-                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.companyInfo.company} &bull; {interview.companyInfo.role}</div>
+                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
                                 <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
                             </div>
                         </CardHeader>
