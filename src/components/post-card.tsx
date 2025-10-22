@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -27,6 +27,9 @@ export function PostCard({ post, currentUser }: PostCardProps) {
   
   const [isCommenting, setIsCommenting] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
+  const [isClamped, setIsClamped] = useState(false);
+  const descriptionRef = useRef<HTMLParagraphElement>(null);
+
 
   useEffect(() => {
     if (createdAt) {
@@ -34,6 +37,21 @@ export function PostCard({ post, currentUser }: PostCardProps) {
     }
   }, [createdAt]);
   
+  useEffect(() => {
+    function checkClamp() {
+      if (descriptionRef.current) {
+        const isCurrentlyClamped = descriptionRef.current.scrollHeight > descriptionRef.current.clientHeight;
+        if (isClamped !== isCurrentlyClamped) {
+          setIsClamped(isCurrentlyClamped);
+        }
+      }
+    }
+    checkClamp();
+    window.addEventListener('resize', checkClamp);
+    return () => window.removeEventListener('resize', checkClamp);
+  }, [isClamped]);
+
+
   const isAvatarUrl = authorAvatar?.startsWith('http');
   const avatarInitials = isAvatarUrl ? '' : authorAvatar?.split(' ').map(n => n[0]).join('') || '';
 
@@ -82,7 +100,14 @@ export function PostCard({ post, currentUser }: PostCardProps) {
             </div>
         </CardHeader>
         <CardContent>
-            <p className="text-sm text-muted-foreground line-clamp-2">{post.main.description} <Link href={detailLink} className="text-sm font-semibold text-primary hover:underline">...Read More</Link></p>
+            <div className="relative">
+              <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-2 pr-1">
+                {post.main.description}
+              </p>
+              {isClamped && (
+                <Link href={detailLink} className="absolute bottom-0 right-0 text-sm font-semibold text-primary hover:underline bg-card">...Read More</Link>
+              )}
+            </div>
             
             <Separator className="my-4" />
             <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
@@ -114,5 +139,3 @@ export function PostCard({ post, currentUser }: PostCardProps) {
     </Card>
   )
 }
-
-    
