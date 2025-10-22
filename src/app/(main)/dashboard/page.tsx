@@ -2,28 +2,23 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
+import { CardContent } from '@/components/ui/card';
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
-import { getCurrentUser } from '@/lib/firebase/users';
-import type { User } from '@/lib/types';
+import { useAuth } from '@/context/auth-context';
 
 
 export default function DashboardPage() {
   const [posts, setPosts] = useState<EnrichedPost[]>([]);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
+  const { user: currentUser } = useAuth();
 
   useEffect(() => {
-    const loadData = async () => {
-      const [allPosts, user] = await Promise.all([
-        getPosts(),
-        getCurrentUser()
-      ]);
+    const loadPosts = async () => {
+      const allPosts = await getPosts();
       setPosts(allPosts);
-      setCurrentUser(user);
     };
-    loadData();
+    loadPosts();
   }, []);
 
   return (

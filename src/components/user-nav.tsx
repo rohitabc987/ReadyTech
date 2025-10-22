@@ -12,22 +12,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { getCurrentUser } from '@/lib/firebase/users';
-import type { User as UserType } from '@/lib/types';
-import { LogOut, Mail, PlusCircle, User } from 'lucide-react';
+import { useAuth } from '@/context/auth-context';
+import { LogOut, PlusCircle, User } from 'lucide-react';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
 
 export function UserNav() {
-  const [user, setUser] = useState<UserType | null>(null);
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      const currentUser = await getCurrentUser();
-      setUser(currentUser);
-    };
-    fetchUser();
-  }, []);
+  const { user } = useAuth();
 
   if (!user) {
      return (
@@ -71,10 +61,6 @@ export function UserNav() {
               <PlusCircle className="mr-2 h-4 w-4" />
               <span>Create Post</span>
              </Link>
-          </DropdownMenuItem>
-          <DropdownMenuItem disabled>
-            <Mail className="mr-2 h-4 w-4" />
-            <span>Messages</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

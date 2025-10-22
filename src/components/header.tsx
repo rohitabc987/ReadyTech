@@ -96,7 +96,9 @@ export function Header() {
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
            <div className="md:hidden">
-              <Logo/>
+            <h1 className="text-xl font-headline font-bold text-primary ml-2">
+              ReadyTech
+            </h1>
            </div>
           <UserNav />
         </div>
