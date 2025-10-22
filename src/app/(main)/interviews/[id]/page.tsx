@@ -14,12 +14,13 @@ import { mockQuestions } from '@/lib/data/mock-data';
 
 
 export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
-    const interview = await getPostDetails(params.id);
+    const { id } = params;
+    const interview = await getPostDetails(id);
     if (!interview) {
         notFound();
     }
     
-    const stats = await getPostStats(params.id);
+    const stats = await getPostStats(id);
     if (!stats) {
         notFound();
     }
@@ -33,8 +34,8 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     // as we transition. A real implementation would fetch from a 'questions' collection.
     const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
 
-    const interviewResources = await getPostResources(params.id);
-    const interviewComments = await getPostComments(params.id);
+    const interviewResources = await getPostResources(id);
+    const interviewComments = await getPostComments(id);
 
     const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
         switch (type) {

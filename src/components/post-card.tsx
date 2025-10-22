@@ -105,7 +105,7 @@ export function PostCard({ post, currentUser }: PostCardProps) {
                 {post.main.description}
               </p>
               {isClamped && (
-                <Link href={detailLink} className="absolute bottom-0 right-0 text-sm font-semibold text-primary hover:underline bg-card">...Read More</Link>
+                <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card"> ...Read More</Link>
               )}
             </div>
             
