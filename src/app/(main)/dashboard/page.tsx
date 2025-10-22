@@ -7,6 +7,8 @@ import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter, type FilterState } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
+import { Button } from '@/components/ui/button';
+import { XCircle } from 'lucide-react';
 
 export default function DashboardPage() {
   const { user: currentUser } = useAuth();
@@ -63,6 +65,8 @@ export default function DashboardPage() {
     setFilteredPosts(allPosts);
   }
 
+  const areFiltersActive = Object.values(filters).some(value => value !== '');
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start">
@@ -74,6 +78,17 @@ export default function DashboardPage() {
         />
       </aside>
       <div className="lg:col-span-3 grid gap-4">
+        {areFiltersActive && (
+            <div className="flex justify-between items-center bg-muted/50 p-3 rounded-lg border">
+                <p className="text-sm font-medium text-muted-foreground">
+                    Filters are active.
+                </p>
+                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={handleClearFilters}>
+                    <XCircle className="mr-2 h-4 w-4" />
+                    Clear All
+                </Button>
+            </div>
+        )}
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} currentUser={currentUser} />

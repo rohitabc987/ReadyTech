@@ -39,7 +39,8 @@ export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: D
     setIsSheetOpen(false);
   }
 
-  const areFiltersActive = Object.values(filters).some(value => value !== '');
+  // Check if any of the "advanced" filters inside the sheet are active
+  const areAdvancedFiltersActive = filters.year !== '' || filters.college !== '';
 
   return (
     <Card>
@@ -92,7 +93,7 @@ export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: D
             <Button variant="outline" className="w-full relative">
               <Filter className="mr-2 h-4 w-4" />
               More filters
-              {areFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>}
+              {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>}
             </Button>
           </SheetTrigger>
           <SheetContent>
@@ -159,15 +160,8 @@ export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: D
                     />
                 </div>
             </div>
-            <SheetFooter className="gap-2 sm:justify-between">
-              <Button 
-                variant="outline"
-                onClick={onClear}
-                className="w-full sm:w-auto"
-              >
-                Clear All
-              </Button>
-              <Button onClick={applyAndClose} className="w-full sm:w-auto">Apply Filters</Button>
+            <SheetFooter>
+              <Button onClick={applyAndClose} className="w-full">Apply Filters</Button>
             </SheetFooter>
           </SheetContent>
         </Sheet>
