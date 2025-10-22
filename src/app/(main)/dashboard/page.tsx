@@ -64,14 +64,16 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <DashboardFilter 
-        filters={filters}
-        onFilterChange={setFilters}
-        onApply={handleApplyFilters}
-        onClear={handleClearFilters}
-      />
-      <div className="grid gap-4">
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start">
+        <DashboardFilter 
+          filters={filters}
+          onFilterChange={setFilters}
+          onApply={handleApplyFilters}
+          onClear={handleClearFilters}
+        />
+      </aside>
+      <div className="lg:col-span-3 grid gap-4">
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} currentUser={currentUser} />
