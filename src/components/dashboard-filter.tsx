@@ -12,30 +12,26 @@ import { companies, roles } from '@/lib/data/company-data';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from './ui/collapsible';
 import { ChevronsUpDown } from 'lucide-react';
 
-const initialFilterState = {
-  type: '',
-  company: '',
-  role: '',
-  year: '',
-  college: '',
+export type FilterState = {
+  type: string;
+  company: string;
+  role: string;
+  year: string;
+  college: string;
 };
 
-export function DashboardFilter() {
-  const [filters, setFilters] = useState(initialFilterState);
+interface DashboardFilterProps {
+  filters: FilterState;
+  onFilterChange: (filters: FilterState) => void;
+  onApply: () => void;
+  onClear: () => void;
+}
+
+export function DashboardFilter({ filters, onFilterChange, onApply, onClear }: DashboardFilterProps) {
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleFilterChange = (key: keyof typeof filters, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-  };
-  
-  const handleClearFilters = () => {
-    setFilters(initialFilterState);
-    // Add logic to re-fetch all posts if needed
-  };
-  
-  const handleApplyFilters = () => {
-    // Add logic here to filter the posts based on `filters` state
-    console.log("Applying filters:", filters);
+  const handleInputChange = (key: keyof FilterState, value: string) => {
+    onFilterChange({ ...filters, [key]: value });
   };
 
   const areFiltersActive = Object.values(filters).some(value => value !== '');
@@ -60,7 +56,7 @@ export function DashboardFilter() {
           <Button 
             variant="link" 
             className="text-primary p-0 h-auto"
-            onClick={handleClearFilters}
+            onClick={onClear}
           >
             Clear
           </Button>
@@ -69,7 +65,7 @@ export function DashboardFilter() {
           <CardContent className="space-y-4">
               <div className="space-y-2">
                   <Label htmlFor="search-type">Type</Label>
-                   <Select value={filters.type} onValueChange={(value) => handleFilterChange('type', value || '')}>
+                   <Select value={filters.type} onValueChange={(value) => handleInputChange('type', value || '')}>
                     <SelectTrigger id="search-type">
                       <SelectValue placeholder="All Types" />
                     </SelectTrigger>
@@ -91,7 +87,7 @@ export function DashboardFilter() {
                     options={companies}
                     placeholder="e.g. Google, Microsoft..."
                     value={filters.company}
-                    onChange={(value) => handleFilterChange('company', value)}
+                    onChange={(value) => handleInputChange('company', value)}
                   />
               </div>
               <div className="space-y-2">
@@ -101,7 +97,7 @@ export function DashboardFilter() {
                     options={roles}
                     placeholder="e.g. SDE, PM..."
                     value={filters.role}
-                    onChange={(value) => handleFilterChange('role', value)}
+                    onChange={(value) => handleInputChange('role', value)}
                   />
               </div>
               <div className="space-y-2">
@@ -110,7 +106,7 @@ export function DashboardFilter() {
                     id="search-year" 
                     placeholder="e.g. 2024" 
                     value={filters.year}
-                    onChange={(e) => handleFilterChange('year', e.target.value)}
+                    onChange={(e) => handleInputChange('year', e.target.value)}
                   />
               </div>
               <div className="space-y-2">
@@ -119,11 +115,11 @@ export function DashboardFilter() {
                     id="search-college" 
                     placeholder="e.g. IIT Bombay..." 
                     value={filters.college}
-                    onChange={(e) => handleFilterChange('college', e.target.value)}
+                    onChange={(e) => handleInputChange('college', e.target.value)}
                   />
               </div>
               <div className="flex justify-center pt-4">
-                <Button variant="default" onClick={handleApplyFilters}>Apply Filters</Button>
+                <Button variant="default" onClick={onApply}>Apply Filters</Button>
               </div>
           </CardContent>
         </CollapsibleContent>

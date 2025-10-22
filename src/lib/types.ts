@@ -94,7 +94,7 @@ export type Question = {
   authorId?: string; // Optional: reference to users/{userId} if added directly
   postId: string; // reference to posts/{postId}
   text: string;
-  isMCQ: boolean;
+  isMCQ?: boolean;
   options?: QuestionOption[];
   difficulty?: 'Easy' | 'Medium' | 'Hard';
   type?: 'Coding' | 'Technical' | 'HR' | 'Internship';
