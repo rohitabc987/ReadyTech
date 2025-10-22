@@ -42,13 +42,12 @@ export default function DashboardPage() {
     if (filters.role) {
       postsToFilter = postsToFilter.filter(post => post.main.role?.toLowerCase() === filters.role.toLowerCase());
     }
-    // Note: Year and College filtering would require that data on the post object.
-    // This is a placeholder for when that data is available.
     if (filters.year) {
-        // Example: postsToFilter = postsToFilter.filter(post => new Date(post.main.createdAt).getFullYear().toString() === filters.year);
+      postsToFilter = postsToFilter.filter(post => new Date(post.main.createdAt).getFullYear().toString() === filters.year);
     }
     if (filters.college) {
         // Example: postsToFilter = postsToFilter.filter(post => post.author.academics.institution.toLowerCase().includes(filters.college.toLowerCase()));
+        // Note: This requires author details to be fetched with posts.
     }
 
     setFilteredPosts(postsToFilter);
