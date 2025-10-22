@@ -6,23 +6,22 @@ import { mockPosts, mockPostStats, mockResources, mockComments, mockUsers } from
 import type { Post, PostStats, Resource, Comment, User } from '@/lib/types';
 
 /**
- * Fetches all posts and combines them with their stats and author info.
+ * Fetches all posts and combines them with their stats.
  * This simulates fetching from the 'posts' collection and joining with other data.
  */
-export async function getPosts(): Promise<(Post & { stats: PostStats; author: User | undefined; })[]> {
+export async function getPosts(): Promise<(Post & { stats: PostStats; authorInitial: string; })[]> {
   const allPosts = mockPosts;
-  console.log("post 1",allPosts[0]);
   
   const enrichedPosts = allPosts.map(post => {
     const stats = mockPostStats.find(s => s.postId === post.id);
-    const author = mockUsers.find(u => u.id === post.main.authorId);
+    const authorInitial = post.main.authorName.split(' ').map(n => n[0]).join('');
+
     return {
       ...post,
       stats: stats || { postId: post.id, likes: 0, commentsCount: 0 },
-      author: author,
+      authorInitial: authorInitial,
     };
   });
-  console.log("final psot", enrichedPosts[0]);
   return enrichedPosts;
 }
 
@@ -31,7 +30,12 @@ export async function getPosts(): Promise<(Post & { stats: PostStats; author: Us
  * @param id The ID of the post to fetch.
  */
 export async function getPostDetails(id: string): Promise<Post | undefined> {
-    return mockPosts.find(p => p.id === id);
+    const post = mockPosts.find(p => p.id === id);
+    if (!post) return undefined;
+
+    // In a real app, you might fetch author details separately here if needed
+    // For now, the denormalized data in post.main is sufficient for most detail views
+    return post;
 }
 
 /**
@@ -68,3 +72,5 @@ export async function getPostComments(postId: string): Promise<Comment[]> {
 export async function getPostsByUserId(userId: string): Promise<Post[]> {
     return mockPosts.filter(p => p.main.authorId === userId);
 }
+
+    

@@ -18,6 +18,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { useAuth } from '@/context/auth-context';
 
 const postFormSchema = z.object({
   postType: z.string({ required_error: "Type is required." }).min(1, "Type is required."),
@@ -43,6 +44,7 @@ let questionCounter = 2;
 let optionCounter = 0;
 
 export default function NewPostPage() {
+    const { user } = useAuth();
     const [questions, setQuestions] = useState<FormQuestion[]>([
         { id: 0, text: '', isMCQ: false, options: [] },
         { id: 1, text: '', isMCQ: false, options: [] }
@@ -63,7 +65,33 @@ export default function NewPostPage() {
     });
 
     function onSubmit(data: PostFormValues) {
-        console.log({ ...data, questions });
+        if (!user) {
+            console.error("User not logged in");
+            return;
+        }
+        
+        const postData = {
+            main: {
+                authorId: user.id,
+                authorName: user.personal.name,
+                authorAvatarUrl: user.personal.avatarUrl,
+                type: data.postType,
+                title: data.title,
+                description: data.description,
+                createdAt: new Date(),
+                updatedAt: new Date(),
+                company: data.company,
+                role: data.role,
+            },
+            companyInfo: {
+                difficulty: data.difficulty,
+                applicationType: data.applicationType,
+                result: data.result,
+            },
+            questions: questions,
+        };
+
+        console.log("Submitting Post Data:", postData);
         // Here you would handle form submission, e.g., saving to Firestore
     }
 
@@ -135,12 +163,12 @@ export default function NewPostPage() {
                                             </SelectTrigger>
                                         </FormControl>
                                         <SelectContent>
-                                            <SelectItem value="technical-interview">Technical Interview</SelectItem>
-                                            <SelectItem value="hr-interview">HR Interview</SelectItem>
-                                            <SelectItem value="managerial-interview">Managerial Interview</SelectItem>
-                                            <SelectItem value="online-assessment">Online Assessment</SelectItem>
-                                            <SelectItem value="technical-test">Technical Test</SelectItem>
-                                            <SelectItem value="other">Other</SelectItem>
+                                            <SelectItem value="Technical Interview">Technical Interview</SelectItem>
+                                            <SelectItem value="HR Interview">HR Interview</SelectItem>
+                                            <SelectItem value="Managerial Interview">Managerial Interview</SelectItem>
+                                            <SelectItem value="Online Assessment">Online Assessment</SelectItem>
+                                            <SelectItem value="Technical Test">Technical Test</SelectItem>
+                                            <SelectItem value="Other">Other</SelectItem>
                                         </SelectContent>
                                     </Select>
                                     <FormMessage />
@@ -378,3 +406,5 @@ export default function NewPostPage() {
     </main>
   );
 }
+
+    

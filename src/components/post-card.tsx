@@ -12,7 +12,10 @@ import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStats, User } from '@/lib/types';
 import { formatDistanceToNow } from 'date-fns';
 
-export type EnrichedPost = Post & { stats: PostStats; author: User | undefined; };
+export type EnrichedPost = Post & { 
+  stats: PostStats;
+  authorInitial: string;
+};
 
 interface PostCardProps {
   post: EnrichedPost;
@@ -20,16 +23,17 @@ interface PostCardProps {
 }
 
 export function PostCard({ post, currentUser }: PostCardProps) {
-  const { author, stats } = post;
-  const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
+  const { authorInitial, stats } = post;
+  const { authorName, authorAvatarUrl, company, role, type, createdAt } = post.main;
+  
   const [isCommenting, setIsCommenting] = useState(false);
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
-    if (post.main.createdAt) {
-      setFormattedDate(formatDistanceToNow(new Date(post.main.createdAt), { addSuffix: true }));
+    if (createdAt) {
+      setFormattedDate(formatDistanceToNow(new Date(createdAt), { addSuffix: true }));
     }
-  }, [post.main.createdAt]);
+  }, [createdAt]);
 
   const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
 
@@ -37,33 +41,31 @@ export function PostCard({ post, currentUser }: PostCardProps) {
     return null;
   }
   
-  const detailLink = `/interviews/${post.id}`; // This can be made dynamic later if other post types have detail pages
+  const detailLink = `/interviews/${post.id}`;
 
   const interviewTypes: Post['main']['type'][] = ['Technical Interview', 'HR Interview', 'Managerial Interview'];
-  const showCompanyInfo = post.companyInfo?.company && interviewTypes.includes(post.main.type);
+  const showCompanyInfo = company && interviewTypes.includes(type);
 
   return (
     <Card className="hover:shadow-lg transition-shadow">
         <CardHeader>
             <div className="flex items-start gap-4">
-                {author && (
-                  <Link href={`/users/${author.id}`}>
-                      <Avatar>
-                          <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
-                          <AvatarFallback>{userInitials}</AvatarFallback>
-                      </Avatar>
-                  </Link>
-                )}
+                <Link href={`/users/${post.main.authorId}`}>
+                    <Avatar>
+                        <AvatarImage src={authorAvatarUrl} alt={authorName} />
+                        <AvatarFallback>{authorInitial}</AvatarFallback>
+                    </Avatar>
+                </Link>
                 <div className="flex-1">
                     <CardTitle className="font-headline text-lg">
                         <Link href={detailLink} className="hover:underline line-clamp-1">{post.main.title}</Link>
                     </CardTitle>
                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
-                        <div className="flex items-center gap-2"><span>{post.main.type}</span></div>
+                        <div className="flex items-center gap-2"><span>{type}</span></div>
                         {showCompanyInfo && (
                           <>
-                            <div className="flex items-center gap-2"><span>&bull;</span><Briefcase className="h-4 w-4" /><span>{post.companyInfo!.company}</span></div>
-                            <div className="flex items-center gap-2"><span>&bull;</span><span>{post.companyInfo!.role}</span></div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><Briefcase className="h-4 w-4" /><span>{company}</span></div>
+                            <div className="flex items-center gap-2"><span>&bull;</span><span>{role}</span></div>
                           </>
                         )}
                          <div className="flex items-center gap-2"><span>&bull;</span><Calendar className="h-4 w-4"/>{formattedDate}</div>
@@ -110,3 +112,5 @@ export function PostCard({ post, currentUser }: PostCardProps) {
     </Card>
   )
 }
+
+    

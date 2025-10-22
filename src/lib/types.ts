@@ -45,17 +45,19 @@ export type User = {
 
 export type PostMain = {
   authorId: string; // reference to users/{userId}
+  authorName: string; // Denormalized for quick access
+  authorAvatarUrl?: string; // Denormalized for quick access
   type: 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Online Assessment' | 'Technical Test' | 'Other';
   title: string;
   description: string;
   coverImage?: string;
   createdAt: Date;
   updatedAt: Date;
+  company?: string; // Denormalized for quick access
+  role?: string; // Denormalized for quick access
 };
 
 export type PostCompanyInfo = {
-  company?: string;
-  role?: string;
   difficulty?: 'easy' | 'medium' | 'hard';
   applicationType?: 'Internship' | 'Full-Time'| 'Internship + FTE' | 'Other';
   result?: 'Selected' | 'Rejected' | 'In Process';
@@ -132,3 +134,5 @@ export type Testimonial = {
   rating: number;
   quote: string;
 };
+
+    

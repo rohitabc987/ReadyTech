@@ -69,7 +69,7 @@ This collection stores all user-related information, organized into sub-objects.
 
 ### `/posts/{postId}`
 
-This collection stores all types of content, including interviews, resources, and more, using a flexible structure.
+This collection stores all types of content. It is denormalized to include key information at the top level for efficient fetching on the dashboard.
 
 - **Path**: `/posts/{postId}`
 - **`postId`**: A unique, auto-generated ID.
@@ -80,16 +80,18 @@ This collection stores all types of content, including interviews, resources, an
   "id": "string",
   "main": {
     "authorId": "string", // Reference to users/{userId}
-    "type": "'Online Assessment' | 'Technical Interview' | 'HR Interview' | 'Managerial Interview' | 'Technical Test'",
+    "authorName": "string", // Denormalized for quick access
+    "authorAvatarUrl": "string", // Denormalized for quick access
+    "type": "'Online Assessment' | 'Technical Interview' | ...",
     "title": "string",
     "description": "string",
+    "company": "string", // Denormalized for quick access
+    "role": "string", // Denormalized for quick access
     "coverImage": "string",
     "createdAt": "Timestamp",
     "updatedAt": "Timestamp"
   },
-  "companyInfo": { // Primarily for interview type posts
-    "company": "string",
-    "role": "string",
+  "companyInfo": { // Extra details for interview type posts
     "difficulty": "'easy' | 'medium' | 'hard'",
     "applicationType": "'Internship' | 'Full-Time' | 'Internship + FTE'",
     "result": "'Selected' | 'Rejected' | 'In Process'"
@@ -115,7 +117,7 @@ A subcollection for resources associated with a specific post.
 
 ### `/questions/{questionId}`
 
-A root-level collection to store all individual questions. This allows for easier querying and reuse of questions across different contexts, such as the main Question Bank page.
+A root-level collection to store all individual questions. This allows for easier querying and reuse of questions.
 
 **Schema: `Question`**
 ```typescript
@@ -136,7 +138,7 @@ A root-level collection to store all individual questions. This allows for easie
 
 ### `/posts/{postId}/stats/{statsId}`
 
-This subcollection stores engagement metrics for each post to separate frequently updated data from the main post content. Typically, there will be one document in this subcollection per post.
+This subcollection stores engagement metrics for each post to separate frequently updated data from the main post content.
 
 **Schema: `PostStats`**
 ```typescript
@@ -190,3 +192,5 @@ To maintain consistency and code quality, new features should be developed follo
     - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. For client-side fetching (e.g., on the dashboard), create abstracted functions in `src/lib/firebase/`.
     - **Data Mutations**: For creating, updating, or deleting data, use Firebase's client-side SDK (`firebase/firestore`) within client components (`'use client'`). Trigger these mutations based on user interactions like button clicks or form submissions.
 5.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).
+
+    
