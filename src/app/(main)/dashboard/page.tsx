@@ -43,11 +43,16 @@ export default function DashboardPage() {
       postsToFilter = postsToFilter.filter(post => post.main.role?.toLowerCase() === filters.role.toLowerCase());
     }
     if (filters.year) {
-      postsToFilter = postsToFilter.filter(post => new Date(post.main.createdAt).getFullYear().toString() === filters.year);
+      postsToFilter = postsToFilter.filter(post => {
+        // Ensure createdAt is a Date object before calling getFullYear
+        const postDate = new Date(post.main.createdAt);
+        return postDate.getFullYear().toString() === filters.year;
+      });
     }
     if (filters.college) {
-        // Example: postsToFilter = postsToFilter.filter(post => post.author.academics.institution.toLowerCase().includes(filters.college.toLowerCase()));
-        // Note: This requires author details to be fetched with posts.
+        postsToFilter = postsToFilter.filter(post => 
+            post.main.institution?.toLowerCase().includes(filters.college.toLowerCase())
+        );
     }
 
     setFilteredPosts(postsToFilter);

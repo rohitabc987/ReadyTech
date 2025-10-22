@@ -53,6 +53,7 @@ export type PostMain = {
   createdAt: Date;
   company?: string; // Denormalized for quick access
   role?: string; // Denormalized for quick access
+  institution?: string; // Denormalized for quick access
 };
 
 export type PostCompanyInfo = {
@@ -132,5 +133,3 @@ export type Testimonial = {
   rating: number;
   quote: string;
 };
-
-    

@@ -79,7 +79,7 @@ This collection stores all types of content. It is denormalized to include key i
 ```typescript
 {
   "id": "string",
-  "updatedAt": "Timestamp", // Moved to root level
+  "updatedAt": "Timestamp",
   "main": {
     "authorId": "string", // Reference to users/{userId}
     "authorName": "string", // Denormalized for quick access
@@ -89,6 +89,7 @@ This collection stores all types of content. It is denormalized to include key i
     "description": "string",
     "company": "string", // Denormalized for quick access
     "role": "string", // Denormalized for quick access
+    "institution": "string", // Denormalized for quick access
     "createdAt": "Timestamp"
   },
   "companyInfo": { // Extra details for interview type posts
@@ -192,5 +193,3 @@ To maintain consistency and code quality, new features should be developed follo
     - **Data Fetching**: Use Server Components by default to fetch data directly from Firestore. For client-side fetching (e.g., on the dashboard), create abstracted functions in `src/lib/firebase/`.
     - **Data Mutations**: For creating, updating, or deleting data, use Firebase's client-side SDK (`firebase/firestore`) within client components (`'use client'`). Trigger these mutations based on user interactions like button clicks or form submissions.
 5.  **Connect UI to Logic**: Integrate the data fetching and mutation logic into the UI components to create a fully functional feature. Ensure proper loading states, error handling, and user feedback (e.g., using toasts).
-
-    

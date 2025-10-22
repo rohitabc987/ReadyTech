@@ -71,6 +71,8 @@ export default function NewPostPage() {
         }
         
         const postData = {
+            id: new Date().toISOString(), // Example ID
+            updatedAt: new Date(),
             main: {
                 authorId: user.id,
                 authorName: user.personal.name,
@@ -81,6 +83,7 @@ export default function NewPostPage() {
                 createdAt: new Date(),
                 company: data.company,
                 role: data.role,
+                institution: user.academics.institution,
             },
             companyInfo: {
                 difficulty: data.difficulty,
@@ -88,7 +91,6 @@ export default function NewPostPage() {
                 result: data.result,
             },
             questions: questions,
-            updatedAt: new Date(),
         };
 
         console.log("Submitting Post Data:", postData);
@@ -406,5 +408,3 @@ export default function NewPostPage() {
     </main>
   );
 }
-
-    

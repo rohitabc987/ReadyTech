@@ -127,6 +127,7 @@ export const mockPosts: Post[] = [
         createdAt: new Date('2024-05-20T09:00:00Z'),
         company: 'Google',
         role: 'SDE-1',
+        institution: 'IIT',
     },
     companyInfo: {
         applicationType: 'Full-Time',
@@ -147,6 +148,7 @@ export const mockPosts: Post[] = [
         createdAt: new Date('2024-04-15T14:00:00Z'),
         company: 'Microsoft',
         role: 'Product Manager',
+        institution: 'NIT',
     },
     companyInfo: {
         applicationType: 'Full-Time',
@@ -167,6 +169,7 @@ export const mockPosts: Post[] = [
         createdAt: new Date('2024-03-10T11:00:00Z'),
         company: 'Amazon',
         role: 'SDE Intern',
+        institution: 'NIT',
     },
     companyInfo: {
         applicationType: 'Internship',
@@ -187,6 +190,7 @@ export const mockPosts: Post[] = [
         createdAt: new Date('2024-06-01T11:00:00Z'),
         company: 'A Startup',
         role: 'SDE Intern',
+        institution: 'IIT',
     },
     companyInfo: {
         applicationType: 'Internship',
@@ -249,5 +253,3 @@ export const mockPostStats: PostStats[] = [
         ratingsCount: 5,
     }
 ];
-
-    
