@@ -6,15 +6,22 @@ import { Card, CardContent } from '@/components/ui/card';
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
+import { getCurrentUser } from '@/lib/firebase/users';
+import type { User } from '@/lib/types';
 
 
 export default function DashboardPage() {
   const [posts, setPosts] = useState<EnrichedPost[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     const loadData = async () => {
-      const allPosts = await getPosts();
+      const [allPosts, user] = await Promise.all([
+        getPosts(),
+        getCurrentUser()
+      ]);
       setPosts(allPosts);
+      setCurrentUser(user);
     };
     loadData();
   }, []);
@@ -28,7 +35,7 @@ export default function DashboardPage() {
         <div className="lg:col-span-3">
                 <CardContent className="grid gap-4">
                     {posts.map((post) => (
-                      <PostCard key={post.id} post={post} />
+                      <PostCard key={post.id} post={post} currentUser={currentUser} />
                     ))}
                 </CardContent>
         </div>

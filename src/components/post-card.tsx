@@ -10,27 +10,25 @@ import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStats, User } from '@/lib/types';
-import { getCurrentUser } from '@/lib/firebase/users';
 import { formatDistanceToNow } from 'date-fns';
 
 export type EnrichedPost = Post & { stats: PostStats; author: User | undefined; };
 
-export function PostCard({ post }: { post: EnrichedPost }) {
+interface PostCardProps {
+  post: EnrichedPost;
+  currentUser: User | null;
+}
+
+export function PostCard({ post, currentUser }: PostCardProps) {
   const { author, stats } = post;
   const userInitials = author ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
   const [isCommenting, setIsCommenting] = useState(false);
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [formattedDate, setFormattedDate] = useState('');
 
   useEffect(() => {
     if (post.main.createdAt) {
       setFormattedDate(formatDistanceToNow(new Date(post.main.createdAt), { addSuffix: true }));
     }
-    const fetchUser = async () => {
-      const user = await getCurrentUser();
-      setCurrentUser(user);
-    };
-    fetchUser();
   }, [post.main.createdAt]);
 
   const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
@@ -58,8 +56,7 @@ export function PostCard({ post }: { post: EnrichedPost }) {
                 )}
                 <div className="flex-1">
                     <CardTitle className="font-headline text-lg">
-                        <Link href={detailLink} className="hover:underline">{post.main.title}</Link>
-
+                        <Link href={detailLink} className="hover:underline line-clamp-1">{post.main.title}</Link>
                     </CardTitle>
                      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mt-1">
                         <div className="flex items-center gap-2"><span>{post.main.type}</span></div>

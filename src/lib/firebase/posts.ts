@@ -11,6 +11,7 @@ import type { Post, PostStats, Resource, Comment, User } from '@/lib/types';
  */
 export async function getPosts(): Promise<(Post & { stats: PostStats; author: User | undefined; })[]> {
   const allPosts = mockPosts;
+  console.log("post 1",allPosts[0]);
   
   const enrichedPosts = allPosts.map(post => {
     const stats = mockPostStats.find(s => s.postId === post.id);
@@ -21,7 +22,7 @@ export async function getPosts(): Promise<(Post & { stats: PostStats; author: Us
       author: author,
     };
   });
-
+  console.log("final psot", enrichedPosts[0]);
   return enrichedPosts;
 }
 
