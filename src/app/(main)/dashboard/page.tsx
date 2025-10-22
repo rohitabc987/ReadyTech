@@ -64,31 +64,25 @@ export default function DashboardPage() {
   }
 
   return (
-    <>
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <aside className="lg:col-span-1">
-          <DashboardFilter 
-            filters={filters}
-            onFilterChange={setFilters}
-            onApply={handleApplyFilters}
-            onClear={handleClearFilters}
-          />
-        </aside>
-        <div className="lg:col-span-3">
-            <CardContent className="grid gap-4">
-                {filteredPosts.length > 0 ? (
-                  filteredPosts.map((post) => (
-                    <PostCard key={post.id} post={post} currentUser={currentUser} />
-                  ))
-                ) : (
-                  <div className="text-center py-12 text-muted-foreground">
-                    <h3 className="text-lg font-semibold">No posts found</h3>
-                    <p>Try adjusting your filters or clearing them to see all posts.</p>
-                  </div>
-                )}
-            </CardContent>
-        </div>
+    <div className="flex flex-col gap-6">
+      <DashboardFilter 
+        filters={filters}
+        onFilterChange={setFilters}
+        onApply={handleApplyFilters}
+        onClear={handleClearFilters}
+      />
+      <div className="grid gap-4">
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map((post) => (
+              <PostCard key={post.id} post={post} currentUser={currentUser} />
+            ))
+          ) : (
+            <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
+              <h3 className="text-lg font-semibold">No posts found</h3>
+              <p>Try adjusting your filters or clearing them to see all posts.</p>
+            </div>
+          )}
       </div>
-    </>
+    </div>
   );
 }
