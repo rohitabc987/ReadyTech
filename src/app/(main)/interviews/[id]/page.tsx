@@ -6,11 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Separator } from '@/components/ui/separator';
 import { getPostComments, getPostDetails, getPostResources, getPostStats } from '@/lib/firebase/posts';
 import { getCurrentUser, getUserProfile } from '@/lib/firebase/users';
-import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, Star, ThumbsUp, Video } from 'lucide-react';
+import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, ThumbsUp, Video } from 'lucide-react';
 import Link from 'next/link';
 import { Textarea } from '@/components/ui/textarea';
 import { notFound } from 'next/navigation';
 import { mockQuestions } from '@/lib/data/mock-data';
+import { StarRating } from '@/components/star-rating';
 
 
 export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
@@ -57,11 +58,9 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                     <Card>
                         <CardHeader>
                             <div className="flex items-start justify-between">
-                                <CardTitle className="font-headline text-2xl">{interview.main.title}</CardTitle>
-                                <div className="flex items-center gap-2">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star key={i} className={`h-6 w-6 cursor-pointer ${i < Math.round(stats.avgRating || 0) ? 'fill-amber-400 text-amber-500' : 'fill-muted-foreground/50 text-muted-foreground'}`}/>
-                                    ))}
+                                <CardTitle className="font-headline text-2xl pr-4">{interview.main.title}</CardTitle>
+                                <div className="flex items-center gap-2 shrink-0">
+                                   <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                                 </div>
                             </div>
                             <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
