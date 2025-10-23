@@ -70,7 +70,7 @@ export default function DashboardPage() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-6">
       {/* Filters */}
-      <aside className="md:col-span-1 md:sticky md:top-20 self-start mb-0">
+      <aside className="hidden md:block md:col-span-1 md:sticky md:top-20 self-start mb-0">
         <DashboardFilter 
           filters={filters}
           onFilterChange={setFilters}
