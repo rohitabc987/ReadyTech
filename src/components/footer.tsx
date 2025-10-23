@@ -7,7 +7,9 @@ export function Footer() {
       <div className="container mx-auto max-w-7xl p-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2 md:col-span-1">
-            <Logo />
+            <h1 className="text-xl font-headline font-bold text-primary">
+              ReadyTech
+            </h1>
             <p className="text-sm mt-2 max-w-xs">Your gateway to success in tech interviews and competitive exams.</p>
           </div>
           <div className="space-y-2">

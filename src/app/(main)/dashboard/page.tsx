@@ -2,13 +2,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter, type FilterState } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
 import { Button } from '@/components/ui/button';
 import { XCircle } from 'lucide-react';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function DashboardPage() {
   const { user: currentUser } = useAuth();
@@ -22,6 +23,8 @@ export default function DashboardPage() {
     year: '',
     college: '',
   });
+
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     const loadPosts = async () => {
@@ -46,7 +49,6 @@ export default function DashboardPage() {
     }
     if (filters.year) {
       postsToFilter = postsToFilter.filter(post => {
-        // Ensure createdAt is a Date object before calling getFullYear
         const postDate = new Date(post.main.createdAt);
         return postDate.getFullYear().toString() === filters.year;
       });
@@ -66,8 +68,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-      <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start">
+    <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6">
+      {/* Filters */}
+      <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start mb-4 lg:mb-0">
         <DashboardFilter 
           filters={filters}
           onFilterChange={setFilters}
@@ -75,17 +78,25 @@ export default function DashboardPage() {
           onClear={handleClearFilters}
         />
       </aside>
-      <div className="lg:col-span-3 grid gap-4">
+
+      {/* Posts */}
+      <div className="lg:col-span-3">
+        <div className="bg-card rounded-lg border md:shadow-sm md:border">
           {filteredPosts.length > 0 ? (
-            filteredPosts.map((post) => (
-              <PostCard key={post.id} post={post} currentUser={currentUser} />
-            ))
+            <div className="flex flex-col">
+              {filteredPosts.map((post, index) => (
+                <div key={post.id} className={index < filteredPosts.length - 1 ? 'border-b' : ''}>
+                    <PostCard post={post} currentUser={currentUser} />
+                </div>
+              ))}
+            </div>
           ) : (
-            <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
+            <div className="text-center py-12 text-muted-foreground rounded-lg">
               <h3 className="text-lg font-semibold">No posts found</h3>
               <p>Try adjusting your filters or clearing them to see all posts.</p>
             </div>
           )}
+        </div>
       </div>
     </div>
   );
