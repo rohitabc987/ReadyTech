@@ -52,7 +52,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
 
     return (
         <div className="p-4">
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 mb-2">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
                         <AvatarImage src={isAvatarUrl ? authorAvatar : undefined} alt={authorName} />
@@ -62,16 +62,16 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                 <div className="flex-1">
                     <div className="flex justify-between items-start">
                         <div>
-                            <Link href={detailLink} className="hover:underline">
-                                <h3 className="font-semibold leading-snug line-clamp-2">{title}</h3>
+                             <Link href={`/users/${authorId}`} className="hover:underline">
+                                <h3 className="font-semibold leading-snug text-sm">{authorName}</h3>
                             </Link>
-                            <div className="text-xs text-muted-foreground mt-1">
-                                <span>{authorName}</span>
+                            <div className="text-xs text-muted-foreground mt-0.5">
+                                <span>{type}</span>
                                 <span className="mx-1">&bull;</span>
                                 <span>{formattedDate}</span>
                             </div>
                         </div>
-                        {stats.avgRating && (
+                         {stats.avgRating && (
                             <div className="flex items-center gap-1 text-xs text-amber-500 shrink-0 ml-2">
                                 <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
                                 <span className="font-semibold">{stats.avgRating.toFixed(1)}</span>
@@ -81,22 +81,26 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                 </div>
             </div>
             
-            <div className="relative mt-2">
+            <Link href={detailLink} className="hover:underline">
+                <h3 className="font-semibold leading-snug line-clamp-2 text-base mb-2">{title}</h3>
+            </Link>
+
+            <div className="relative mt-1">
                 <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-3">
                     {description}
                 </p>
                 {isClamped && (
-                    <Link href={detailLink} className="text-sm font-semibold text-primary hover:underline">...Read More</Link>
+                    <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card">...Read More</Link>
                 )}
             </div>
 
             {showCompanyInfo && (
-                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground mt-2">
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground mt-3">
                     <div className="flex items-center gap-1.5"><Briefcase className="h-3 w-3" /><span>{company}</span></div>
                     <div className="flex items-center gap-1.5"><span>&bull;</span><span>{role}</span></div>
                 </div>
             )}
-            
+
             <div className="flex items-center justify-start gap-1 text-sm text-muted-foreground mt-2 -ml-2">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
                     <ThumbsUp className="h-4 w-4" />
@@ -154,7 +158,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
   const detailLink = `/interviews/${post.id}`;
 
   const interviewTypes: Post['main']['type'][] = ['Technical Interview', 'HR Interview', 'Managerial Interview'];
-  const showCompanyInfo = company && interviewTypes.includes(type);
+  const showCompanyInfo = company && role && interviewTypes.includes(type);
 
   return (
     <Card className="shadow-none border-0 rounded-none">
@@ -236,14 +240,29 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 }
 
 export function PostCard(props: PostCardProps) {
-  return (
-    <>
-      <div className="lg:hidden">
-        <MobilePostCard {...props} />
-      </div>
-      <div className="hidden lg:block">
-        <DesktopPostCard {...props} />
-      </div>
-    </>
-  );
+  const { post } = props;
+  const isMobile = useIsMobile();
+
+  // A key is used here to force a re-mount when switching between mobile/desktop.
+  // This prevents complex state and ref issues between the two different layouts.
+  return isMobile ? <MobilePostCard key="mobile" {...props} /> : <DesktopPostCard key="desktop" {...props} />;
+}
+
+// A new hook to manage layout changes without complex logic in the card component itself.
+function useIsMobile() {
+    const [isMobile, setIsMobile] = useState<boolean | undefined>(undefined);
+
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        function handleResize() {
+            setIsMobile(window.innerWidth < 768);
+        }
+
+        handleResize(); // Set initial state
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return isMobile;
 }

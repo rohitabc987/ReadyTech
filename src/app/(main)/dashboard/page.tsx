@@ -81,7 +81,26 @@ export default function DashboardPage() {
 
       {/* Posts */}
       <div className="lg:col-span-3">
-        <div className="bg-card md:rounded-lg md:border md:shadow-sm">
+        {/* Mobile View */}
+        <div className="block md:hidden bg-card">
+          {filteredPosts.length > 0 ? (
+            <div className="flex flex-col">
+              {filteredPosts.map((post, index) => (
+                <div key={post.id} className={index < filteredPosts.length - 1 ? 'border-b' : ''}>
+                    <PostCard post={post} currentUser={currentUser} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 text-muted-foreground">
+              <h3 className="text-lg font-semibold">No posts found</h3>
+              <p>Try adjusting your filters or clearing them to see all posts.</p>
+            </div>
+          )}
+        </div>
+
+        {/* Desktop View */}
+        <div className="hidden md:block bg-card rounded-lg border shadow-sm">
           {filteredPosts.length > 0 ? (
             <div className="flex flex-col">
               {filteredPosts.map((post, index) => (
