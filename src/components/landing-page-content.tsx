@@ -42,23 +42,22 @@ export function LandingPageContent() {
 
   useEffect(() => {
     if (window.location.hash === '#join' && ctaRef.current) {
-      const element = ctaRef.current;
-      
-      // Remove the class to reset the animation
-      element.classList.remove('animate-pulse-border');
-      
-      // This is a trick to force a browser reflow, which is necessary to restart the animation
-      void element.offsetWidth;
-
-      // Re-add the class to trigger the animation
-      element.classList.add('animate-pulse-border');
+      const buttons = ctaRef.current.querySelectorAll('button');
+      buttons.forEach((btn) => {
+        btn.classList.add('animate-pulse-scale');
+      });
+  
+      // remove after few seconds if needed
+      setTimeout(() => {
+        buttons.forEach((btn) => btn.classList.remove('animate-pulse-scale'));
+      }, 4000);
     }
   }, []);
-
+  
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section id="join" className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-b from-primary/5 to-transparent">
+      <section id="join" className="w-full py-20 pb-10 md:py-32 pb-20 lg:pb-30 py-40  bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
@@ -83,16 +82,63 @@ export function LandingPageContent() {
       </section>
 
       {/* Our Mission Section */}
-      <section id="mission" className="w-full py-16 md:py-24 bg-background">
-        <div className="container mx-auto px-4 md:px-6">
-            <div className="max-w-3xl mx-auto text-center">
-                <h2 className="text-3xl font-bold font-headline tracking-tight">Our Mission</h2>
-                <p className="mt-4 text-muted-foreground md:text-lg">
-                    We believe that the best way to prepare for the future is to learn from those who have already walked the path. ReadyTech was created to bridge the gap between academic learning and real-world success. We connect aspiring students with a community of experienced seniors and mentors, making preparation for competitive exams and tech interviews more transparent, accessible, and effective for everyone.
-                </p>
-            </div>
+      {/* Our Mission Section */}
+<section id="mission" className="relative overflow-hidden py-10 md:py-15 bg-gradient-to-b from-white via-primary/5 to-white">
+  <div className="absolute inset-0 bg-grid-slate-100/40 [mask-image:radial-gradient(white,transparent_75%)]"></div>
+  <div className="container relative mx-auto px-4 md:px-6">
+    <div className="max-w-4xl mx-auto text-center">
+      <h2 className="text-4xl md:text-5xl font-extrabold font-headline bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+        Our Mission
+      </h2>
+      <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
+        At <span className="font-semibold text-primary">ReadyTech</span>, we’re redefining how students prepare for their future.
+        We believe success isn’t built from textbooks alone — it’s built through
+        <span className="font-medium text-foreground"> real stories, shared experiences, and community learning.</span>
+      </p>
+
+      <div className="mt-10 grid gap-8 md:grid-cols-3">
+        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+          <div className="bg-primary/10 p-4 rounded-full mb-4">
+            <Users className="h-10 w-10 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold">Empower Students</h3>
+          <p className="text-muted-foreground mt-2">
+            Helping every learner gain confidence through real-world guidance and mentorship.
+          </p>
         </div>
-      </section>
+
+        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+          <div className="bg-primary/10 p-4 rounded-full mb-4">
+            <BookOpen className="h-10 w-10 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold">Bridge Academia & Reality</h3>
+          <p className="text-muted-foreground mt-2">
+            Making learning more practical, relatable, and aligned with real career paths.
+          </p>
+        </div>
+
+        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+          <div className="bg-primary/10 p-4 rounded-full mb-4">
+            <Star className="h-10 w-10 text-primary" />
+          </div>
+          <h3 className="text-xl font-semibold">Build a Thriving Community</h3>
+          <p className="text-muted-foreground mt-2">
+            Connecting students and mentors to grow together — one experience at a time.
+          </p>
+        </div>
+      </div>
+
+      <div className="mt-12">
+        <Button asChild size="lg" className="px-8 py-6 text-lg animate-pulse-border">
+          <Link href="#join">
+            Join the Movement <ArrowRight className="ml-2 h-5 w-5" />
+          </Link>
+        </Button>
+      </div>
+    </div>
+  </div>
+</section>
+
       
       {/* How It Works Section */}
       <section id="how-it-works" className="w-full py-16 md:py-24 bg-muted/30">
