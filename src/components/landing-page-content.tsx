@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useRef, useEffect } from 'react';
@@ -42,13 +43,15 @@ export function LandingPageContent() {
   useEffect(() => {
     if (window.location.hash === '#join' && ctaRef.current) {
       const element = ctaRef.current;
+      
+      // Remove the class to reset the animation
+      element.classList.remove('animate-pulse-border');
+      
+      // This is a trick to force a browser reflow, which is necessary to restart the animation
+      void element.offsetWidth;
+
+      // Re-add the class to trigger the animation
       element.classList.add('animate-pulse-border');
-
-      const timer = setTimeout(() => {
-        element.classList.remove('animate-pulse-border');
-      }, 4500); // Animation is 1.5s * 3 = 4.5s
-
-      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -66,7 +69,7 @@ export function LandingPageContent() {
             </p>
             <div 
               ref={ctaRef}
-              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 rounded-lg"
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 p-2 rounded-lg"
             >
               <Button asChild size="lg">
                 <Link href="/dashboard">
