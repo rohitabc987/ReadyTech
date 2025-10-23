@@ -84,7 +84,7 @@ export default function DashboardPage() {
         {/* Mobile View */}
         <div className="block md:hidden">
           {filteredPosts.length > 0 ? (
-            <div className="flex flex-col gap-2 bg-muted/30 p-2 -m-2 rounded-lg">
+            <div className="flex flex-col gap-2 bg-muted/30 rounded-lg">
               {filteredPosts.map((post) => (
                 <PostCard key={post.id} post={post} currentUser={currentUser} />
               ))}
