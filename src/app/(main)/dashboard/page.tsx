@@ -102,17 +102,13 @@ export default function DashboardPage() {
         </div>
 
         {/* Desktop View */}
-        <div className="hidden md:block bg-card rounded-lg border shadow-sm">
+        <div className="hidden md:flex flex-col gap-4">
           {filteredPosts.length > 0 ? (
-            <div className="flex flex-col">
-              {filteredPosts.map((post, index) => (
-                <div key={post.id} className={index < filteredPosts.length - 1 ? 'border-b' : ''}>
-                    <PostCard post={post} currentUser={currentUser} />
-                </div>
-              ))}
-            </div>
+              filteredPosts.map((post) => (
+                <PostCard key={post.id} post={post} currentUser={currentUser} />
+              ))
           ) : (
-            <div className="text-center py-12 text-muted-foreground rounded-lg">
+            <div className="text-center py-12 text-muted-foreground bg-card rounded-lg border">
               <h3 className="text-lg font-semibold">No posts found</h3>
               <p>Try adjusting your filters or clearing them to see all posts.</p>
             </div>

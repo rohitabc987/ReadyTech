@@ -166,7 +166,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
   const showCompanyInfo = company && role && interviewTypes.includes(type);
 
   return (
-    <Card className="shadow-none border-0 rounded-none">
+    <Card>
         <CardHeader className="p-4 md:p-6">
             <div className="flex items-start gap-3 md:gap-4">
                 <Link href={`/users/${authorId}`}>
