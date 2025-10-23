@@ -82,19 +82,23 @@ export default function DashboardPage() {
       {/* Posts */}
       <div className="md:col-span-3">
         {/* Mobile View */}
-        <div className="block md:hidden bg-muted/30 p-2">
-            <div className="flex flex-col gap-2">
-                {filteredPosts.length > 0 ? (
-                    filteredPosts.map((post) => (
-                        <PostCard key={post.id} post={post} currentUser={currentUser} />
-                    ))
-                ) : (
-                    <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
-                        <h3 className="text-lg font-semibold">No posts found</h3>
-                        <p>Try adjusting your filters or clearing them to see all posts.</p>
-                    </div>
-                )}
-            </div>
+        <div className="block md:hidden bg-muted/30 p-2 flex flex-col gap-2">
+            <DashboardFilter 
+              filters={filters}
+              onFilterChange={setFilters}
+              onApply={handleApplyFilters}
+              onClear={handleClearFilters}
+            />
+            {filteredPosts.length > 0 ? (
+                filteredPosts.map((post) => (
+                    <PostCard key={post.id} post={post} currentUser={currentUser} />
+                ))
+            ) : (
+                <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
+                    <h3 className="text-lg font-semibold">No posts found</h3>
+                    <p>Try adjusting your filters or clearing them to see all posts.</p>
+                </div>
+            )}
         </div>
 
         {/* Desktop View */}
