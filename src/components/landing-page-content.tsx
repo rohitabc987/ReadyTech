@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -30,8 +30,8 @@ function ComingSoonButton() {
 
 
 export function LandingPageContent() {
-  const [highlight, setHighlight] = useState(false);
-  const plugin = useRef(
+  const ctaRef = useRef<HTMLDivElement>(null);
+  const autoplayPlugin = useRef(
     Autoplay({
       delay: 2000,
       stopOnInteraction: false, // important: don't stop autoplay on hover
@@ -40,9 +40,14 @@ export function LandingPageContent() {
   )
 
   useEffect(() => {
-    if (window.location.hash === '#join') {
-      setHighlight(true);
-      const timer = setTimeout(() => setHighlight(false), 3000); // Highlight for 3 seconds
+    if (window.location.hash === '#join' && ctaRef.current) {
+      const element = ctaRef.current;
+      element.classList.add('animate-pulse-border');
+
+      const timer = setTimeout(() => {
+        element.classList.remove('animate-pulse-border');
+      }, 4500); // Animation is 1.5s * 3 = 4.5s
+
       return () => clearTimeout(timer);
     }
   }, []);
@@ -59,10 +64,10 @@ export function LandingPageContent() {
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               A community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
             </p>
-            <div className={cn(
-              "mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 rounded-lg",
-               highlight && "animate-pulse-border"
-            )}>
+            <div 
+              ref={ctaRef}
+              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 rounded-lg"
+            >
               <Button asChild size="lg">
                 <Link href="/dashboard">
                   Continue as College Student <ArrowRight className="ml-2 h-5 w-5" />
@@ -151,7 +156,7 @@ export function LandingPageContent() {
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-headline font-bold text-center mb-12">What Our Community Says</h2>
           <Carousel
-            plugins={[plugin.current]}
+            plugins={[autoplayPlugin.current]}
             opts={{
               align: "start",
               loop: true,
