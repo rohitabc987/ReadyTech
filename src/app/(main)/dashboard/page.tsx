@@ -78,17 +78,6 @@ export default function DashboardPage() {
         />
       </aside>
       <div className="lg:col-span-3 grid gap-4">
-        {areFiltersActive && (
-            <div className="flex justify-between items-center bg-muted/50 p-3 rounded-lg border">
-                <p className="text-sm font-medium text-muted-foreground">
-                    Filters are active.
-                </p>
-                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive hover:bg-destructive/10" onClick={handleClearFilters}>
-                    <XCircle className="mr-2 h-4 w-4" />
-                    Clear All
-                </Button>
-            </div>
-        )}
           {filteredPosts.length > 0 ? (
             filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} currentUser={currentUser} />
