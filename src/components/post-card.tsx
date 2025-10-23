@@ -53,7 +53,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
     const showCompanyInfo = company && role;
 
     return (
-        <div className="p-4 bg-card rounded-lg border">
+        <div className="p-3 bg-card rounded-lg border">
             <div className="flex items-start gap-3 mb-2">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
@@ -105,7 +105,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
               )}
             </div>
 
-            <Separator className="my-2" />
+            <Separator className="my-3 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
             <div className="flex items-center justify-start gap-1 text-sm text-muted-foreground -ml-2">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
                     <ThumbsUp className="h-4 w-4" />
@@ -166,7 +166,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
   const showCompanyInfo = company && role && interviewTypes.includes(type);
 
   return (
-    <Card>
+    <Card className="rounded-lg border shadow-sm">
         <CardHeader className="p-4 md:p-6">
             <div className="flex items-start gap-3 md:gap-4">
                 <Link href={`/users/${authorId}`}>

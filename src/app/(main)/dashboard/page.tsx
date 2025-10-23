@@ -2,13 +2,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter, type FilterState } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
-import { Button } from '@/components/ui/button';
-import { XCircle } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
 
 export default function DashboardPage() {
@@ -82,7 +79,7 @@ export default function DashboardPage() {
       {/* Posts */}
       <div className="md:col-span-3">
         {/* Mobile View */}
-        <div className="block md:hidden bg-muted/30 p-2 flex flex-col gap-2">
+        <div className="block md:hidden  flex flex-col gap-2">
             <DashboardFilter 
               filters={filters}
               onFilterChange={setFilters}
