@@ -23,7 +23,7 @@ function ComingSoonButton() {
   };
 
   return (
-    <Button variant="outline" size="lg" onClick={handleClick}>
+    <Button variant="outline" size="lg" onClick={handleClick} data-cta="join">
       Continue as School Student
     </Button>
   );
@@ -35,7 +35,7 @@ export function LandingPageContent() {
   const autoplayPlugin = useRef(
     Autoplay({
       delay: 2000,
-      stopOnInteraction: false, // important: don't stop autoplay on hover
+      stopOnInteraction: false, 
       stopOnMouseEnter: false,
     })
   )
@@ -43,13 +43,16 @@ export function LandingPageContent() {
   useEffect(() => {
     const triggerAnimation = () => {
       if (window.location.hash === '#join' && ctaRef.current) {
-        const buttons = ctaRef.current.querySelectorAll('button');
-        buttons.forEach((btn) => {
-          btn.classList.add('animate-attention');
+        const ctas = ctaRef.current.querySelectorAll('[data-cta="join"]');
+  
+        ctas.forEach((el) => {
+          el.classList.add('animate-attention');
         });
   
         setTimeout(() => {
-          buttons.forEach((btn) => btn.classList.remove('animate-attention'));
+          ctas.forEach((el) => {
+            el.classList.remove('animate-attention');
+          });
         }, 5000);
       }
     };
@@ -65,11 +68,10 @@ export function LandingPageContent() {
     };
   }, []);
   
-  
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section id="join" className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-b from-primary/5 to-transparent">
+      <section id="join" className="w-full py-20 md:py-24 lg:py-32 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
@@ -83,7 +85,7 @@ export function LandingPageContent() {
               className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 p-2 rounded-lg"
             >
               <Button asChild size="lg">
-                <Link href="/dashboard">
+                <Link href="/dashboard" data-cta="join">
                   Continue as College Student <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
               </Button>
@@ -94,63 +96,62 @@ export function LandingPageContent() {
       </section>
 
       {/* Our Mission Section */}
-<section id="mission" className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-white via-primary/5 to-white">
-  <div className="absolute inset-0 bg-grid-slate-100/40 [mask-image:radial-gradient(white,transparent_75%)]"></div>
-  <div className="container relative mx-auto px-4 md:px-6">
-    <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-3xl md:text-5xl font-extrabold font-headline bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
-        Our Mission
-      </h2>
-      <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
-        At <span className="font-semibold text-primary">ReadyTech</span>, we’re redefining how students prepare for their future.
-        We believe success isn’t built from textbooks alone — it’s built through
-        <span className="font-medium text-foreground"> real stories, shared experiences, and community learning.</span>
-      </p>
+      <section id="mission" className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-white via-primary/5 to-white">
+        <div className="absolute inset-0 bg-grid-slate-100/40 [mask-image:radial-gradient(white,transparent_75%)]"></div>
+        <div className="container relative mx-auto px-4 md:px-6">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-5xl font-extrabold font-headline bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+              Our Mission
+            </h2>
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
+              At <span className="font-semibold text-primary">ReadyTech</span>, we’re redefining how students prepare for their future.
+              We believe success isn’t built from textbooks alone — it’s built through
+              <span className="font-medium text-foreground"> real stories, shared experiences, and community learning.</span>
+            </p>
 
-      <div className="mt-12 grid gap-8 md:grid-cols-3">
-        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
-          <div className="bg-primary/10 p-4 rounded-full mb-4">
-            <Users className="h-10 w-10 text-primary" />
+            <div className="mt-12 grid gap-8 md:grid-cols-3">
+              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+                <div className="bg-primary/10 p-4 rounded-full mb-4">
+                  <Users className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Empower Students</h3>
+                <p className="text-muted-foreground mt-2">
+                  Helping every learner gain confidence through real-world guidance and mentorship.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+                <div className="bg-primary/10 p-4 rounded-full mb-4">
+                  <BookOpen className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Bridge Academia & Reality</h3>
+                <p className="text-muted-foreground mt-2">
+                  Making learning more practical, relatable, and aligned with real career paths.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+                <div className="bg-primary/10 p-4 rounded-full mb-4">
+                  <Star className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold">Build a Thriving Community</h3>
+                <p className="text-muted-foreground mt-2">
+                  Connecting students and mentors to grow together — one experience at a time.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-12">
+              <Button asChild size="lg" className="px-8 py-6 text-lg">
+                <Link href="#join">
+                  Join the Movement <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </div>
           </div>
-          <h3 className="text-xl font-semibold">Empower Students</h3>
-          <p className="text-muted-foreground mt-2">
-            Helping every learner gain confidence through real-world guidance and mentorship.
-          </p>
         </div>
+      </section>
 
-        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
-          <div className="bg-primary/10 p-4 rounded-full mb-4">
-            <BookOpen className="h-10 w-10 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold">Bridge Academia & Reality</h3>
-          <p className="text-muted-foreground mt-2">
-            Making learning more practical, relatable, and aligned with real career paths.
-          </p>
-        </div>
-
-        <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
-          <div className="bg-primary/10 p-4 rounded-full mb-4">
-            <Star className="h-10 w-10 text-primary" />
-          </div>
-          <h3 className="text-xl font-semibold">Build a Thriving Community</h3>
-          <p className="text-muted-foreground mt-2">
-            Connecting students and mentors to grow together — one experience at a time.
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-12">
-        <Button asChild size="lg" className="px-8 py-6 text-lg animate-pulse-border">
-          <Link href="#join">
-            Join the Movement <ArrowRight className="ml-2 h-5 w-5" />
-          </Link>
-        </Button>
-      </div>
-    </div>
-  </div>
-</section>
-
-      
       {/* How It Works Section */}
       <section id="how-it-works" className="w-full py-16 md:py-24 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
@@ -271,5 +272,3 @@ export function LandingPageContent() {
     </main>
   );
 }
-
-    
