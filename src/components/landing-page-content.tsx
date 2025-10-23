@@ -44,15 +44,15 @@ export function LandingPageContent() {
     if (window.location.hash === '#join' && ctaRef.current) {
       const buttons = ctaRef.current.querySelectorAll('button');
       buttons.forEach((btn) => {
-        btn.classList.add('animate-pulse-scale');
+        btn.classList.add('animate-attention');
       });
   
-      // remove after few seconds if needed
+      // remove after 5 seconds
       setTimeout(() => {
-        buttons.forEach((btn) => btn.classList.remove('animate-pulse-scale'));
-      }, 4000);
+        buttons.forEach((btn) => btn.classList.remove('animate-attention'));
+      }, 5000);
     }
-  }, []);
+  }, []);  
   
   return (
     <main className="flex-1">
