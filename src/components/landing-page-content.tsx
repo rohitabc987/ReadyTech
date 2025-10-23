@@ -47,7 +47,7 @@ export function LandingPageContent() {
         btn.classList.add('animate-attention');
       });
   
-      // remove after 5 seconds
+      // remove after animation finishes (0.8s * 3 iterations) ~3s, use 5s for safety
       setTimeout(() => {
         buttons.forEach((btn) => btn.classList.remove('animate-attention'));
       }, 5000);

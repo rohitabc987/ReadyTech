@@ -91,14 +91,14 @@ export default {
           },
         },
         attention: {
-          '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(59,130,246, 0.4)' },
-          '50%': { transform: 'scale(1.1)', boxShadow: '0 0 20px 2px rgba(59,130,246, 0.4)' },
+          '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(var(--primary-rgb), 0.4)' },
+          '50%': { transform: 'scale(1.05)', boxShadow: '0 0 20px 2px rgba(var(--primary-rgb), 0.4)' },
         },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
-        attention: 'attention 0.8s ease-in-out infinite',
+        attention: 'attention 0.8s ease-in-out 3',
       },
     },
   },
