@@ -103,9 +103,7 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
                     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
                         <Button variant="outline" className="w-full relative">
-                        <Filter className="mr-2 h-4 w-4" />
-                        More
-                        <span className="hidden sm:inline ml-1">filters</span>
+                        <Filter className="mr-2 h-4 w-4" /> More
                         {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>}
                         </Button>
                     </SheetTrigger>
