@@ -204,7 +204,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
 
     return (
         <div className="p-4 bg-card md:rounded-lg border">
-            <h2 className="text-lg font-bold mb-4">Filter Posts</h2>
+            <h2 className="text-lg font-bold mb-2 md: mb-4">Filter Posts</h2>
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="space-y-2">
                     <Label htmlFor="mobile-search-company">Company</Label>

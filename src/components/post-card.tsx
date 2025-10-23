@@ -53,7 +53,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
     const showCompanyInfo = company && role;
 
     return (
-        <div className="p-3 bg-card rounded-lg border">
+        <div className="p-3 bg-card border">
             <div className="flex items-start gap-3 mb-2">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
@@ -166,7 +166,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
   const showCompanyInfo = company && role && interviewTypes.includes(type);
 
   return (
-    <Card className="rounded-lg border shadow-sm">
+    <Card className="border shadow-sm">
         <CardHeader className="p-4 md:p-6">
             <div className="flex items-start gap-3 md:gap-4">
                 <Link href={`/users/${authorId}`}>
