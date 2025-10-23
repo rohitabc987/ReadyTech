@@ -81,7 +81,7 @@ export default function DashboardPage() {
 
       {/* Posts */}
       <div className="lg:col-span-3">
-        <div className="bg-card rounded-lg border md:shadow-sm md:border">
+        <div className="bg-card md:rounded-lg md:border md:shadow-sm">
           {filteredPosts.length > 0 ? (
             <div className="flex flex-col">
               {filteredPosts.map((post, index) => (

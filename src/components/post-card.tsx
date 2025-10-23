@@ -66,7 +66,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                                 <h3 className="font-semibold leading-snug line-clamp-2">{title}</h3>
                             </Link>
                             <div className="text-xs text-muted-foreground mt-1">
-                                <span>{type}</span>
+                                <span>{authorName}</span>
                                 <span className="mx-1">&bull;</span>
                                 <span>{formattedDate}</span>
                             </div>
@@ -78,24 +78,25 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                             </div>
                         )}
                     </div>
-                    
-                    <div className="relative mt-2">
-                        <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-2 pr-1">
-                            {description}
-                        </p>
-                        {isClamped && (
-                            <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card">...Read More</Link>
-                        )}
-                    </div>
-
-                    {showCompanyInfo && (
-                        <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground mt-2">
-                            <div className="flex items-center gap-1.5"><Briefcase className="h-3 w-3" /><span>{company}</span></div>
-                            <div className="flex items-center gap-1.5"><span>&bull;</span><span>{role}</span></div>
-                        </div>
-                    )}
                 </div>
             </div>
+            
+            <div className="relative mt-2">
+                <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-3">
+                    {description}
+                </p>
+                {isClamped && (
+                    <Link href={detailLink} className="text-sm font-semibold text-primary hover:underline">...Read More</Link>
+                )}
+            </div>
+
+            {showCompanyInfo && (
+                <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground mt-2">
+                    <div className="flex items-center gap-1.5"><Briefcase className="h-3 w-3" /><span>{company}</span></div>
+                    <div className="flex items-center gap-1.5"><span>&bull;</span><span>{role}</span></div>
+                </div>
+            )}
+            
             <div className="flex items-center justify-start gap-1 text-sm text-muted-foreground mt-2 -ml-2">
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
                     <ThumbsUp className="h-4 w-4" />

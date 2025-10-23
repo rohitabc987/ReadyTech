@@ -205,7 +205,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
     const areAdvancedFiltersActive = filters.year !== '' || filters.college !== '' || filters.type !== '';
 
     return (
-        <div className="p-4 bg-card rounded-lg border">
+        <div className="p-4 bg-card md:rounded-lg border">
             <h2 className="text-lg font-bold mb-4">Filter Posts</h2>
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="space-y-2">

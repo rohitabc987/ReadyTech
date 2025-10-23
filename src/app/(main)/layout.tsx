@@ -13,7 +13,7 @@ export default function MainAppLayout({
       <div className="flex flex-col min-h-screen">
         <Header />
         <main className="flex-1">
-          <div className="container mx-auto p-4 sm:p-6 lg:p-8 max-w-7xl">
+          <div className="container mx-auto p-0 sm:p-6 lg:p-8 max-w-7xl">
             {children}
           </div>
         </main>
