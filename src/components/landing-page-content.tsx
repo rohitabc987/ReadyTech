@@ -57,12 +57,13 @@ export function LandingPageContent() {
       }
     };
   
-    // Run on mount
+    // Run on mount in case the user lands on the page with the hash
     triggerAnimation();
   
-    // Run on hash change
+    // Run on hash change to catch in-page navigation
     window.addEventListener('hashchange', triggerAnimation);
   
+    // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener('hashchange', triggerAnimation);
     };
