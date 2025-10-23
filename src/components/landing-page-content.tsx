@@ -1,7 +1,6 @@
-
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -11,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import Autoplay from "embla-carousel-autoplay";
 import { mockTestimonials } from '@/lib/data/testimonials-data';
+import { cn } from '@/lib/utils';
 
 function ComingSoonButton() {
   const { toast } = useToast();
@@ -30,6 +30,7 @@ function ComingSoonButton() {
 
 
 export function LandingPageContent() {
+  const [highlight, setHighlight] = useState(false);
   const plugin = useRef(
     Autoplay({
       delay: 2000,
@@ -37,6 +38,14 @@ export function LandingPageContent() {
       stopOnMouseEnter: false,
     })
   )
+
+  useEffect(() => {
+    if (window.location.hash === '#join') {
+      setHighlight(true);
+      const timer = setTimeout(() => setHighlight(false), 3000); // Highlight for 3 seconds
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <main className="flex-1">
@@ -50,7 +59,10 @@ export function LandingPageContent() {
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               A community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
             </p>
-            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className={cn(
+              "mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 rounded-lg",
+               highlight && "animate-pulse-border"
+            )}>
               <Button asChild size="lg">
                 <Link href="/dashboard">
                   Continue as College Student <ArrowRight className="ml-2 h-5 w-5" />
