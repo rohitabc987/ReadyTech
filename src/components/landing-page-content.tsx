@@ -41,23 +41,35 @@ export function LandingPageContent() {
   )
 
   useEffect(() => {
-    if (window.location.hash === '#join' && ctaRef.current) {
-      const buttons = ctaRef.current.querySelectorAll('button');
-      buttons.forEach((btn) => {
-        btn.classList.add('animate-attention');
-      });
+    const triggerAnimation = () => {
+      if (window.location.hash === '#join' && ctaRef.current) {
+        const buttons = ctaRef.current.querySelectorAll('button');
+        buttons.forEach((btn) => {
+          btn.classList.add('animate-attention');
+        });
   
-      // remove after animation finishes (0.8s * 3 iterations) ~3s, use 5s for safety
-      setTimeout(() => {
-        buttons.forEach((btn) => btn.classList.remove('animate-attention'));
-      }, 5000);
-    }
-  }, []);  
+        setTimeout(() => {
+          buttons.forEach((btn) => btn.classList.remove('animate-attention'));
+        }, 5000);
+      }
+    };
+  
+    // Run on mount
+    triggerAnimation();
+  
+    // Run on hash change
+    window.addEventListener('hashchange', triggerAnimation);
+  
+    return () => {
+      window.removeEventListener('hashchange', triggerAnimation);
+    };
+  }, []);
+  
   
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section id="join" className="w-full py-20 pb-10 md:py-32 pb-20 lg:pb-30 py-40  bg-gradient-to-b from-primary/5 to-transparent">
+      <section id="join" className="w-full py-20 md:py-32 lg:py-40 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
@@ -82,12 +94,11 @@ export function LandingPageContent() {
       </section>
 
       {/* Our Mission Section */}
-      {/* Our Mission Section */}
-<section id="mission" className="relative overflow-hidden py-10 md:py-15 bg-gradient-to-b from-white via-primary/5 to-white">
+<section id="mission" className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-white via-primary/5 to-white">
   <div className="absolute inset-0 bg-grid-slate-100/40 [mask-image:radial-gradient(white,transparent_75%)]"></div>
   <div className="container relative mx-auto px-4 md:px-6">
     <div className="max-w-4xl mx-auto text-center">
-      <h2 className="text-4xl md:text-5xl font-extrabold font-headline bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
+      <h2 className="text-3xl md:text-5xl font-extrabold font-headline bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
         Our Mission
       </h2>
       <p className="mt-6 text-lg md:text-xl text-muted-foreground leading-relaxed">
@@ -96,7 +107,7 @@ export function LandingPageContent() {
         <span className="font-medium text-foreground"> real stories, shared experiences, and community learning.</span>
       </p>
 
-      <div className="mt-10 grid gap-8 md:grid-cols-3">
+      <div className="mt-12 grid gap-8 md:grid-cols-3">
         <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
           <div className="bg-primary/10 p-4 rounded-full mb-4">
             <Users className="h-10 w-10 text-primary" />
@@ -214,21 +225,23 @@ export function LandingPageContent() {
           >
             <CarouselContent>
               {mockTestimonials.map((testimonial) => (
-                <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/3">
-                  <Card className="h-full">
-                    <CardContent className="pt-6 flex flex-col items-center text-center">
-                      <Avatar className="h-16 w-16 mb-4">
-                        <AvatarImage src={testimonial.avatarUrl} />
-                        <AvatarFallback>{testimonial.avatarFallback}</AvatarFallback>
-                      </Avatar>
-                      <p className="font-semibold">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.institution}</p>
-                      <div className="flex gap-0.5 my-2">
-                        {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
-                      </div>
-                      <p className="text-muted-foreground text-sm flex-1">{testimonial.quote}</p>
-                    </CardContent>
-                  </Card>
+                <CarouselItem key={testimonial.id} className="basis-full md:basis-1/2 lg:basis-1/3">
+                  <div className="p-1 h-full">
+                    <Card className="h-full">
+                      <CardContent className="pt-6 flex flex-col items-center text-center">
+                        <Avatar className="h-16 w-16 mb-4">
+                          <AvatarImage src={testimonial.avatarUrl} />
+                          <AvatarFallback>{testimonial.avatarFallback}</AvatarFallback>
+                        </Avatar>
+                        <p className="font-semibold">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.institution}</p>
+                        <div className="flex gap-0.5 my-2">
+                          {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
+                        </div>
+                        <p className="text-muted-foreground text-sm flex-1">{testimonial.quote}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -258,3 +271,5 @@ export function LandingPageContent() {
     </main>
   );
 }
+
+    
