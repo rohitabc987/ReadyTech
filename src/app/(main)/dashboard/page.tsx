@@ -65,8 +65,6 @@ export default function DashboardPage() {
     setFilteredPosts(allPosts);
   }
 
-  const areFiltersActive = Object.values(filters).some(value => value !== '');
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
       <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start">

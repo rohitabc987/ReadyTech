@@ -1,3 +1,4 @@
+
 'use client';
 
 import Link from 'next/link';
@@ -16,11 +17,8 @@ export function LandingHeader() {
         </div>
 
         <div className="flex items-center gap-4">
-            <Button variant="ghost" asChild>
-                <Link href="/login">Sign In</Link>
-            </Button>
             <Button asChild>
-                <Link href="/login">Sign Up</Link>
+                <Link href="/#join">Sign Up</Link>
             </Button>
         </div>
       </div>
