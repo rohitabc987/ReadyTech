@@ -34,9 +34,8 @@ export function LandingPageContent() {
   const ctaRef = useRef<HTMLDivElement>(null);
   const autoplayPlugin = useRef(
     Autoplay({
-      delay: 2000,
-      stopOnInteraction: false, 
-      stopOnMouseEnter: false,
+      delay: 5000,
+      stopOnInteraction: true,
     })
   )
 
@@ -45,29 +44,38 @@ export function LandingPageContent() {
       if (window.location.hash === '#join' && ctaRef.current) {
         const ctas = ctaRef.current.querySelectorAll('[data-cta="join"]');
   
-        ctas.forEach((el) => {
-          el.classList.add('animate-attention');
-        });
+        ctas.forEach((el) => el.classList.add('animate-attention'));
   
         setTimeout(() => {
-          ctas.forEach((el) => {
-            el.classList.remove('animate-attention');
-          });
+          ctas.forEach((el) => el.classList.remove('animate-attention'));
         }, 5000);
       }
     };
   
-    // Run on mount in case the user lands on the page with the hash
+    const handleLinkClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const link = target.closest('a');
+      if (link && link.getAttribute('href') === '#join') {
+        e.preventDefault();
+        window.location.hash = '#join'; // ensures hashchange event happens
+        triggerAnimation();
+        document.querySelector('#join')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    };
+  
+    // Attach both listeners
+    window.addEventListener('hashchange', triggerAnimation);
+    document.addEventListener('click', handleLinkClick);
+  
+    // Run on mount (page reload)
     triggerAnimation();
   
-    // Run on hash change to catch in-page navigation
-    window.addEventListener('hashchange', triggerAnimation);
-  
-    // Cleanup the event listener when the component unmounts
     return () => {
       window.removeEventListener('hashchange', triggerAnimation);
+      document.removeEventListener('click', handleLinkClick);
     };
   }, []);
+  
   
   return (
     <main className="flex-1">
@@ -81,13 +89,10 @@ export function LandingPageContent() {
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
               A community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
             </p>
-            <div 
-              ref={ctaRef}
-              className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 p-2 rounded-lg"
-            >
+            <div ref={ctaRef} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 p-2 rounded-lg" >
               <Button asChild size="lg">
                 <Link href="/dashboard" data-cta="join">
-                  Continue as College Student <ArrowRight className="ml-2 h-5 w-5" />
+                  Continue as College Student
                 </Link>
               </Button>
               <ComingSoonButton />
@@ -273,3 +278,5 @@ export function LandingPageContent() {
     </main>
   );
 }
+
+    
