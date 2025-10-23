@@ -68,9 +68,9 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-4 md:gap-6">
       {/* Filters */}
-      <aside className="lg:col-span-1 lg:sticky lg:top-20 self-start mb-4 lg:mb-0">
+      <aside className="md:col-span-1 md:sticky md:top-20 self-start mb-0">
         <DashboardFilter 
           filters={filters}
           onFilterChange={setFilters}
@@ -80,21 +80,21 @@ export default function DashboardPage() {
       </aside>
 
       {/* Posts */}
-      <div className="lg:col-span-3">
+      <div className="md:col-span-3">
         {/* Mobile View */}
-        <div className="block md:hidden">
-          {filteredPosts.length > 0 ? (
-            <div className="flex flex-col gap-2 bg-muted/30 rounded-lg">
-              {filteredPosts.map((post) => (
-                <PostCard key={post.id} post={post} currentUser={currentUser} />
-              ))}
+        <div className="block md:hidden bg-muted/30 p-2">
+            <div className="flex flex-col gap-2">
+                {filteredPosts.length > 0 ? (
+                    filteredPosts.map((post) => (
+                        <PostCard key={post.id} post={post} currentUser={currentUser} />
+                    ))
+                ) : (
+                    <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
+                        <h3 className="text-lg font-semibold">No posts found</h3>
+                        <p>Try adjusting your filters or clearing them to see all posts.</p>
+                    </div>
+                )}
             </div>
-          ) : (
-            <div className="text-center py-12 text-muted-foreground bg-card rounded-lg">
-              <h3 className="text-lg font-semibold">No posts found</h3>
-              <p>Try adjusting your filters or clearing them to see all posts.</p>
-            </div>
-          )}
         </div>
 
         {/* Desktop View */}
