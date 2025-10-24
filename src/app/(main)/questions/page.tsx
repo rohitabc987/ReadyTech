@@ -159,7 +159,7 @@ export default function QuestionsPage() {
               <React.Fragment key={i}>
                 <Card className="border-0 shadow-none bg-transparent">
                   <CardHeader className="p-4 pb-2">
-                    <CardTitle className="text-base font-normal">{q.text}</CardTitle>
+                    <CardTitle className="text-base font-normal line-clamp-2">{q.text}</CardTitle>
                   </CardHeader>
                   <CardContent className="p-4 pt-2">
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
