@@ -131,16 +131,17 @@ export default function NewPostPage() {
     }
 
     const handleSaveDraft = () => {
+        const currentValues = form.watch(); // ✅ gets the freshest form state
         const draftData = {
-            formValues: form.getValues(),
-            questions: questions,
+          formValues: currentValues,
+          questions,
         };
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         toast({
-            title: 'Draft Saved!',
-            description: 'Your progress has been saved in this browser.',
+          title: 'Draft Saved!',
+          description: 'Your progress has been saved in this browser.',
         });
-    };
+      };      
 
     const addQuestion = () => {
         setQuestions([...questions, { id: questionCounter++, text: '', isMCQ: false, options: [] }]);
@@ -299,9 +300,9 @@ export default function NewPostPage() {
                                   <FormLabel>Application Type <span className="text-destructive">*</span></FormLabel>
                                   <Select onValueChange={field.onChange} value={field.value}>
                                       <FormControl>
-                                          <SelectTrigger>
-                                              <SelectValue placeholder="Select application type" />
-                                          </Trigger>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select application type" />
+                                        </SelectTrigger>
                                       </FormControl>
                                       <SelectContent>
                                           <SelectItem value="Internship">Internship</SelectItem>

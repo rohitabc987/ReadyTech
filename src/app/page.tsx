@@ -2,7 +2,6 @@
 
 import { LandingHeader } from '@/components/landing-header';
 import { LandingFooter } from '@/components/landing-footer';
-import { Toaster } from '@/components/ui/toaster';
 import { LandingPageContent } from '@/components/landing-page-content';
 
 export default function LandingPage() {
@@ -11,7 +10,6 @@ export default function LandingPage() {
       <LandingHeader />
       <LandingPageContent />
       <LandingFooter />
-      <Toaster />
     </div>
   );
 }
