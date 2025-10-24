@@ -4,7 +4,7 @@ import { Logo } from "./logo";
 export function LandingFooter() {
   return (
     <footer className="bg-footer text-footer-foreground">
-      <div className="container mx-auto max-w-7xl p-8">
+      <div className="container mx-auto max-w-7xl p-4 md:p-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2 md:col-span-1">
             <Logo />

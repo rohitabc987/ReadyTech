@@ -191,6 +191,7 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
 
 function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFilterProps) {
     const [isSheetOpen, setIsSheetOpen] = useState(false);
+    const areFiltersActive = Object.values(filters).some(value => value !== '');
 
     const handleInputChange = (key: keyof FilterState, value: string) => {
         onFilterChange({ ...filters, [key]: value });
@@ -204,10 +205,23 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
 
     return (
         <div className="p-4 bg-card md:rounded-lg border">
-            <h2 className="text-lg font-bold mb-2 md: mb-4">Filter Posts</h2>
+            <div className="flex justify-between items-center ">
+                <h2 className="text-lg font-bold mb-1 md: mb-2">Filter</h2>
+                {areFiltersActive && (
+                    <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={onClear}
+                    className="text-destructive hover:text-destructive hover:bg-destructive/10 h-auto px-2 py-1"
+                    >
+                    <XCircle className="mr-1 h-4 w-4" />
+                    Clear
+                    </Button>
+                )}  
+            </div>  
             <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="space-y-2">
-                    <Label htmlFor="mobile-search-company">Company</Label>
+                    {/* <Label htmlFor="mobile-search-company">Company</Label> */}
                     <ComboboxInput
                         id="mobile-search-company"
                         options={companies}
@@ -217,7 +231,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
                     />
                 </div>
                 <div className="space-y-2">
-                    <Label htmlFor="mobile-search-role">Role</Label>
+                    {/* <Label htmlFor="mobile-search-role">Role</Label> */}
                     <ComboboxInput
                         id="mobile-search-role"
                         options={roles}

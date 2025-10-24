@@ -284,7 +284,7 @@ export default function NewPostPage() {
                 </Card>
               </div>
 
-              <div>
+              <div className=" p-2">
                 <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">🗒 Description & Details</h3>
                 <div className="space-y-6">
                     <FormField
@@ -320,10 +320,10 @@ export default function NewPostPage() {
               <div>
                 <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"> ❓ Questions Asked</h3>
                 <Card className="bg-muted/30 border-dashed">
-                  <CardContent className="gap-6 pt-6">
+                  <CardContent className="gap-6 pt-4">
                       <div className="space-y-4">
                           {questions.map((question, qIndex) => (
-                              <div key={question.id} className="p-4 border rounded-lg bg-background/50 space-y-4">
+                              <div key={question.id} className="p-1 space-y-4 ">
                                   <div className="flex gap-4 items-start">
                                       <Input 
                                           placeholder={qIndex === 0 ? "e.g., Tell me about a time you had a conflict with a team member." : "e.g., How does a hash map work internally?"} 
@@ -338,7 +338,7 @@ export default function NewPostPage() {
                                   <div className="flex items-center space-x-2">
                                       <Checkbox id={`is-mcq-${question.id}`} checked={question.isMCQ} onCheckedChange={() => toggleMCQ(question.id)} />
                                       <label htmlFor={`is-mcq-${question.id}`} className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                                          This is an MCQ
+                                    Is it MCQ ?
                                       </label>
                                   </div>
                                   {question.isMCQ && (

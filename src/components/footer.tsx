@@ -3,8 +3,8 @@ import { Logo } from "./logo";
 
 export function Footer() {
   return (
-    <footer className="bg-footer text-footer-foreground">
-      <div className="container mx-auto max-w-7xl p-8">
+    <footer className="bg-footer text-footer-foreground mt-4 lg:mt-2">
+      <div className="container mx-auto max-w-7xl p-4 md:pd-8">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
           <div className="col-span-2 md:col-span-1">
             <h1 className="text-xl font-headline font-bold text-primary">

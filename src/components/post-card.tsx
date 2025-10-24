@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp } from 'lucide-react';
+import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp, Share2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStats, User } from '@/lib/types';
@@ -54,7 +54,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
 
     return (
         <div className="p-3 bg-card border">
-            <div className="flex items-start gap-3 mb-2">
+            <div className="flex items-start gap-3 ">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
                         <AvatarImage src={isAvatarUrl ? authorAvatar : undefined} alt={authorName} />
@@ -87,6 +87,16 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
               <Link href={detailLink} className="hover:underline">
                   <h3 className="font-semibold leading-snug line-clamp-2 text-base mb-2">{title}</h3>
               </Link>
+            {showCompanyInfo && (
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground mb-2">
+                <div className="flex items-center gap-1.5 bg-muted/90 px-2 py-1 rounded-full">
+                  <span>{company}</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-muted/80 px-2 py-1 rounded-full">
+                  <span>{role}</span>
+                </div>
+              </div>
+            )}
 
               <div className="relative mt-1">
                   <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-4">
@@ -96,24 +106,23 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                       <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card">...Read More</Link>
                   )}
               </div>
-
-              {showCompanyInfo && (
-                  <div className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground mt-3">
-                      <div className="flex items-center gap-1.5"><Briefcase className="h-3 w-3" /><span>{company}</span></div>
-                      <div className="flex items-center gap-1.5"><span>&bull;</span><span>{role}</span></div>
-                  </div>
-              )}
             </div>
 
             <Separator className="my-3 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
-            <div className="flex items-center justify-start gap-1 text-sm text-muted-foreground -ml-2">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+                <div className="flex items-center gap-1 -ml-2">
+                    <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
+                        <ThumbsUp className="h-4 w-4" />
+                        <span>Like</span>
+                    </Button>
+                    <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
+                        <MessageSquare className="h-4 w-4" />
+                        <span>Comment</span>
+                    </Button>
+                </div>
                 <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
-                    <ThumbsUp className="h-4 w-4" />
-                    <span>Like ({stats.likes})</span>
-                </Button>
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Comment</span>
+                    <Share2 className="h-4 w-4" />
+                    <span>Share</span>
                 </Button>
             </div>
         </div>
@@ -206,24 +215,47 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card"> ...Read More</Link>
               )}
             </div>
-            { showCompanyInfo &&
-              <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground mb-2">
-                <div className="flex items-center gap-2"><Briefcase className="h-3 w-3" /><span>{company}</span></div>
-                <div className="flex items-center gap-2"><span>&bull;</span><span>{role}</span></div>
+            {showCompanyInfo && (
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground mt-3">
+                <div className="flex items-center gap-1.5 bg-muted/30 px-2 py-1 rounded-full">
+                  <Briefcase className="h-3.5 w-3.5 text-primary/70" />
+                  <span>{company}</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-muted/30 px-2 py-1 rounded-full">
+                  <span className="text-primary/70">🧑‍💻</span>
+                  <span>{role}</span>
+                </div>
               </div>
-            }
-            
-            <Separator className="my-2 md:my-4" />
-            <div className="flex items-center justify-start gap-2 md:gap-4 text-sm text-muted-foreground">
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs md:text-sm">
-                  <ThumbsUp className="h-4 w-4" />
-                  <span>Like ({stats.likes})</span>
-                </Button>
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs md:text-sm" onClick={() => setIsCommenting(!isCommenting)}>
-                    <MessageSquare className="h-4 w-4" />
-                    <span>Comment</span>
-                </Button>
+            )}
+            <Separator className="my-3 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
+            <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+              >
+                <ThumbsUp className="h-4 w-4" />
+                <span>Likes</span>
+              </Button>
+
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+              >
+                <MessageSquare className="h-4 w-4" />
+                <span>Comment</span>
+              </Button>
+               <Button 
+                variant="ghost" 
+                size="sm" 
+                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+              >
+                <Share2 className="h-4 w-4" />
+                <span>Share</span>
+              </Button>
             </div>
+
              {isCommenting && currentUser && (
               <div className="pt-4">
                 <Separator className="mb-4"/>
