@@ -7,7 +7,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { getCurrentUser } from '@/lib/firebase/users';
 import { Switch } from '@/components/ui/switch';
-import { Briefcase, Building, Calendar, GraduationCap, Link as LinkIcon, Mail, MapPin, User as UserIcon } from 'lucide-react';
+import { Mail, User as UserIcon } from 'lucide-react';
+import { GraduationCapIcon } from 'lucide-react';
+
 
 export default async function ProfilePage() {
     const user = await getCurrentUser();
@@ -15,12 +17,15 @@ export default async function ProfilePage() {
 
   return (
     <main className="flex-1 mt-4">
+      <div className="relative">
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-blue-500/10 blur-3xl -z-10"></div>
+        
         <div className="grid gap-6 lg:grid-cols-3">
             {/* Left Column - Profile Summary */}
             <div className="lg:col-span-1 flex flex-col gap-6">
-                <Card>
+                <Card className="shadow-lg">
                     <CardHeader className="items-center text-center p-6">
-                        <Avatar className="h-28 w-28 border-4 border-background shadow-md mb-2">
+                        <Avatar className="h-28 w-28 border-4 border-background mb-2">
                             <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
                             <AvatarFallback className="text-4xl">{userInitials}</AvatarFallback>
                         </Avatar>
@@ -29,7 +34,7 @@ export default async function ProfilePage() {
                     </CardHeader>
                     <CardContent className="p-6 pt-0 space-y-4 text-sm text-muted-foreground">
                         <div className="flex items-center gap-3">
-                            <GraduationCap className="h-5 w-5" />
+                            <GraduationCapIcon className="h-5 w-5" />
                             <span>{user.academics.institution} &apos;{user.academics.graduationYear?.toString().slice(-2)}</span>
                         </div>
                         <div className="flex items-center gap-3">
@@ -111,6 +116,7 @@ export default async function ProfilePage() {
                 </form>
             </div>
         </div>
+      </div>
     </main>
   );
 }
