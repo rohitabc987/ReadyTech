@@ -3,7 +3,7 @@
 
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { companies, topics } from '@/lib/data/company-data';
@@ -15,6 +15,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 import type { Question } from '@/lib/types';
+import { Separator } from '@/components/ui/separator';
 
 type QuestionWithCompany = Question & { company: string; interviewId: string };
 
@@ -121,11 +122,11 @@ export default function QuestionsPage() {
     <main className="flex-1 mt-4">
         <CardContent>
             <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
-                <div className="w-full grid grid-cols-2 md:flex md:w-auto gap-2">
+                <div className="w-full grid grid-cols-2 md:flex md:w-auto md:gap-2">
                     <ComboboxFilter options={companies} placeholder="Company .." />
                     <ComboboxFilter options={topics} placeholder="Topic .." />
                 </div>
-                <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
+                <Button variant="outline" className="w-full md:w-auto mt-2 md:mt-0"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
           <div className="hidden md:block border rounded-lg">
             <Table>
@@ -155,23 +156,26 @@ export default function QuestionsPage() {
           </div>
           <div className="grid md:hidden gap-2">
             {questions.map((q, i) => (
-              <Card key={i} className="border-0 shadow-none bg-transparent">
-                <CardHeader className="p-4">
-                  <CardTitle className="text-base font-normal">{q.text}</CardTitle>
-                </CardHeader>
-                <CardContent className="p-4 pt-0">
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <div className="flex items-center gap-x-3">
-                      <Badge variant="secondary">{q.topic}</Badge>
-                      <span>&bull;</span>
-                      <span>{q.company}</span>
+              <React.Fragment key={i}>
+                <Card className="border-0 shadow-none bg-transparent">
+                  <CardHeader className="p-4 pb-2">
+                    <CardTitle className="text-base font-normal">{q.text}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="p-4 pt-2">
+                    <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <div className="flex items-center gap-x-3">
+                        <Badge variant="secondary">{q.topic}</Badge>
+                        <span>&bull;</span>
+                        <span>{q.company}</span>
+                      </div>
+                      <Button variant="outline" size="sm" asChild>
+                        <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
+                      </Button>
                     </div>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+                <Separator />
+              </React.Fragment>
             ))}
           </div>
         </CardContent>
