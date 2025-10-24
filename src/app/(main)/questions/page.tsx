@@ -4,130 +4,57 @@
 import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { companies, topics } from '@/lib/data/company-data';
 import { getAllQuestions } from '@/lib/firebase/questions';
-import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
 import type { Question } from '@/lib/types';
 import { Separator } from '@/components/ui/separator';
+import { ContentFilter } from '@/components/content-filter';
 
 type QuestionWithCompany = Question & { company: string; interviewId: string };
 
-
-function ComboboxFilter({ options, placeholder, className }: { options: string[], placeholder: string, className?: string }) {
-  const [open, setOpen] = React.useState(false);
-  const [value, setValue] = React.useState('');
-  const [inputValue, setInputValue] = React.useState('');
-
-  const frameworkList = options.map(opt => ({ value: opt.toLowerCase(), label: opt }));
-
-  React.useEffect(() => {
-    if (!open) {
-        // Find if the input value matches a label in the list
-        const selectedFramework = frameworkList.find(
-            (framework) => framework.label.toLowerCase() === inputValue.toLowerCase()
-        );
-        // If it doesn't match, or if the input is empty, set the value to the raw input value
-        if (!selectedFramework) {
-            setValue(inputValue);
-        }
-    }
-  }, [open, inputValue, frameworkList]);
-
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Enter') {
-        event.preventDefault();
-        setValue(inputValue);
-        setOpen(false);
-    }
-  }
-
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("w-full justify-between text-muted-foreground font-normal", className)}
-        >
-          <span className="truncate">
-            {value
-              ? frameworkList.find((framework) => framework.value === value)?.label || value
-              : placeholder}
-          </span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-        <Command shouldFilter={true}>
-          <CommandInput 
-            placeholder={placeholder}
-            value={inputValue}
-            onValueChange={setInputValue}
-            onKeyDown={handleKeyDown}
-          />
-          <CommandList>
-            <CommandEmpty></CommandEmpty>
-            <CommandGroup>
-              {frameworkList.map((framework) => (
-                <CommandItem
-                  key={framework.value}
-                  value={framework.value}
-                  onSelect={(currentValue) => {
-                    const selectedLabel = frameworkList.find(f => f.value === currentValue)?.label || '';
-                    setValue(currentValue === value ? '' : currentValue);
-                    setInputValue(currentValue === value ? '' : selectedLabel)
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      'mr-2 h-4 w-4',
-                      value === framework.value ? 'opacity-100' : 'opacity-0'
-                    )}
-                  />
-                  {framework.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-
 export default function QuestionsPage() {
-  const [questions, setQuestions] = React.useState<QuestionWithCompany[]>([]);
+  const [allQuestions, setAllQuestions] = React.useState<QuestionWithCompany[]>([]);
+  const [filteredQuestions, setFilteredQuestions] = React.useState<QuestionWithCompany[]>([]);
 
   React.useEffect(() => {
     const loadQuestions = async () => {
-      const allQuestions = await getAllQuestions();
-      setQuestions(allQuestions);
+      const questions = await getAllQuestions();
+      setAllQuestions(questions);
+      setFilteredQuestions(questions);
     };
     loadQuestions();
   }, []);
+
+  const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
+    let questionsToFilter = [...allQuestions];
+    
+    if (filters.company) {
+      questionsToFilter = questionsToFilter.filter(q => q.company.toLowerCase() === filters.company?.toLowerCase());
+    }
+    if (filters.topic) {
+      questionsToFilter = questionsToFilter.filter(q => q.topic?.toLowerCase() === filters.topic?.toLowerCase());
+    }
+
+    setFilteredQuestions(questionsToFilter);
+  };
+
+  const handleClearFilters = () => {
+    setFilteredQuestions(allQuestions);
+  };
     
   return (
     <main className="flex-1 mt-4">
         <CardContent>
-            <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
-                <div className="w-full grid grid-cols-2 gap-2 md:flex md:w-auto md:gap-4">
-                    <ComboboxFilter options={companies} placeholder="Company .." className="md:w-60" />
-                    <ComboboxFilter options={topics} placeholder="Topic .." className="md:w-60" />
-                </div>
-                <Button variant="outline" className="w-full md:w-auto mt-2 md:mt-0"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
-            </div>
+            <ContentFilter 
+              initialFilters={{}}
+              onApply={handleApplyFilters}
+              onClear={handleClearFilters}
+              showCompanyFilter={true}
+              showTopicFilter={true}
+            />
+
           <div className="hidden md:block border rounded-lg">
             <Table>
               <TableHeader>
@@ -139,7 +66,7 @@ export default function QuestionsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {questions.map((q, i) => (
+                {filteredQuestions.map((q, i) => (
                   <TableRow key={i}>
                     <TableCell className="font-medium">{q.text}</TableCell>
                     <TableCell><Badge variant="secondary">{q.topic}</Badge></TableCell>
@@ -155,7 +82,7 @@ export default function QuestionsPage() {
             </Table>
           </div>
           <div className="grid md:hidden gap-2">
-            {questions.map((q, i) => (
+            {filteredQuestions.map((q, i) => (
               <React.Fragment key={i}>
                 <Card className="border-0 shadow-none bg-transparent">
                   <CardHeader className="p-4 pb-2">
@@ -164,9 +91,9 @@ export default function QuestionsPage() {
                   <CardContent className="p-4 pt-2">
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
                       <div className="flex items-center gap-x-3">
-                        <Badge variant="secondary">{q.topic}</Badge>
-                        <span>&bull;</span>
-                        <span>{q.company}</span>
+                        {q.topic && <Badge variant="secondary">{q.topic}</Badge>}
+                        {q.topic && q.company && <span>&bull;</span>}
+                        {q.company && <span>{q.company}</span>}
                       </div>
                       <Button variant="outline" size="sm" asChild>
                         <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
@@ -174,7 +101,7 @@ export default function QuestionsPage() {
                     </div>
                   </CardContent>
                 </Card>
-                <Separator />
+                { i < filteredQuestions.length - 1 && <Separator /> }
               </React.Fragment>
             ))}
           </div>
@@ -182,3 +109,36 @@ export default function QuestionsPage() {
     </main>
   );
 }
+
+// Keep the internal Table components for now, can be moved to ui/ if needed
+const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(({ className, ...props }, ref) => (
+  <div className="relative w-full overflow-auto">
+    <table ref={ref} className={cn("w-full caption-bottom text-sm", className)} {...props} />
+  </div>
+));
+Table.displayName = "Table";
+
+const TableHeader = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
+  <thead ref={ref} className={cn("[&_tr]:border-b", className)} {...props} />
+));
+TableHeader.displayName = "TableHeader";
+
+const TableBody = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(({ className, ...props }, ref) => (
+  <tbody ref={ref} className={cn("[&_tr:last-child]:border-0", className)} {...props} />
+));
+TableBody.displayName = "TableBody";
+
+const TableRow = React.forwardRef<HTMLTableRowElement, React.HTMLAttributes<HTMLTableRowElement>>(({ className, ...props }, ref) => (
+  <tr ref={ref} className={cn("border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted", className)} {...props} />
+));
+TableRow.displayName = "TableRow";
+
+const TableHead = React.forwardRef<HTMLTableCellElement, React.ThHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
+  <th ref={ref} className={cn("h-12 px-4 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0", className)} {...props} />
+));
+TableHead.displayName = "TableHead";
+
+const TableCell = React.forwardRef<HTMLTableCellElement, React.TdHTMLAttributes<HTMLTableCellElement>>(({ className, ...props }, ref) => (
+  <td ref={ref} className={cn("p-4 align-middle [&:has([role=checkbox])]:pr-0", className)} {...props} />
+));
+TableCell.displayName = "TableCell";
