@@ -20,7 +20,7 @@ import { Separator } from '@/components/ui/separator';
 type QuestionWithCompany = Question & { company: string; interviewId: string };
 
 
-function ComboboxFilter({ options, placeholder }: { options: string[], placeholder: string }) {
+function ComboboxFilter({ options, placeholder, className }: { options: string[], placeholder: string, className?: string }) {
   const [open, setOpen] = React.useState(false);
   const [value, setValue] = React.useState('');
   const [inputValue, setInputValue] = React.useState('');
@@ -57,7 +57,7 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full justify-between text-muted-foreground font-normal"
+          className={cn("w-full justify-between text-muted-foreground font-normal", className)}
         >
           <span className="truncate">
             {value
@@ -122,9 +122,9 @@ export default function QuestionsPage() {
     <main className="flex-1 mt-4">
         <CardContent>
             <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
-                <div className="w-full grid grid-cols-2 md:flex md:w-auto md:gap-2">
-                    <ComboboxFilter options={companies} placeholder="Company .." />
-                    <ComboboxFilter options={topics} placeholder="Topic .." />
+                <div className="w-full grid grid-cols-2 gap-2 md:flex md:w-auto md:gap-2">
+                    <ComboboxFilter options={companies} placeholder="Company .." className="md:w-48" />
+                    <ComboboxFilter options={topics} placeholder="Topic .." className="md:w-48" />
                 </div>
                 <Button variant="outline" className="w-full md:w-auto mt-2 md:mt-0"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
