@@ -23,7 +23,7 @@ function ComingSoonButton() {
   };
 
   return (
-    <Button variant="outline" size="lg" onClick={handleClick} data-cta="join">
+    <Button variant="outline" size="lg" onClick={handleClick} data-cta="join" className="btn-glow">
       Continue as School Student
     </Button>
   );
@@ -90,7 +90,7 @@ export function LandingPageContent() {
               A community-driven platform connecting students with mentors, resources, and real-world interview experiences to excel in competitive exams and tech careers.
             </p>
             <div ref={ctaRef} className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 p-2 rounded-lg" >
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="btn-glow">
                 <Link href="/dashboard" data-cta="join">
                   Continue as College Student
                 </Link>
