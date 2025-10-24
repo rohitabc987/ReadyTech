@@ -123,8 +123,8 @@ export default function QuestionsPage() {
         <CardContent>
             <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
                 <div className="w-full grid grid-cols-2 gap-2 md:flex md:w-auto md:gap-4">
-                    <ComboboxFilter options={companies} placeholder="Company .." className="md:w-48" />
-                    <ComboboxFilter options={topics} placeholder="Topic .." className="md:w-48" />
+                    <ComboboxFilter options={companies} placeholder="Company .." className="md:w-60" />
+                    <ComboboxFilter options={topics} placeholder="Topic .." className="md:w-60" />
                 </div>
                 <Button variant="outline" className="w-full md:w-auto mt-2 md:mt-0"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
@@ -182,4 +182,3 @@ export default function QuestionsPage() {
     </main>
   );
 }
-
