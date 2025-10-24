@@ -42,6 +42,19 @@ export default function ResourcesPage() {
     const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
       // Resource filtering logic can be added here if resources get tagged with company/topic
       console.log("Applying filters to resources:", filters);
+      // For now, just log and show all as an example
+      let resourcesToFilter = [...allResources];
+      
+      // Example of how it *could* work if resources had tags.
+      // This will not work currently as resources don't have company/topic.
+      // if (filters.company) {
+      //   // resourcesToFilter = resourcesToFilter.filter(r => r.company.toLowerCase() === filters.company.toLowerCase());
+      // }
+      // if (filters.topic) {
+      //   // resourcesToFilter = resourcesToFilter.filter(r => r.topics.includes(filters.topic));
+      // }
+
+      setFilteredResources(resourcesToFilter);
     };
 
     const handleClearFilters = () => {
@@ -53,23 +66,13 @@ export default function ResourcesPage() {
     <main className="flex-1 mt-4">
        <Card>
           <CardContent className="pt-6">
-              <div className="relative mb-4">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
-                  <Input 
-                    placeholder="Search resources by title or description..." 
-                    className="pl-10"
-                    onChange={handleSearch}
-                  />
-              </div>
-
-              {/* In the future, resources could be tagged, enabling these filters. */}
-              {/* <ContentFilter 
+              <ContentFilter 
                 initialFilters={{}}
                 onApply={handleApplyFilters}
                 onClear={handleClearFilters}
                 showCompanyFilter={true}
                 showTopicFilter={true}
-              /> */}
+              />
               
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {filteredResources.map(resource => (
@@ -93,7 +96,7 @@ export default function ResourcesPage() {
                   {filteredResources.length === 0 && (
                     <div className="md:col-span-3 text-center py-12 text-muted-foreground">
                       <h3 className="text-lg font-semibold">No resources found</h3>
-                      <p>Try adjusting your search term.</p>
+                      <p>Try adjusting your filters.</p>
                     </div>
                   )}
               </div>
