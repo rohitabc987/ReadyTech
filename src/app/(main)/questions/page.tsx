@@ -122,8 +122,8 @@ export default function QuestionsPage() {
         <CardContent>
             <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
                 <div className="w-full grid grid-cols-2 md:flex md:w-auto gap-2">
-                    <ComboboxFilter options={companies} placeholder="Filter by Company" />
-                    <ComboboxFilter options={topics} placeholder="Filter by Topic" />
+                    <ComboboxFilter options={companies} placeholder="Company .." />
+                    <ComboboxFilter options={topics} placeholder="Topic .." />
                 </div>
                 <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
@@ -159,15 +159,17 @@ export default function QuestionsPage() {
                 <CardHeader className="p-4">
                   <CardTitle className="text-base font-normal">{q.text}</CardTitle>
                 </CardHeader>
-                <CardContent className="p-4 pt-0 space-y-3">
-                  <div className="flex items-center gap-x-3 text-sm text-muted-foreground">
-                    <Badge variant="secondary">{q.topic}</Badge>
-                    <span>&bull;</span>
-                    <span>{q.company}</span>
+                <CardContent className="p-4 pt-0">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-x-3">
+                      <Badge variant="secondary">{q.topic}</Badge>
+                      <span>&bull;</span>
+                      <span>{q.company}</span>
+                    </div>
+                    <Button variant="outline" size="sm" asChild>
+                      <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
+                    </Button>
                   </div>
-                  <Button variant="outline" size="sm" asChild className="w-full">
-                    <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
-                  </Button>
                 </CardContent>
               </Card>
             ))}
