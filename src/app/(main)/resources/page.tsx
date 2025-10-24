@@ -3,9 +3,8 @@
 
 import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { getAllResources } from '@/lib/firebase/resources';
-import { FileText, Link as LinkIcon, Search, Video } from 'lucide-react';
+import { FileText, Link as LinkIcon, Video } from 'lucide-react';
 import { ContentFilter } from '@/components/content-filter';
 import type { Resource } from '@/lib/types';
 
@@ -30,78 +29,56 @@ export default function ResourcesPage() {
       loadResources();
     }, []);
 
-    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-      const searchTerm = e.target.value.toLowerCase();
-      const newFilteredResources = allResources.filter(r => 
-        r.title.toLowerCase().includes(searchTerm) || 
-        r.description?.toLowerCase().includes(searchTerm)
-      );
-      setFilteredResources(newFilteredResources);
-    };
-
     const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
-      // Resource filtering logic can be added here if resources get tagged with company/topic
       console.log("Applying filters to resources:", filters);
-      // For now, just log and show all as an example
       let resourcesToFilter = [...allResources];
       
-      // Example of how it *could* work if resources had tags.
-      // This will not work currently as resources don't have company/topic.
-      // if (filters.company) {
-      //   // resourcesToFilter = resourcesToFilter.filter(r => r.company.toLowerCase() === filters.company.toLowerCase());
-      // }
-      // if (filters.topic) {
-      //   // resourcesToFilter = resourcesToFilter.filter(r => r.topics.includes(filters.topic));
-      // }
+      // Filtering logic would be added here if resources were tagged.
+      // e.g., if (filters.topic) { resourcesToFilter = ... }
 
       setFilteredResources(resourcesToFilter);
     };
 
     const handleClearFilters = () => {
-      // Logic to clear resource filters
       setFilteredResources(allResources);
     };
 
   return (
     <main className="flex-1 mt-4">
-       <Card>
-          <CardContent className="pt-6">
-              <ContentFilter 
-                initialFilters={{}}
-                onApply={handleApplyFilters}
-                onClear={handleClearFilters}
-                showCompanyFilter={true}
-                showTopicFilter={true}
-              />
-              
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                  {filteredResources.map(resource => (
-                      <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
-                          <Card className="h-full hover:bg-muted/50 transition-colors">
-                              <CardHeader className="flex-row items-start gap-4 space-y-0 p-4">
-                                  <div className="p-3 bg-muted rounded-lg">
-                                      <ResourceIcon type={resource.type} />
-                                  </div>
-                                  <div>
-                                      <CardTitle className="text-base font-semibold">{resource.title}</CardTitle>
-                                      <CardDescription className="text-xs uppercase font-medium">{resource.type}</CardDescription>
-                                  </div>
-                              </CardHeader>
-                              <CardContent className="p-4 pt-0">
-                                  <p className="text-sm text-muted-foreground line-clamp-2">{resource.description}</p>
-                              </CardContent>
-                          </Card>
-                      </a>
-                  ))}
-                  {filteredResources.length === 0 && (
-                    <div className="md:col-span-3 text-center py-12 text-muted-foreground">
-                      <h3 className="text-lg font-semibold">No resources found</h3>
-                      <p>Try adjusting your filters.</p>
-                    </div>
-                  )}
-              </div>
-          </CardContent>
-       </Card>
+      <ContentFilter 
+        initialFilters={{}}
+        onApply={handleApplyFilters}
+        onClear={handleClearFilters}
+        showCompanyFilter={true}
+        showTopicFilter={true}
+      />
+      
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {filteredResources.map(resource => (
+              <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
+                  <Card className="h-full hover:bg-muted/50 transition-colors">
+                      <CardHeader className="flex-row items-start gap-4 space-y-0 p-4">
+                          <div className="p-3 bg-muted rounded-lg">
+                              <ResourceIcon type={resource.type} />
+                          </div>
+                          <div>
+                              <CardTitle className="text-base font-semibold">{resource.title}</CardTitle>
+                              <CardDescription className="text-xs uppercase font-medium">{resource.type}</CardDescription>
+                          </div>
+                      </CardHeader>
+                      <CardContent className="p-4 pt-0">
+                          <p className="text-sm text-muted-foreground line-clamp-2">{resource.description}</p>
+                      </CardContent>
+                  </Card>
+              </a>
+          ))}
+          {filteredResources.length === 0 && (
+            <div className="md:col-span-3 text-center py-12 text-muted-foreground">
+              <h3 className="text-lg font-semibold">No resources found</h3>
+              <p>Try adjusting your filters.</p>
+            </div>
+          )}
+      </div>
     </main>
   );
 }
