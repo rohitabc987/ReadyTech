@@ -13,6 +13,10 @@ import { Switch } from '@/components/ui/switch';
 import { Mail, User as UserIcon, GraduationCapIcon } from 'lucide-react';
 import type { User } from '@/lib/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ComboboxInput } from '@/components/combobox-input';
+import { iitList, nitList, iiitList, privateList } from '@/lib/data/collegelist';
+
+const allColleges = [...iitList, ...nitList, ...iiitList, ...privateList];
 
 export default function ProfilePage() {
     const [user, setUser] = useState<User | null>(null);
@@ -51,6 +55,19 @@ export default function ProfilePage() {
                 setImagePreview(reader.result as string);
             };
             reader.readAsDataURL(file);
+        }
+    };
+    
+    const handleFieldChange = (field: keyof User, subField: keyof any, value: any) => {
+        if (user) {
+            setUser({
+                ...user,
+                [field]: {
+                    // @ts-ignore
+                    ...user[field],
+                    [subField]: value,
+                },
+            });
         }
     };
 
@@ -127,16 +144,16 @@ export default function ProfilePage() {
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name">Full Name</Label>
-                                    <Input id="name" defaultValue={user.personal.name} />
+                                    <Input id="name" value={user.personal.name} onChange={(e) => handleFieldChange('personal', 'name', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
-                                    <Input id="email" defaultValue={user.personal.email} disabled />
+                                    <Input id="email" value={user.personal.email} disabled />
                                 </div>
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="bio">Bio</Label>
-                                <Textarea id="bio" placeholder="Tell us about yourself..." defaultValue={user.personal.bio} className="min-h-[100px]" />
+                                <Textarea id="bio" placeholder="Tell us about yourself..." value={user.personal.bio} onChange={(e) => handleFieldChange('personal', 'bio', e.target.value)} className="min-h-[100px]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -149,12 +166,18 @@ export default function ProfilePage() {
                         <CardContent className="space-y-6 p-6 pt-0">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
-                                    <Label htmlFor="institution">Institution</Label>
-                                    <Input id="institution" defaultValue={user.academics.institution} />
+                                    <Label htmlFor="institution">College Name</Label>
+                                     <ComboboxInput
+                                        id="institution"
+                                        options={allColleges}
+                                        placeholder="Select or type your college"
+                                        value={user.academics.institution || ''}
+                                        onChange={(value) => handleFieldChange('academics', 'institution', value)}
+                                    />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="graduationYear">Graduation Year</Label>
-                                    <Input id="graduationYear" type="number" defaultValue={user.academics.graduationYear} />
+                                    <Input id="graduationYear" type="number" value={user.academics.graduationYear} onChange={(e) => handleFieldChange('academics', 'graduationYear', parseInt(e.target.value))} />
                                 </div>
                             </div>
                             <div className="flex items-center justify-between rounded-lg border p-4 bg-background">
@@ -164,12 +187,12 @@ export default function ProfilePage() {
                                         Enable this to appear in the "Connection" section for other users.
                                     </p>
                                 </div>
-                                <Switch id="is-mentor" defaultChecked={user.academics.role === 'mentor'} />
+                                <Switch id="is-mentor" checked={user.academics.role === 'mentor'} onCheckedChange={(checked) => handleFieldChange('academics', 'role', checked ? 'mentor' : 'learner')} />
                             </div>
                         </CardContent>
                     </Card>
 
-                    <div className="flex justify-end">
+                    <div className="flex justify-center">
                         <Button type="submit">Save All Changes</Button>
                     </div>
                 </form>
