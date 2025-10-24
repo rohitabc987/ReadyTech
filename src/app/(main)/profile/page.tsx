@@ -45,11 +45,11 @@ export default async function ProfilePage() {
             <div className="lg:col-span-2 flex flex-col gap-6">
                 <form className="space-y-6">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="p-6">
                             <CardTitle>Personal Details</CardTitle>
                             <CardDescription>Update your personal information. This will be displayed on your public profile.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6">
+                        <CardContent className="space-y-6 p-6">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
                                     <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
@@ -78,11 +78,11 @@ export default async function ProfilePage() {
                     </Card>
 
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="p-6">
                           <CardTitle>Academic & Professional Info</CardTitle>
-                          <CardDescription>Update your institution and graduation details.</CardDescription>
+                          <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6">
+                        <CardContent className="space-y-6 p-6">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="institution">Institution</Label>
@@ -93,15 +93,6 @@ export default async function ProfilePage() {
                                     <Input id="graduationYear" type="number" defaultValue={user.academics.graduationYear} />
                                 </div>
                             </div>
-                        </CardContent>
-                    </Card>
-                    
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Account Settings</CardTitle>
-                            <CardDescription>Manage your mentorship and notification preferences.</CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-4">
                             <div className="flex items-center justify-between rounded-lg border p-4">
                                 <div className="space-y-0.5">
                                     <Label htmlFor="is-mentor" className="text-base">Available for Mentorship</Label>
