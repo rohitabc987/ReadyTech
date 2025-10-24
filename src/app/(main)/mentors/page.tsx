@@ -24,26 +24,25 @@ function MentorCard({ user }: { user: User }) {
     return (
         <Link href={`/users/${user.id}`} className="block">
             <Card className="h-full flex flex-col hover:bg-muted/50 transition-colors">
-                <CardHeader className="items-center text-center p-4">
-                     <Avatar className="h-16 w-16 mb-2">
+                <CardHeader className="items-center text-center p-4 md:p-6">
+                     <Avatar className="h-16 w-16 md:h-20 md:w-20 mb-2">
                         <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
-                        <AvatarFallback className="text-xl">{userInitials}</AvatarFallback>
+                        <AvatarFallback className="text-xl md:text-2xl">{userInitials}</AvatarFallback>
                     </Avatar>
-                    <CardTitle className="font-headline text-base">{user.personal.name}</CardTitle>
+                    <CardTitle className="font-headline text-base md:text-lg">{user.personal.name}</CardTitle>
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                         <GraduationCap className="h-3 w-3" />
                         <span>{user.academics.institution}</span>
                     </div>
                 </CardHeader>
-                <CardContent className="p-4 pt-0 flex-1 flex flex-col">
-                    <p className="text-xs text-muted-foreground text-center flex-1 line-clamp-2">{user.personal.bio}</p>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 flex-1 flex flex-col">
+                    <p className="text-xs md:text-sm text-muted-foreground text-center flex-1 line-clamp-2">{user.personal.bio}</p>
                     <Button 
                         variant="default"
                         size="sm" 
-                        className="w-full mt-3 text-xs" 
-                        onClick={handleConnect}
-                    >
-                        <MessageSquare className="mr-1.5 h-3 w-3"/>Connect
+                        className="w-auto mt-3 text-xs mx-2 md:text-sm md:mx-4" 
+                        onClick={handleConnect}>
+                        <MessageSquare className="mr-1.5 h-3 w-3 md:h-4 md:w-4"/>Connect
                     </Button>
                 </CardContent>
             </Card>
