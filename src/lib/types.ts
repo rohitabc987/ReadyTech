@@ -109,6 +109,7 @@ export type Resource = {
   type: 'pdf' | 'video' | 'link';
   url: string;
   description?: string;
+  topic?: string;
 };
 
 export type Comment = {

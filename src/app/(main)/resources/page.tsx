@@ -3,10 +3,9 @@
 
 import * as React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { getAllResources } from '@/lib/firebase/resources';
+import { getAllResources, type EnrichedResource } from '@/lib/firebase/resources';
 import { FileText, Link as LinkIcon, Video } from 'lucide-react';
 import { ContentFilter } from '@/components/content-filter';
-import type { Resource } from '@/lib/types';
 
 const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
     switch (type) {
@@ -17,8 +16,8 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
 }
 
 export default function ResourcesPage() {
-    const [allResources, setAllResources] = React.useState<Resource[]>([]);
-    const [filteredResources, setFilteredResources] = React.useState<Resource[]>([]);
+    const [allResources, setAllResources] = React.useState<EnrichedResource[]>([]);
+    const [filteredResources, setFilteredResources] = React.useState<EnrichedResource[]>([]);
 
     React.useEffect(() => {
       const loadResources = async () => {
@@ -30,11 +29,14 @@ export default function ResourcesPage() {
     }, []);
 
     const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
-      console.log("Applying filters to resources:", filters);
       let resourcesToFilter = [...allResources];
       
-      // Filtering logic would be added here if resources were tagged.
-      // e.g., if (filters.topic) { resourcesToFilter = ... }
+      if (filters.company) {
+        resourcesToFilter = resourcesToFilter.filter(r => r.company?.toLowerCase() === filters.company?.toLowerCase());
+      }
+      if (filters.topic) {
+        resourcesToFilter = resourcesToFilter.filter(r => r.topic?.toLowerCase() === filters.topic?.toLowerCase());
+      }
 
       setFilteredResources(resourcesToFilter);
     };

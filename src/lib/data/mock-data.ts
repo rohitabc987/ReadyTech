@@ -208,10 +208,10 @@ export const mockQuestions: Question[] = [
 ];
 
 export const mockResources: Resource[] = [
-    { id: 'r1', postId: 'i1', title: 'Grokking the System Design Interview', type: 'link', url: '#', description: 'A comprehensive guide to prepare for system design interviews.' },
-    { id: 'r2', postId: 'i2', title: 'CSES Problem Set', type: 'link', url: '#', description: 'A great collection of competitive programming problems.' },
-    { id: 'r3', postId: 'i3', title: 'Google\'s C++ Style Guide', type: 'pdf', url: '#', description: 'Best practices for writing clean and maintainable C++ code.' },
-    { id: 'r4', postId: 'i3', title: 'Fireship.io - 100 Seconds of Code', type: 'video', url: '#', description: 'Quick and concise videos on a variety of tech topics.' },
+    { id: 'r1', postId: 'i1', title: 'Grokking the System Design Interview', type: 'link', url: '#', description: 'A comprehensive guide to prepare for system design interviews.', topic: 'System Design' },
+    { id: 'r2', postId: 'i2', title: 'CSES Problem Set', type: 'link', url: '#', description: 'A great collection of competitive programming problems.', topic: 'Algorithms' },
+    { id: 'r3', postId: 'i3', title: 'Google\'s C++ Style Guide', type: 'pdf', url: '#', description: 'Best practices for writing clean and maintainable C++ code.', topic: 'Data Structures' },
+    { id: 'r4', postId: 'i3', title: 'Fireship.io - 100 Seconds of Code', type: 'video', url: '#', description: 'Quick and concise videos on a variety of tech topics.', topic: 'Data Structures' },
 ];
 
 export const mockComments: Comment[] = [
