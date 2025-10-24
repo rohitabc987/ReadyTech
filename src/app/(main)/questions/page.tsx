@@ -31,10 +31,10 @@ export default function QuestionsPage() {
     let questionsToFilter = [...allQuestions];
     
     if (filters.company) {
-      questionsToFilter = questionsToFilter.filter(q => q.company.toLowerCase() === filters.company?.toLowerCase());
+      questionsToFilter = questionsToFilter.filter(q => q.company.toLowerCase().includes(filters.company?.toLowerCase() || ''));
     }
     if (filters.topic) {
-      questionsToFilter = questionsToFilter.filter(q => q.topic?.toLowerCase() === filters.topic?.toLowerCase());
+      questionsToFilter = questionsToFilter.filter(q => q.topic?.toLowerCase().includes(filters.topic?.toLowerCase() || ''));
     }
 
     setFilteredQuestions(questionsToFilter);
@@ -85,17 +85,17 @@ export default function QuestionsPage() {
             {filteredQuestions.map((q, i) => (
               <React.Fragment key={i}>
                 <Card className="border-0 shadow-none bg-transparent">
-                  <CardHeader className="p-4 pb-2">
+                  <CardHeader className="p-2 pb-2">
                     <CardTitle className="text-base font-normal line-clamp-2">{q.text}</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-4 pt-2">
+                  <CardContent className="p-2 pt-2">
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <div className="flex items-center gap-x-3">
+                      <div className="flex items-center gap-x-3 flex-wrap">
                         {q.topic && <Badge variant="secondary">{q.topic}</Badge>}
-                        {q.topic && q.company && <span>&bull;</span>}
+                        {q.topic && q.company && <span className="hidden sm:inline">&bull;</span>}
                         {q.company && <span>{q.company}</span>}
                       </div>
-                      <Button variant="outline" size="sm" asChild>
+                      <Button variant="outline" size="sm" asChild className="h-auto px-2 py-1 text-xs">
                         <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
                       </Button>
                     </div>
