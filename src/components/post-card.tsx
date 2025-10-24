@@ -176,7 +176,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 
   return (
     <Card className="border shadow-sm">
-        <CardHeader className="p-6">
+        <CardHeader className="px-6 pt-4">
             <div className="flex items-start gap-4">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-12 w-12">
@@ -206,7 +206,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 )}
             </div>
         </CardHeader>
-        <CardContent className="px-6 pt-0 pb-4">
+        <CardContent className="px-6">
             <div className="relative mb-4">
             {showCompanyInfo && (
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
@@ -227,7 +227,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
             </div>
 
 
-            <Separator className="my-4" />
+            <Separator className="my-2" />
             <div className="flex items-center justify-start gap-2 text-sm text-muted-foreground">
               <Button 
                 variant="ghost" 

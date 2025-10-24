@@ -44,8 +44,8 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
     return (
         <Card>
             <CardHeader>
-                <div className="flex justify-between items-center ">
-                <CardTitle className=" text-bs md:text-xl" >Filter Posts</CardTitle>
+                <div className="flex justify-between items-center p-6">
+                <CardTitle className=" text-bs md:text-2xl" >Filter Posts</CardTitle>
                 {areFiltersActive && (
                     <Button
                     variant="ghost"
@@ -104,7 +104,7 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
                     <SheetTrigger asChild>
                         <Button variant="outline" className="w-full relative">
                         <Filter className="mr-2 h-4 w-4" /> More
-                        {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>}
+                        {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span></span>}
                         </Button>
                     </SheetTrigger>
                     <SheetContent>
@@ -201,7 +201,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
         onApply();
         setIsSheetOpen(false);
     }
-    const areAdvancedFiltersActive = filters.year !== '' || filters.college !== '' || filters.type !== '';
+    const areAdvancedFiltersActive = (filters.year !== '' && filters.year !== 'all') || (filters.college !== '' && filters.college !== 'all') || (filters.type !== '' && filters.type !== 'all');
 
     return (
         <div className="p-4 bg-card md:rounded-lg border">
@@ -248,7 +248,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
                         <Button variant="outline" className="w-full relative">
                             <Filter className="mr-2 h-4 w-4" />
                             More
-                            {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-primary"></span></span>}
+                            {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span></span>}
                         </Button>
                     </SheetTrigger>
                     <SheetContent>
