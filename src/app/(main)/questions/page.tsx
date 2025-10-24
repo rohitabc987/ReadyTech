@@ -56,7 +56,7 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
           variant="outline"
           role="combobox"
           aria-expanded={open}
-          className="w-full md:w-[200px] justify-between text-muted-foreground font-normal"
+          className="w-full justify-between text-muted-foreground font-normal"
         >
           <span className="truncate">
             {value
@@ -66,7 +66,7 @@ function ComboboxFilter({ options, placeholder }: { options: string[], placehold
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-[200px] p-0">
+      <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
         <Command shouldFilter={true}>
           <CommandInput 
             placeholder={placeholder}
@@ -120,15 +120,11 @@ export default function QuestionsPage() {
   return (
     <main className="flex-1 mt-4">
         <CardContent>
-            <div className="flex flex-col md:flex-row gap-2 mb-4">
-                {/* <div className="relative flex-1">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
-                    <Input placeholder="Search questions..." className="pl-10"/>
+            <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
+                <div className="w-full grid grid-cols-2 md:flex md:w-auto gap-2">
+                    <ComboboxFilter options={companies} placeholder="Filter by Company" />
+                    <ComboboxFilter options={topics} placeholder="Filter by Topic" />
                 </div>
-                 */}
-                <ComboboxFilter options={companies} placeholder="Filter by Company" />
-                <ComboboxFilter options={topics} placeholder="Filter by Topic" />
-
                 <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
           <div className="hidden md:block border rounded-lg">
