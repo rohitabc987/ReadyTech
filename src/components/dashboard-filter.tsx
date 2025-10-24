@@ -225,7 +225,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
                     <ComboboxInput
                         id="mobile-search-company"
                         options={companies}
-                        placeholder="e.g. Google"
+                        placeholder="Cmpany .."
                         value={filters.company}
                         onChange={(value) => handleInputChange('company', value)}
                     />
@@ -235,7 +235,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
                     <ComboboxInput
                         id="mobile-search-role"
                         options={roles}
-                        placeholder="e.g. SDE"
+                        placeholder="Topic .."
                         value={filters.role}
                         onChange={(value) => handleInputChange('role', value)}
                     />

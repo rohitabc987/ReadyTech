@@ -13,21 +13,21 @@ function MentorCard({ user }: { user: User }) {
 
     return (
         <Card className="h-full flex flex-col">
-            <CardHeader className="items-center text-center">
-                 <Avatar className="h-24 w-24 mb-2">
+            <CardHeader className="items-center text-center p-4">
+                 <Avatar className="h-20 w-20 mb-2">
                     <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
-                    <AvatarFallback className="text-3xl">{userInitials}</AvatarFallback>
+                    <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
                 </Avatar>
-                <CardTitle className="font-headline">{user.personal.name}</CardTitle>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <GraduationCap className="h-4 w-4" />
+                <CardTitle className="font-headline text-lg">{user.personal.name}</CardTitle>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                    <GraduationCap className="h-3 w-3" />
                     <span>{user.academics.institution}</span>
                 </div>
             </CardHeader>
-            <CardContent className="flex-1 flex flex-col">
-                <p className="text-sm text-muted-foreground text-center flex-1">{user.personal.bio}</p>
-                <Button asChild className="w-full mt-4">
-                    <Link href={`/users/${user.id}`}><MessageSquare className="mr-2 h-4 w-4"/>View Profile</Link>
+            <CardContent className="p-4 pt-0 flex-1 flex flex-col">
+                <p className="text-xs text-muted-foreground text-center flex-1 line-clamp-3">{user.personal.bio}</p>
+                <Button asChild size="sm" className="w-full mt-3 text-xs">
+                    <Link href={`/users/${user.id}`}><MessageSquare className="mr-1.5 h-3 w-3"/>Profile</Link>
                 </Button>
             </CardContent>
         </Card>
@@ -39,18 +39,19 @@ export default async function MentorsPage() {
 
   return (
     <main className="flex-1 mt-4">
-      {/* <Card> */}
-          {/* <CardHeader> */}
-              <div className="mb-5 mt-0" >Connect with experienced professionals from top companies and colleges.</div>
-          {/* </CardHeader> */}
-          <CardContent>
-               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                  {mentors.map(mentor => (
-                      <MentorCard key={mentor.id} user={mentor} />
-                  ))}
-              </div>
-          </CardContent>
-      {/* </Card> */}
+          <Card>
+            <CardHeader>
+                <CardTitle>Find a Mentor</CardTitle>
+                <CardDescription>Connect with experienced professionals from top companies and colleges.</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    {mentors.map(mentor => (
+                        <MentorCard key={mentor.id} user={mentor} />
+                    ))}
+                </div>
+            </CardContent>
+          </Card>
     </main>
   );
 }

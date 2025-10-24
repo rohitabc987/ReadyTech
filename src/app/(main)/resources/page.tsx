@@ -46,7 +46,7 @@ export default function ResourcesPage() {
     };
 
   return (
-    <main className="flex-1 mt-4">
+    <main className="flex-1 mt-4 p-2">
       <ContentFilter 
         initialFilters={{}}
         onApply={handleApplyFilters}
