@@ -6,13 +6,14 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Briefcase, Calendar, MessageSquare, Star, ThumbsUp, Share2 } from 'lucide-react';
+import { MessageSquare, Star, ThumbsUp, Share2 } from 'lucide-react';
 import { Separator } from '@/components/ui/separator';
 import { Textarea } from '@/components/ui/textarea';
 import type { Post, PostStats, User } from '@/lib/types';
 import { formatDistanceToNow } from 'date-fns';
 import { useIsMobile } from '@/hooks/use-mobile';
-
+import { cn } from '@/lib/utils';
+import { useToast } from '@/hooks/use-toast';
 
 export type EnrichedPost = Post & { 
   stats: PostStats;
@@ -30,6 +31,8 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
     const descriptionRef = useRef<HTMLParagraphElement>(null);
     const [isClamped, setIsClamped] = useState(false);
     const [isCommenting, setIsCommenting] = useState(false);
+    const [isLiked, setIsLiked] = useState(false);
+    const { toast } = useToast();
     
     useEffect(() => {
         if (createdAt) {
@@ -48,6 +51,30 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
       return () => window.removeEventListener('resize', checkClamp);
     }, []);
 
+    const handleLike = () => {
+      setIsLiked(!isLiked);
+    };
+
+    const handleShare = async () => {
+      const shareData = {
+        title: post.main.title,
+        text: post.main.description,
+        url: `${window.location.origin}/interviews/${post.id}`,
+      };
+      try {
+        if (navigator.share) {
+          await navigator.share(shareData);
+        } else {
+          await navigator.clipboard.writeText(shareData.url);
+          toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
+        }
+      } catch (error) {
+        console.error('Error sharing:', error);
+        await navigator.clipboard.writeText(shareData.url);
+        toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
+      }
+    };
+
     const isAvatarUrl = authorAvatar?.startsWith('http');
     const avatarInitials = isAvatarUrl ? '' : authorAvatar?.split(' ').map(n => n[0]).join('') || '';
     const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
@@ -56,7 +83,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
 
     return (
         <div className="p-3 bg-card border">
-            <div className="flex items-start gap-3 ">
+            <div className="flex items-start gap-3">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
                         <AvatarImage src={isAvatarUrl ? authorAvatar : undefined} alt={authorName} />
@@ -113,8 +140,13 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
             <Separator className="my-2 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
             <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <div className="flex items-center gap-1 -ml-2">
-                    <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
-                        <ThumbsUp className="h-4 w-4" />
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className={cn("h-auto px-2 py-1 gap-1 text-xs transition-colors", isLiked && "text-red-500 hover:text-red-600")}
+                      onClick={handleLike}
+                    >
+                        <ThumbsUp className={cn("h-4 w-4 transition-transform active:scale-125", isLiked && "fill-red-500")} />
                         <span>Like</span>
                     </Button>
                     <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs" onClick={() => setIsCommenting(!isCommenting)}>
@@ -122,7 +154,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                         <span>Comment</span>
                     </Button>
                 </div>
-                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
+                <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs" onClick={handleShare}>
                     <Share2 className="h-4 w-4" />
                     <span>Share</span>
                 </Button>
@@ -154,6 +186,8 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
   const [formattedDate, setFormattedDate] = useState('');
   const [isClamped, setIsClamped] = useState(false);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
+  const [isLiked, setIsLiked] = useState(false);
+  const { toast } = useToast();
 
 
   useEffect(() => {
@@ -175,6 +209,30 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
     window.addEventListener('resize', checkClamp);
     return () => window.removeEventListener('resize', checkClamp);
   }, [isClamped]);
+
+  const handleLike = () => {
+    setIsLiked(!isLiked);
+  };
+
+  const handleShare = async () => {
+    const shareData = {
+      title: post.main.title,
+      text: post.main.description,
+      url: `${window.location.origin}/interviews/${post.id}`,
+    };
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(shareData.url);
+        toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+      await navigator.clipboard.writeText(shareData.url);
+      toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
+    }
+  };
 
 
   const isAvatarUrl = authorAvatar?.startsWith('http');
@@ -205,7 +263,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                     <CardTitle className="font-headline text-xl leading-snug mb-0">
                         <Link href={detailLink} className="hover:underline line-clamp-2">{title}</Link>
                     </CardTitle>
-                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground mt-1.5">
+                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-muted-foreground mt-1.5">
                         <span>{authorName}</span>
                         <span className="text-muted-foreground/50">&bull;</span>
                         <span>{type}</span>
@@ -223,7 +281,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 )}
             </div>
         </CardHeader>
-        <CardContent className="px-6 pt-4">
+        <CardContent className="px-6 pt-4 pb-4">
             <div className="relative mb-4">
             {showCompanyInfo && (
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
@@ -249,9 +307,10 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
+                className={cn("h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 transition", isLiked ? "text-red-500 hover:text-red-600" : "hover:text-primary")}
+                onClick={handleLike}
               >
-                <ThumbsUp className="h-5 w-5" />
+                <ThumbsUp className={cn("h-5 w-5 transition-transform active:scale-125", isLiked && "fill-red-500")} />
                 <span>Like</span>
               </Button>
 
@@ -268,6 +327,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 variant="ghost" 
                 size="sm" 
                 className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
+                onClick={handleShare}
               >
                 <Share2 className="h-5 w-5" />
                 <span>Share</span>
@@ -305,3 +365,5 @@ export function PostCard(props: PostCardProps) {
   
   return isMobile ? <MobilePostCard key="mobile" {...props} /> : <DesktopPostCard key="desktop" {...props} />;
 }
+
+    
