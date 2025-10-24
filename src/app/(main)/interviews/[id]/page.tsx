@@ -56,7 +56,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     <Card>
-                        <CardHeader>
+                        <CardHeader className="p-6">
                             <div className="flex items-start justify-between">
                                 <CardTitle className="font-headline text-2xl pr-4">{interview.main.title}</CardTitle>
                                 <div className="flex items-center gap-2 shrink-0">
@@ -107,7 +107,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                     </Card>
                     
                     <Card id="comments">
-                        <CardHeader>
+                        <CardHeader className="p-6">
                             <CardTitle>Comments ({stats.commentsCount})</CardTitle>
                         </CardHeader>
                         <CardContent className="space-y-6">
@@ -150,7 +150,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
 
                 {author && <div className="lg:col-span-1">
                     <Card>
-                        <CardHeader className="flex-row items-center gap-4 space-y-0">
+                        <CardHeader className="flex-row items-center gap-4 space-y-0 p-6">
                             <Avatar className="h-12 w-12">
                                 <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name}/>
                                 <AvatarFallback>{authorInitials}</AvatarFallback>
