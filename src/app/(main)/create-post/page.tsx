@@ -99,14 +99,11 @@ export default function NewPostPage() {
             localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         };
 
-        // Subscribe to form changes for auto-saving
-        const subscription = form.watch((value, { name, type }) => {
+        const subscription = form.watch(() => {
             saveDraft();
         });
-
-        // We still need this effect to re-run if `questions` changes,
-        // because `questions` are not part of the `react-hook-form` state.
-        saveDraft();
+        
+        saveDraft(); // Also save when `questions` state changes
 
         return () => subscription.unsubscribe();
     }, [form, questions]);
@@ -154,11 +151,9 @@ export default function NewPostPage() {
         // Here you would handle form submission, e.g., saving to Firestore
         // and uploading files to Firebase Storage
         
-        // Clear draft after successful submission
         localStorage.removeItem(DRAFT_KEY);
         toast({ title: "Post Published!", description: "Your post is now live." });
         
-        // Optionally, redirect the user or clear the form
         form.reset();
         setQuestions([{ id: 0, text: '', isMCQ: false, options: [] }]);
         setUploadedFiles([]);
@@ -166,8 +161,8 @@ export default function NewPostPage() {
     
     const handleSaveDraft = () => {
         // The form is already auto-saving. This button just provides explicit user feedback.
-        const currentValues = form.getValues();
-        const draftData = { formValues: currentValues, questions, uploadedFiles: [] }; // Files not saved
+        const formValues = form.getValues();
+        const draftData = { formValues, questions };
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         toast({
             title: 'Draft Saved!',
