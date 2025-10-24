@@ -123,7 +123,7 @@ export default function ProfilePage() {
                             <CardTitle>Personal Details</CardTitle>
                             <CardDescription>Update your personal information. This will be displayed on your public profile.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6 p-6 pt-0">
+                        <CardContent className="space-y-6 p-6">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
                                     <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
@@ -144,7 +144,7 @@ export default function ProfilePage() {
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="name">Full Name</Label>
-                                    <Input id="name" value={user.personal.name} onChange={(e) => handleFieldChange('personal', 'name', e.target.value)} />
+                                    <Input id="name" value={user.personal.name || ''} onChange={(e) => handleFieldChange('personal', 'name', e.target.value)} />
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
@@ -153,7 +153,7 @@ export default function ProfilePage() {
                             </div>
                             <div className="space-y-2">
                                 <Label htmlFor="bio">Bio</Label>
-                                <Textarea id="bio" placeholder="Tell us about yourself..." value={user.personal.bio} onChange={(e) => handleFieldChange('personal', 'bio', e.target.value)} className="min-h-[100px]" />
+                                <Textarea id="bio" placeholder="Tell us about yourself..." value={user.personal.bio || ''} onChange={(e) => handleFieldChange('personal', 'bio', e.target.value)} className="min-h-[100px]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -163,7 +163,7 @@ export default function ProfilePage() {
                           <CardTitle>Academic & Professional Info</CardTitle>
                           <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6 p-6 pt-0">
+                        <CardContent className="space-y-6 p-6">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="institution">College Name</Label>
@@ -177,7 +177,7 @@ export default function ProfilePage() {
                                 </div>
                                 <div className="space-y-2">
                                     <Label htmlFor="graduationYear">Graduation Year</Label>
-                                    <Input id="graduationYear" type="number" value={user.academics.graduationYear} onChange={(e) => handleFieldChange('academics', 'graduationYear', parseInt(e.target.value))} />
+                                    <Input id="graduationYear" type="number" value={user.academics.graduationYear || ''} onChange={(e) => handleFieldChange('academics', 'graduationYear', parseInt(e.target.value))} />
                                 </div>
                             </div>
                             <div className="flex items-center justify-between rounded-lg border p-4 bg-background">
