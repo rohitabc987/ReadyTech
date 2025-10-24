@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
-import { PlusCircle, Upload, Trash2 } from 'lucide-react';
+import { PlusCircle, Upload, Trash2, File as FileIcon } from 'lucide-react';
 import { ComboboxInput } from '@/components/combobox-input';
 import { companies, roles } from '@/lib/data/company-data';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -49,6 +49,7 @@ export default function NewPostPage() {
         { id: 0, text: '', isMCQ: false, options: [] },
         { id: 1, text: '', isMCQ: false, options: [] }
     ]);
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
 
     const form = useForm<PostFormValues>({
         resolver: zodResolver(postFormSchema),
@@ -91,10 +92,16 @@ export default function NewPostPage() {
                 result: data.result,
             },
             questions: questions,
+            resources: uploadedFiles.map(file => ({
+                name: file.name,
+                size: file.size,
+                type: file.type,
+            })),
         };
 
         console.log("Submitting Post Data:", postData);
         // Here you would handle form submission, e.g., saving to Firestore
+        // and uploading files to Firebase Storage
     }
 
     const addQuestion = () => {
@@ -136,6 +143,17 @@ export default function NewPostPage() {
                 : q
         ));
     };
+    
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (event.target.files) {
+            setUploadedFiles(prevFiles => [...prevFiles, ...Array.from(event.target.files!)]);
+        }
+    };
+
+    const removeFile = (fileName: string) => {
+        setUploadedFiles(uploadedFiles.filter(file => file.name !== fileName));
+    };
+
 
   return (
     <main className="flex-1 mt-4">
@@ -285,7 +303,7 @@ export default function NewPostPage() {
               </div>
 
               <div className=" p-2">
-                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">🗒 Description & Details</h3>
+                <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">📝 Description & Details</h3>
                 <div className="space-y-6">
                     <FormField
                       control={form.control}
@@ -392,9 +410,28 @@ export default function NewPostPage() {
                           </p>
                           <p className="text-xs text-muted-foreground">Cover image, PDFs, or other resources</p>
                           </div>
-                          <Input id="dropzone-file" type="file" className="hidden" />
+                          <Input id="dropzone-file" type="file" className="hidden" onChange={handleFileChange} multiple />
                       </Label>
                   </div>
+                  {uploadedFiles.length > 0 && (
+                        <div className="mt-4 space-y-2">
+                            <h4 className="font-semibold text-sm">Uploaded Files:</h4>
+                            <ul className="space-y-2">
+                                {uploadedFiles.map((file, index) => (
+                                    <li key={index} className="flex items-center justify-between p-2 border rounded-md bg-muted/50 text-sm">
+                                        <div className="flex items-center gap-2 truncate">
+                                            <FileIcon className="h-4 w-4 text-muted-foreground" />
+                                            <span className="truncate">{file.name}</span>
+                                            <span className="text-muted-foreground text-xs">({(file.size / 1024).toFixed(2)} KB)</span>
+                                        </div>
+                                        <Button variant="ghost" size="icon" onClick={() => removeFile(file.name)}>
+                                            <Trash2 className="h-4 w-4 text-destructive" />
+                                        </Button>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
@@ -408,3 +445,5 @@ export default function NewPostPage() {
     </main>
   );
 }
+
+    

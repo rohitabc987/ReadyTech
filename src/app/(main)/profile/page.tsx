@@ -120,7 +120,7 @@ export default function ProfilePage() {
                 <form className="space-y-6">
                     <Card className="bg-muted/30 border-dashed">
                         <CardHeader className="p-6">
-                            <CardTitle>Personal Details</CardTitle>
+                            <CardTitle>🧑‍🎓 Personal Details</CardTitle>
                             <CardDescription>Update your personal information. This will be displayed on your public profile.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6 p-6">
@@ -160,7 +160,7 @@ export default function ProfilePage() {
 
                     <Card className="bg-muted/30 border-dashed">
                         <CardHeader className="p-6">
-                          <CardTitle>Academic & Professional Info</CardTitle>
+                          <CardTitle>🎓 Academic & Professional Info</CardTitle>
                           <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6 p-6">
