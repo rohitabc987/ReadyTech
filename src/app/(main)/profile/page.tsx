@@ -17,9 +17,6 @@ export default async function ProfilePage() {
 
   return (
     <main className="flex-1 mt-4">
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-blue-500/10 blur-3xl -z-10"></div>
-        
         <div className="grid gap-6 lg:grid-cols-3">
             {/* Left Column - Profile Summary */}
             <div className="lg:col-span-1 flex flex-col gap-6">
@@ -49,12 +46,12 @@ export default async function ProfilePage() {
             {/* Right Column - Editable Form */}
             <div className="lg:col-span-2 flex flex-col gap-6">
                 <form className="space-y-6">
-                    <Card>
+                    <Card className="bg-muted/30 border-dashed">
                         <CardHeader className="p-6">
                             <CardTitle>Personal Details</CardTitle>
                             <CardDescription>Update your personal information. This will be displayed on your public profile.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6 p-6">
+                        <CardContent className="space-y-6 p-6 pt-0">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
                                     <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
@@ -82,12 +79,12 @@ export default async function ProfilePage() {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="bg-muted/30 border-dashed">
                         <CardHeader className="p-6">
                           <CardTitle>Academic & Professional Info</CardTitle>
                           <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription>
                         </CardHeader>
-                        <CardContent className="space-y-6 p-6">
+                        <CardContent className="space-y-6 p-6 pt-0">
                             <div className="grid md:grid-cols-2 gap-4">
                                 <div className="space-y-2">
                                     <Label htmlFor="institution">Institution</Label>
@@ -98,7 +95,7 @@ export default async function ProfilePage() {
                                     <Input id="graduationYear" type="number" defaultValue={user.academics.graduationYear} />
                                 </div>
                             </div>
-                            <div className="flex items-center justify-between rounded-lg border p-4">
+                            <div className="flex items-center justify-between rounded-lg border p-4 bg-background">
                                 <div className="space-y-0.5">
                                     <Label htmlFor="is-mentor" className="text-base">Available for Mentorship</Label>
                                     <p className="text-sm text-muted-foreground">
@@ -116,7 +113,6 @@ export default async function ProfilePage() {
                 </form>
             </div>
         </div>
-      </div>
     </main>
   );
 }
