@@ -35,3 +35,16 @@ export const roles: string[] = [
     "Site Reliability Engineer (SRE)",
     "Other"
 ];
+
+export const topics: string[] = [
+    "Data Structures",
+    "Algorithms",
+    "System Design",
+    "Trees",
+    "Graphs",
+    "Operating Systems",
+    "Databases",
+    "Networking",
+    "Machine Learning",
+    "Behavioral"
+];

@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { companies, roles } from '@/lib/data/company-data';
+import { companies, topics } from '@/lib/data/company-data';
 import { getAllQuestions } from '@/lib/firebase/questions';
 import { Filter, Search, Check, ChevronsUpDown } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
@@ -121,13 +121,13 @@ export default function QuestionsPage() {
     <main className="flex-1 mt-4">
         <CardContent>
             <div className="flex flex-col md:flex-row gap-2 mb-4">
-                <div className="relative flex-1">
+                {/* <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground"/>
                     <Input placeholder="Search questions..." className="pl-10"/>
                 </div>
-                
+                 */}
                 <ComboboxFilter options={companies} placeholder="Filter by Company" />
-                <ComboboxFilter options={roles} placeholder="Filter by Role" />
+                <ComboboxFilter options={topics} placeholder="Filter by Topic" />
 
                 <Button variant="outline" className="w-full md:w-auto"><Filter className="mr-2 h-4 w-4" /> Apply</Button>
             </div>
@@ -159,7 +159,7 @@ export default function QuestionsPage() {
           </div>
           <div className="grid md:hidden gap-2">
             {questions.map((q, i) => (
-              <Card key={i} className="border-b rounded-none shadow-none bg-transparent">
+              <Card key={i} className="border-0 shadow-none bg-transparent">
                 <CardHeader className="p-4">
                   <CardTitle className="text-base font-normal">{q.text}</CardTitle>
                 </CardHeader>
