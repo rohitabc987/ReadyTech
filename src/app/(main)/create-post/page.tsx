@@ -69,13 +69,15 @@ export default function NewPostPage() {
         },
     });
 
+    // Load draft from localStorage on initial render
     useEffect(() => {
         const savedDraft = localStorage.getItem(DRAFT_KEY);
         if (savedDraft) {
             try {
                 const draft = JSON.parse(savedDraft);
                 form.reset(draft.formValues);
-                setQuestions(draft.questions);
+                setQuestions(draft.questions || [{ id: 0, text: '', isMCQ: false, options: [] }]);
+                // Note: File objects can't be stored in JSON, so uploadedFiles are not restored.
                 toast({
                     title: 'Draft Loaded',
                     description: 'Your previously saved draft has been loaded.',
@@ -85,11 +87,23 @@ export default function NewPostPage() {
             }
         }
     }, [form, toast]);
-
+    
+    // Auto-save form changes to localStorage
+    useEffect(() => {
+        const subscription = form.watch((values) => {
+            const draftData = { formValues: values, questions };
+            localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
+        });
+        return () => subscription.unsubscribe();
+    }, [form, questions]);
 
     function onSubmit(data: PostFormValues) {
         if (!user) {
-            console.error("User not logged in");
+            toast({
+                title: 'Error',
+                description: 'You must be logged in to create a post.',
+                variant: 'destructive'
+            });
             return;
         }
         
@@ -128,20 +142,23 @@ export default function NewPostPage() {
         // Clear draft after successful submission
         localStorage.removeItem(DRAFT_KEY);
         toast({ title: "Post Published!", description: "Your post is now live." });
+        
+        // Optionally, redirect the user or clear the form
+        form.reset();
+        setQuestions([{ id: 0, text: '', isMCQ: false, options: [] }]);
+        setUploadedFiles([]);
     }
-
+    
     const handleSaveDraft = () => {
-        const currentValues = form.watch();
-        const draftData = {
-          formValues: currentValues,
-          questions,
-        };
+        // The form is already auto-saving. This button just provides explicit user feedback.
+        const currentValues = form.getValues();
+        const draftData = { formValues: currentValues, questions, uploadedFiles: [] }; // Files not saved
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         toast({
-          title: 'Draft Saved!',
-          description: 'Your progress has been saved.',
+            title: 'Draft Saved!',
+            description: 'Your progress has been saved.',
         });
-      };      
+    };
 
     const addQuestion = () => {
         setQuestions([...questions, { id: questionCounter++, text: '', isMCQ: false, options: [] }]);
@@ -168,20 +185,34 @@ export default function NewPostPage() {
     };
 
     const handleOptionChange = (questionId: number, optionId: number, text: string) => {
-        setQuestions(questions.map(q => 
-            q.id === questionId 
-            ? { ...q, options: q.options.map(opt => opt.id === optionId ? { ...opt, text } : opt) } 
-            : q
-        ));
+        setQuestions(prevQuestions => 
+            prevQuestions.map(q => 
+                q.id === questionId
+                ? {
+                    ...q,
+                    options: q.options.map(opt => 
+                        opt.id === optionId ? { ...opt, text } : opt
+                    )
+                  }
+                : q
+            )
+        );
     };
     
+    
     const handleCorrectOptionChange = (questionId: number, correctOptionId: number) => {
-        setQuestions(questions.map(q =>
-            q.id === questionId
-                ? { ...q, options: q.options.map(opt => ({ ...opt, isCorrect: opt.id === correctOptionId })) }
-                : q
-        ));
+        setQuestions(prevQuestions =>
+            prevQuestions.map(q =>
+                q.id === questionId
+                    ? {
+                        ...q,
+                        options: q.options.map(opt => ({ ...opt, isCorrect: opt.id === correctOptionId }))
+                      }
+                    : q
+            )
+        );
     };
+    
     
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
