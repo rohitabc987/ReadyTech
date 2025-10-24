@@ -140,7 +140,7 @@ export default function NewPostPage() {
   return (
     <main className="flex-1 mt-4">
       <Card>
-        <CardHeader className="p-4">
+        <CardHeader className="p-6">
           <CardTitle>Share Your Knowledge & Experience</CardTitle>
           <CardDescription>Start by providing the core details of the experience you're sharing. Fields marked with <span className="text-destructive">*</span> are required.</CardDescription>
         </CardHeader>

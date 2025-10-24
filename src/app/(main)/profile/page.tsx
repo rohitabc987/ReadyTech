@@ -1,4 +1,7 @@
 
+'use client';
+
+import { useState, useEffect, useRef } from 'react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,13 +10,65 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { getCurrentUser } from '@/lib/firebase/users';
 import { Switch } from '@/components/ui/switch';
-import { Mail, User as UserIcon } from 'lucide-react';
-import { GraduationCapIcon } from 'lucide-react';
+import { Mail, User as UserIcon, GraduationCapIcon } from 'lucide-react';
+import type { User } from '@/lib/types';
+import { Skeleton } from '@/components/ui/skeleton';
 
+export default function ProfilePage() {
+    const [user, setUser] = useState<User | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [userInitials, setUserInitials] = useState('');
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
-export default async function ProfilePage() {
-    const user = await getCurrentUser();
-    const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const currentUser = await getCurrentUser();
+                setUser(currentUser);
+                setUserInitials(currentUser.personal.name.split(' ').map(n => n[0]).join(''));
+                if (currentUser.personal.avatarUrl) {
+                    setImagePreview(currentUser.personal.avatarUrl);
+                }
+            } catch (error) {
+                console.error("Failed to fetch user", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchUser();
+    }, []);
+
+    const handlePhotoChangeClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    if (loading || !user) {
+        return (
+             <main className="flex-1 mt-4">
+                <div className="grid gap-6 lg:grid-cols-3">
+                    <div className="lg:col-span-1">
+                        <Skeleton className="h-[300px] w-full" />
+                    </div>
+                    <div className="lg:col-span-2 space-y-6">
+                        <Skeleton className="h-[250px] w-full" />
+                        <Skeleton className="h-[250px] w-full" />
+                    </div>
+                </div>
+            </main>
+        );
+    }
 
   return (
     <main className="flex-1 mt-4">
@@ -23,13 +78,13 @@ export default async function ProfilePage() {
                 <Card className="shadow-lg">
                     <CardHeader className="items-center text-center p-6">
                         <Avatar className="h-28 w-28 border-4 border-background mb-2">
-                            <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
+                            <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
                             <AvatarFallback className="text-4xl">{userInitials}</AvatarFallback>
                         </Avatar>
                         <CardTitle className="font-headline text-2xl">{user.personal.name}</CardTitle>
                         <CardDescription>{user.personal.bio}</CardDescription>
                     </CardHeader>
-                    <CardContent className="p-6 pt-0 space-y-4 text-sm text-muted-foreground">
+                    <CardContent className="p-6 pt-0 space-y-4 text-sm text-muted-foreground flex flex-col items-center">
                         <div className="flex items-center gap-3">
                             <GraduationCapIcon className="h-5 w-5" />
                             <span>{user.academics.institution} &apos;{user.academics.graduationYear?.toString().slice(-2)}</span>
@@ -54,12 +109,19 @@ export default async function ProfilePage() {
                         <CardContent className="space-y-6 p-6 pt-0">
                             <div className="flex items-center gap-4">
                                 <Avatar className="h-20 w-20">
-                                    <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
+                                    <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
                                     <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
                                 </Avatar>
                                 <div>
-                                    <Button variant="outline" type="button">Change Photo</Button>
+                                    <Button variant="outline" type="button" onClick={handlePhotoChangeClick}>Change Photo</Button>
                                     <p className="text-xs text-muted-foreground mt-2">JPG, GIF or PNG. 1MB max.</p>
+                                    <Input 
+                                      type="file" 
+                                      ref={fileInputRef} 
+                                      onChange={handleFileChange}
+                                      className="hidden" 
+                                      accept="image/png, image/jpeg, image/gif"
+                                    />
                                 </div>
                             </div>
                             <div className="grid md:grid-cols-2 gap-4">
