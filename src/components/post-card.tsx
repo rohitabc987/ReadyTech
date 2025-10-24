@@ -176,19 +176,19 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 
   return (
     <Card className="border shadow-sm">
-        <CardHeader className="p-4 md:p-6">
-            <div className="flex items-start gap-3 md:gap-4">
+        <CardHeader className="p-6">
+            <div className="flex items-start gap-4">
                 <Link href={`/users/${authorId}`}>
-                    <Avatar className="h-10 w-10 md:h-12 md:w-12">
+                    <Avatar className="h-12 w-12">
                         <AvatarImage src={isAvatarUrl ? authorAvatar : undefined} alt={authorName} />
-                        <AvatarFallback className="text-sm md:text-base">{avatarInitials || authorName.split(' ').map(n=>n[0]).join('')}</AvatarFallback>
+                        <AvatarFallback className="text-base">{avatarInitials || authorName.split(' ').map(n=>n[0]).join('')}</AvatarFallback>
                     </Avatar>
                 </Link>
                 <div className="flex-1">
-                    <CardTitle className="font-headline text-base md:text-lg leading-snug">
+                    <CardTitle className="font-headline text-xl leading-snug mb-0">
                         <Link href={detailLink} className="hover:underline line-clamp-2">{title}</Link>
                     </CardTitle>
-                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs md:text-sm text-muted-foreground mt-1">
+                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground mt-1.5">
                         <span>{authorName}</span>
                         <span className="text-muted-foreground/50">&bull;</span>
                         <span>{type}</span>
@@ -199,59 +199,59 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                     </div>
                 </div>
                 {stats.avgRating && (
-                  <div className="flex items-center gap-1 text-xs md:text-sm text-amber-500 shrink-0">
+                  <div className="flex items-center gap-1.5 text-sm text-amber-500 shrink-0">
                       <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
                       <span className="font-semibold">{stats.avgRating.toFixed(1)}</span>
                   </div>
                 )}
             </div>
         </CardHeader>
-        <CardContent className="p-4 md:p-6 pt-0">
-            <div className="relative mb-2">
-              <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-2 pr-1">
+        <CardContent className="px-6 pt-0 pb-4">
+            <div className="relative mb-4">
+            {showCompanyInfo && (
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
+                <div className="flex items-center gap-1.5 bg-muted/90 px-2.5 py-1 rounded-full">
+                  <span>{company}</span>
+                </div>
+                <div className="flex items-center gap-1.5 bg-muted/80 px-2.5 py-1 rounded-full">
+                  <span>{role}</span>
+                </div>
+              </div>
+            )}
+              <p ref={descriptionRef} className="text-base text-muted-foreground line-clamp-3 pr-1">
                 {description}
               </p>
               {isClamped && (
                 <Link href={detailLink} className="absolute bottom-0 right-0 pl-1 text-sm font-semibold text-primary hover:underline bg-card"> ...Read More</Link>
               )}
             </div>
-            {showCompanyInfo && (
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground mt-3">
-                <div className="flex items-center gap-1.5 bg-muted/30 px-2 py-1 rounded-full">
-                  <Briefcase className="h-3.5 w-3.5 text-primary/70" />
-                  <span>{company}</span>
-                </div>
-                <div className="flex items-center gap-1.5 bg-muted/30 px-2 py-1 rounded-full">
-                  <span className="text-primary/70">🧑‍💻</span>
-                  <span>{role}</span>
-                </div>
-              </div>
-            )}
-            <Separator className="my-3 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
-            <div className="flex items-center justify-start gap-4 text-sm text-muted-foreground">
+
+
+            <Separator className="my-4" />
+            <div className="flex items-center justify-start gap-2 text-sm text-muted-foreground">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+                className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
               >
-                <ThumbsUp className="h-4 w-4" />
+                <ThumbsUp className="h-5 w-5" />
                 <span>Likes</span>
               </Button>
 
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+                className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
               >
-                <MessageSquare className="h-4 w-4" />
+                <MessageSquare className="h-5 w-5" />
                 <span>Comment</span>
               </Button>
                <Button 
                 variant="ghost" 
                 size="sm" 
-                className="h-auto px-3 py-1.5 gap-1 rounded-full hover:bg-primary/10 hover:text-primary transition"
+                className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
               >
-                <Share2 className="h-4 w-4" />
+                <Share2 className="h-5 w-5" />
                 <span>Share</span>
               </Button>
             </div>
