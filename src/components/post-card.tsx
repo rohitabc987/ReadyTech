@@ -61,19 +61,22 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
         text: post.main.description,
         url: `${window.location.origin}/interviews/${post.id}`,
       };
+      console.log("Attempting to share:", shareData);
       try {
         if (navigator.share) {
           await navigator.share(shareData);
+          console.log("Shared successfully!");
         } else {
           await navigator.clipboard.writeText(shareData.url);
           toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
+          console.log("Clipboard fallback used");
         }
       } catch (error) {
-        console.error('Error sharing:', error);
+        console.error("Error sharing:", error);
         await navigator.clipboard.writeText(shareData.url);
         toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
       }
-    };
+    };    
 
     const isAvatarUrl = authorAvatar?.startsWith('http');
     const avatarInitials = isAvatarUrl ? '' : authorAvatar?.split(' ').map(n => n[0]).join('') || '';
@@ -281,7 +284,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 )}
             </div>
         </CardHeader>
-        <CardContent className="p-6 pt-4 pb-4">
+        <CardContent className="p-6 pt-2 pb-4">
             <div className="relative mb-4">
             {showCompanyInfo && (
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">

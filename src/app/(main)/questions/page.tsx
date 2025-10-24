@@ -157,28 +157,22 @@ export default function QuestionsPage() {
               </TableBody>
             </Table>
           </div>
-          <div className="grid md:hidden gap-4">
+          <div className="grid md:hidden gap-2">
             {questions.map((q, i) => (
-              <Card key={i} className="flex flex-col">
-                <CardHeader>
-                  <CardDescription>Question</CardDescription>
-                  <CardTitle className="text-base">{q.text}</CardTitle>
+              <Card key={i} className="border-b rounded-none shadow-none bg-transparent">
+                <CardHeader className="p-4">
+                  <CardTitle className="text-base font-normal">{q.text}</CardTitle>
                 </CardHeader>
-                <CardContent className="flex-1 space-y-4">
-                  <div className="flex justify-between">
-                    <CardDescription>Topic</CardDescription>
+                <CardContent className="p-4 pt-0 space-y-3">
+                  <div className="flex items-center gap-x-3 text-sm text-muted-foreground">
                     <Badge variant="secondary">{q.topic}</Badge>
+                    <span>&bull;</span>
+                    <span>{q.company}</span>
                   </div>
-                   <div className="flex justify-between">
-                    <CardDescription>Source Company</CardDescription>
-                    <span className="text-sm font-medium">{q.company}</span>
-                  </div>
-                </CardContent>
-                <div className="p-6 pt-0">
                   <Button variant="outline" size="sm" asChild className="w-full">
                     <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
                   </Button>
-                </div>
+                </CardContent>
               </Card>
             ))}
           </div>
