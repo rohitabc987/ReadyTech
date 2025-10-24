@@ -68,7 +68,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                                 <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
                             </div>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="p-6 pt-0">
                             <p className="whitespace-pre-wrap">{interview.main.description}</p>
                             
                             {interviewQuestions.length > 0 && (
@@ -85,32 +85,35 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                                     </div>
                                 </>
                             )}
-
-                            {interviewResources.length > 0 && (
-                                <>
-                                    <Separator className="my-6" />
-                                    <h3 className="font-semibold text-lg mb-4">Helpful Resources</h3>
-                                    <div className="space-y-2">
-                                        {interviewResources.map(r => (
-                                            <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50">
-                                                <ResourceIcon type={r.type} />
-                                                <div>
-                                                    <p className="font-semibold">{r.title}</p>
-                                                    {r.description && <p className="text-sm text-muted-foreground">{r.description}</p>}
-                                                </div>
-                                            </a>
-                                        ))}
-                                    </div>
-                                </>
-                            )}
                         </CardContent>
                     </Card>
+
+                    {interviewResources.length > 0 && (
+                        <Card>
+                            <CardHeader className="p-6 pb-4">
+                                <CardTitle>Helpful Resources</CardTitle>
+                            </CardHeader>
+                            <CardContent className="p-6 pt-0">
+                                <div className="space-y-2">
+                                    {interviewResources.map(r => (
+                                        <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50">
+                                            <ResourceIcon type={r.type} />
+                                            <div>
+                                                <p className="font-semibold">{r.title}</p>
+                                                {r.description && <p className="text-sm text-muted-foreground">{r.description}</p>}
+                                            </div>
+                                        </a>
+                                    ))}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    )}
                     
                     <Card id="comments">
                         <CardHeader className="p-6">
                             <CardTitle>Comments ({stats.commentsCount})</CardTitle>
                         </CardHeader>
-                        <CardContent className="space-y-6">
+                        <CardContent className="p-6 pt-0 space-y-6">
                             <div className="flex gap-4">
                                 <Avatar>
                                     <AvatarImage src={currentUser.personal.avatarUrl} />
@@ -164,7 +167,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                                 </CardDescription>
                             </div>
                         </CardHeader>
-                        <CardContent>
+                        <CardContent className="p-6 pt-0">
                             <p className="text-sm text-muted-foreground">{author.personal.bio}</p>
                             <Button asChild className="w-full mt-4">
                                 <Link href={`/users/${author.id}`}><MessageSquare className="mr-2 h-4 w-4"/>View Profile</Link>
