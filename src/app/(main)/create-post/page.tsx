@@ -1,10 +1,11 @@
 
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useToast } from '@/hooks/use-toast';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -43,8 +44,11 @@ type FormQuestion = {
 let questionCounter = 2;
 let optionCounter = 0;
 
+const DRAFT_KEY = 'post-draft';
+
 export default function NewPostPage() {
     const { user } = useAuth();
+    const { toast } = useToast();
     const [questions, setQuestions] = useState<FormQuestion[]>([
         { id: 0, text: '', isMCQ: false, options: [] },
         { id: 1, text: '', isMCQ: false, options: [] }
@@ -64,6 +68,24 @@ export default function NewPostPage() {
             description: '',
         },
     });
+
+    useEffect(() => {
+        const savedDraft = localStorage.getItem(DRAFT_KEY);
+        if (savedDraft) {
+            try {
+                const draft = JSON.parse(savedDraft);
+                form.reset(draft.formValues);
+                setQuestions(draft.questions);
+                toast({
+                    title: 'Draft Loaded',
+                    description: 'Your previously saved draft has been loaded.',
+                });
+            } catch (error) {
+                console.error("Failed to parse draft from localStorage", error);
+            }
+        }
+    }, [form, toast]);
+
 
     function onSubmit(data: PostFormValues) {
         if (!user) {
@@ -102,7 +124,23 @@ export default function NewPostPage() {
         console.log("Submitting Post Data:", postData);
         // Here you would handle form submission, e.g., saving to Firestore
         // and uploading files to Firebase Storage
+        
+        // Clear draft after successful submission
+        localStorage.removeItem(DRAFT_KEY);
+        toast({ title: "Post Published!", description: "Your post is now live." });
     }
+
+    const handleSaveDraft = () => {
+        const draftData = {
+            formValues: form.getValues(),
+            questions: questions,
+        };
+        localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
+        toast({
+            title: 'Draft Saved!',
+            description: 'Your progress has been saved in this browser.',
+        });
+    };
 
     const addQuestion = () => {
         setQuestions([...questions, { id: questionCounter++, text: '', isMCQ: false, options: [] }]);
@@ -176,7 +214,7 @@ export default function NewPostPage() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Type <span className="text-destructive">*</span></FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select a type" />
@@ -237,7 +275,7 @@ export default function NewPostPage() {
                             render={({ field }) => (
                               <FormItem>
                                     <FormLabel>Difficulty <span className="text-destructive">*</span></FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select difficulty" />
@@ -259,7 +297,7 @@ export default function NewPostPage() {
                             render={({ field }) => (
                               <FormItem>
                                   <FormLabel>Application Type <span className="text-destructive">*</span></FormLabel>
-                                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                  <Select onValueChange={field.onChange} value={field.value}>
                                       <FormControl>
                                           <SelectTrigger>
                                               <SelectValue placeholder="Select application type" />
@@ -282,7 +320,7 @@ export default function NewPostPage() {
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel>Result <span className="text-destructive">*</span></FormLabel>
-                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                    <Select onValueChange={field.onChange} value={field.value}>
                                         <FormControl>
                                             <SelectTrigger>
                                                 <SelectValue placeholder="Select the outcome" />
@@ -365,6 +403,7 @@ export default function NewPostPage() {
                                         <RadioGroup
                                             onValueChange={(value) => handleCorrectOptionChange(question.id, parseInt(value))}
                                             className="space-y-2"
+                                            value={question.options.find(opt => opt.isCorrect)?.id.toString()}
                                         >
                                             {question.options.map((option, oIndex) => (
                                                 <div key={option.id} className="flex gap-2 items-center">
@@ -435,7 +474,7 @@ export default function NewPostPage() {
               </div>
 
               <div className="flex flex-col sm:flex-row justify-center gap-4 pt-4">
-                  <Button variant="outline" type="button">Save as Draft</Button>
+                  <Button variant="outline" type="button" onClick={handleSaveDraft}>Save as Draft</Button>
                   <Button type="submit">Publish Post</Button>
               </div>
             </form>
