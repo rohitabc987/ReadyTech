@@ -88,7 +88,7 @@ export default function QuestionsPage() {
                   <CardHeader className="p-2 pb-2">
                     <CardTitle className="text-base font-normal line-clamp-2">{q.text}</CardTitle>
                   </CardHeader>
-                  <CardContent className="p-2 pt-2">
+                  <CardContent className="p-1 pt-1 pb-0">
                     <div className="flex items-center justify-between text-sm text-muted-foreground">
                       <div className="flex items-center gap-x-3 flex-wrap">
                         {q.topic && <Badge variant="secondary">{q.topic}</Badge>}

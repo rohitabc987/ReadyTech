@@ -7,12 +7,14 @@ import { DashboardFilter, type FilterState } from '@/components/dashboard-filter
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function DashboardPage() {
   const { user: currentUser } = useAuth();
   
   const [allPosts, setAllPosts] = useState<EnrichedPost[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<EnrichedPost[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filters, setFilters] = useState<FilterState>({
     type: '',
     company: '',
@@ -25,9 +27,11 @@ export default function DashboardPage() {
 
   useEffect(() => {
     const loadPosts = async () => {
+      setIsLoading(true);
       const posts = await getPosts();
       setAllPosts(posts);
       setFilteredPosts(posts);
+      setIsLoading(false);
     };
     loadPosts();
   }, []);
@@ -64,6 +68,14 @@ export default function DashboardPage() {
     setFilteredPosts(allPosts);
   }
 
+  const PostSkeletons = () => (
+    <div className="flex flex-col gap-4">
+      <Skeleton className="w-full h-[220px] rounded-lg" />
+      <Skeleton className="w-full h-[220px] rounded-lg" />
+      <Skeleton className="w-full h-[220px] rounded-lg" />
+    </div>
+  );
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 md:gap-6">
       {/* Filters */}
@@ -86,7 +98,7 @@ export default function DashboardPage() {
               onApply={handleApplyFilters}
               onClear={handleClearFilters}
             />
-            {filteredPosts.length > 0 ? (
+            {isLoading ? <PostSkeletons /> : filteredPosts.length > 0 ? (
                 filteredPosts.map((post) => (
                     <PostCard key={post.id} post={post} currentUser={currentUser} />
                 ))
@@ -100,7 +112,7 @@ export default function DashboardPage() {
 
         {/* Desktop View */}
         <div className="hidden md:flex flex-col gap-4">
-          {filteredPosts.length > 0 ? (
+          {isLoading ? <PostSkeletons /> : filteredPosts.length > 0 ? (
               filteredPosts.map((post) => (
                 <PostCard key={post.id} post={post} currentUser={currentUser} />
               ))
