@@ -8,6 +8,7 @@ import { Filter, Check, ChevronsUpDown } from 'lucide-react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
 import { cn } from '@/lib/utils';
+import { Input } from './ui/input';
 
 type FilterSet = {
   company?: string;
@@ -34,35 +35,61 @@ function ComboboxFilter({ options, placeholder, value, onChange, className }: { 
 
   const handleSelect = (currentValue: string) => {
     const selectedLabel = frameworkList.find(f => f.value === currentValue)?.label || '';
-    onChange(currentValue === value ? '' : selectedLabel);
-    setInputValue(currentValue === value ? '' : selectedLabel);
+    setInputValue(selectedLabel);
+    onChange(selectedLabel);
     setOpen(false);
   };
+  
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      onChange(inputValue);
+    }
+  }
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        onChange(inputValue);
+        setOpen(false);
+    }
+  }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
+    <Popover open={open} onOpenChange={handleOpenChange}>
       <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn("w-full justify-between text-muted-foreground font-normal", className)}
-        >
-          <span className="truncate">
-            {inputValue || placeholder}
-          </span>
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
+        <div className="relative w-full">
+            <Input
+                placeholder={placeholder}
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                onClick={() => setOpen(true)}
+                onKeyDown={handleKeyDown}
+                autoComplete="off"
+                role="combobox"
+                aria-expanded={open}
+                className={cn("justify-between text-muted-foreground font-normal", className)}
+            />
+            <ChevronsUpDown 
+                className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 shrink-0 opacity-50 cursor-pointer"
+                onClick={() => setOpen(!open)}
+            />
+        </div>
       </PopoverTrigger>
       <PopoverContent className="w-[--radix-popover-trigger-width] p-0">
-        <Command shouldFilter={true}>
+        <Command shouldFilter={false}>
           <CommandInput 
             placeholder={`Search ${placeholder.toLowerCase()}...`}
+            value={inputValue}
+            onValueChange={setInputValue}
+            onKeyDown={handleKeyDown}
           />
           <CommandList>
             <CommandEmpty>No results found.</CommandEmpty>
             <CommandGroup>
-              {frameworkList.map((framework) => (
+              {frameworkList
+                .filter(framework => framework.label.toLowerCase().includes(inputValue.toLowerCase()))
+                .map((framework) => (
                 <CommandItem
                   key={framework.value}
                   value={framework.value}
@@ -109,7 +136,7 @@ export function ContentFilter({
 
   return (
     <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-4">
-        <div className="w-full grid grid-cols-2 gap-2 md:flex md:w-auto md:gap-4">
+        <div className="w-full grid grid-cols-2 gap-2 md:flex md:gap-4">
             {showCompanyFilter && (
               <ComboboxFilter 
                 options={companies} 
