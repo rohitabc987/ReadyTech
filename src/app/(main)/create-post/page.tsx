@@ -131,7 +131,7 @@ export default function NewPostPage() {
     }
 
     const handleSaveDraft = () => {
-        const currentValues = form.watch(); // ✅ gets the freshest form state
+        const currentValues = form.watch();
         const draftData = {
           formValues: currentValues,
           questions,
@@ -139,7 +139,7 @@ export default function NewPostPage() {
         localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
         toast({
           title: 'Draft Saved!',
-          description: 'Your progress has been saved in this browser.',
+          description: 'Your progress has been saved.',
         });
       };      
 
