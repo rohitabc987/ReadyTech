@@ -301,7 +301,7 @@ export default function NewPostPage() {
                                       <FormControl>
                                           <SelectTrigger>
                                               <SelectValue placeholder="Select application type" />
-                                          </SelectTrigger>
+                                          </Trigger>
                                       </FormControl>
                                       <SelectContent>
                                           <SelectItem value="Internship">Internship</SelectItem>
@@ -484,5 +484,3 @@ export default function NewPostPage() {
     </main>
   );
 }
-
-    
