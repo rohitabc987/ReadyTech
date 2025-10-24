@@ -29,6 +29,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
     const [formattedDate, setFormattedDate] = useState('');
     const descriptionRef = useRef<HTMLParagraphElement>(null);
     const [isClamped, setIsClamped] = useState(false);
+    const [isCommenting, setIsCommenting] = useState(false);
     
     useEffect(() => {
         if (createdAt) {
@@ -49,6 +50,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
 
     const isAvatarUrl = authorAvatar?.startsWith('http');
     const avatarInitials = isAvatarUrl ? '' : authorAvatar?.split(' ').map(n => n[0]).join('') || '';
+    const currentUserInitials = currentUser?.personal.name.split(' ').map(n => n[0]).join('');
     const detailLink = `/interviews/${post.id}`;
     const showCompanyInfo = company && role;
 
@@ -108,14 +110,14 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
               </div>
             </div>
 
-            <Separator className="my-3 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
+            <Separator className="my-2 mx-[-0.75rem] w-[calc(100%+1.5rem)]" />
             <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <div className="flex items-center gap-1 -ml-2">
                     <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
                         <ThumbsUp className="h-4 w-4" />
                         <span>Like</span>
                     </Button>
-                    <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs">
+                    <Button variant="ghost" size="sm" className="h-auto px-2 py-1 gap-1 text-xs" onClick={() => setIsCommenting(!isCommenting)}>
                         <MessageSquare className="h-4 w-4" />
                         <span>Comment</span>
                     </Button>
@@ -125,6 +127,21 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
                     <span>Share</span>
                 </Button>
             </div>
+            {isCommenting && currentUser && (
+              <div className="pt-4">
+                <Separator className="mb-4 mx-[-0.75rem] w-[calc(100%+1.5rem)]"/>
+                <div className="flex gap-4">
+                    <Avatar>
+                        <AvatarImage src={currentUser.personal.avatarUrl} />
+                        <AvatarFallback>{currentUserInitials}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex-1 space-y-2">
+                        <Textarea placeholder="Add a comment..." />
+                        <Button size="sm">Post Comment</Button>
+                    </div>
+                </div>
+              </div>
+            )}
         </div>
     );
 }
@@ -176,7 +193,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 
   return (
     <Card className="border shadow-sm">
-        <CardHeader className="px-6 pt-4">
+        <CardHeader className="px-6 pt-4 pb-0">
             <div className="flex items-start gap-4">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-12 w-12">
@@ -206,7 +223,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 )}
             </div>
         </CardHeader>
-        <CardContent className="px-6">
+        <CardContent className="px-6 pt-4">
             <div className="relative mb-4">
             {showCompanyInfo && (
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
@@ -235,13 +252,14 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
               >
                 <ThumbsUp className="h-5 w-5" />
-                <span>Likes</span>
+                <span>Like</span>
               </Button>
 
               <Button 
                 variant="ghost" 
                 size="sm" 
                 className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
+                onClick={() => setIsCommenting(!isCommenting)}
               >
                 <MessageSquare className="h-5 w-5" />
                 <span>Comment</span>
