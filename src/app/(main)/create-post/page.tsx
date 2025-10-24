@@ -88,14 +88,29 @@ export default function NewPostPage() {
         }
     }, [form, toast]);
     
-    // Auto-save form changes to localStorage
+    // Auto-save form and questions changes to localStorage
     useEffect(() => {
-        const subscription = form.watch((values) => {
-            const draftData = { formValues: values, questions };
+        const saveDraft = () => {
+            const formValues = form.getValues();
+            const draftData = {
+                formValues,
+                questions,
+            };
             localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
+        };
+
+        // Subscribe to form changes for auto-saving
+        const subscription = form.watch((value, { name, type }) => {
+            saveDraft();
         });
+
+        // We still need this effect to re-run if `questions` changes,
+        // because `questions` are not part of the `react-hook-form` state.
+        saveDraft();
+
         return () => subscription.unsubscribe();
     }, [form, questions]);
+
 
     function onSubmit(data: PostFormValues) {
         if (!user) {
@@ -229,8 +244,8 @@ export default function NewPostPage() {
     <main className="flex-1 mt-4">
       <Card>
         <CardHeader className="p-6">
-          <CardTitle>Share Your Knowledge & Experience</CardTitle>
-          <CardDescription>Start by providing the core details of the experience you're sharing. Fields marked with <span className="text-destructive">*</span> are required.</CardDescription>
+          <CardTitle>🥳 Share Your Knowledge & Experience</CardTitle>
+          <CardDescription>  Start by providing the core details of the experience you're sharing. Fields marked with <span className="text-destructive">*</span> are required.</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
