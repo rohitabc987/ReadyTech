@@ -1,15 +1,25 @@
 
+'use client';
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getMentors } from '@/lib/firebase/users';
 import type { User } from '@/lib/types';
-import { GraduationCap, Mail, MessageSquare } from 'lucide-react';
+import { GraduationCap, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
 
 function MentorCard({ user }: { user: User }) {
     const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
+
+    const handleConnect = (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log("Connect with " + user.id);
+        // Here you would implement the logic to connect with the mentor,
+        // for example, opening a chat modal or sending a connection request.
+    };
 
     return (
         <Link href={`/users/${user.id}`} className="block">
@@ -31,7 +41,7 @@ function MentorCard({ user }: { user: User }) {
                         variant="default"
                         size="sm" 
                         className="w-full mt-3 text-xs" 
-                        onClick={(e) => { e.preventDefault(); console.log("Connect with " + user.id)}}
+                        onClick={handleConnect}
                     >
                         <MessageSquare className="mr-1.5 h-3 w-3"/>Connect
                     </Button>
@@ -41,8 +51,17 @@ function MentorCard({ user }: { user: User }) {
     )
 }
 
-export default async function MentorsPage() {
-    const mentors = await getMentors();
+export default function MentorsPage() {
+    const [mentors, setMentors] = useState<User[]>([]);
+
+    useEffect(() => {
+      const fetchMentors = async () => {
+        const mentorData = await getMentors();
+        setMentors(mentorData);
+      };
+      fetchMentors();
+    }, []);
+
 
   return (
     <main className="flex-1 mt-4">
