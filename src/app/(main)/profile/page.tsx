@@ -31,7 +31,7 @@ const profileFormSchema = z.object({
   bio: z.string().min(1, 'Bio is required.'),
   institution: z.string().min(1, 'College name is required.'),
   branch: z.string().min(1, 'Branch is required.'),
-  graduationYear: z.number({ required_error: "Graduation year is required."}).min(1950).max(2050),
+  graduationYear: z.coerce.number({ required_error: "Graduation year is required."}).min(1950).max(2050),
   isMentor: z.boolean(),
   expertiseAreas: z.array(z.string()).optional(),
   linkedin: z.string().optional(),
@@ -223,7 +223,7 @@ export default function ProfilePage() {
                                         name="name"
                                         render={({ field }) => (
                                             <FormItem className="space-y-2 w-full md:w-1/2">
-                                                <FormLabel>Full Name</FormLabel>
+                                                <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -242,7 +242,7 @@ export default function ProfilePage() {
                                         name="mobile"
                                         render={({ field }) => (
                                             <FormItem className="space-y-2">
-                                                <FormLabel>Mobile Number</FormLabel>
+                                                <FormLabel>Mobile Number <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
                                                 </FormControl>
@@ -256,7 +256,7 @@ export default function ProfilePage() {
                                     name="bio"
                                     render={({ field }) => (
                                         <FormItem className="space-y-2">
-                                            <FormLabel>Bio</FormLabel>
+                                            <FormLabel>Bio <span className="text-destructive">*</span></FormLabel>
                                             <FormControl>
                                                 <Textarea placeholder="Tell us about yourself..." className="min-h-[100px]" {...field} />
                                             </FormControl>
@@ -278,7 +278,7 @@ export default function ProfilePage() {
                                         name="institution"
                                         render={({ field }) => (
                                             <FormItem className="space-y-2">
-                                                <FormLabel>College Name</FormLabel>
+                                                <FormLabel>College Name <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
                                                     <ComboboxInput
                                                         options={allColleges}
@@ -296,7 +296,7 @@ export default function ProfilePage() {
                                         name="branch"
                                         render={({ field }) => (
                                             <FormItem className="space-y-2">
-                                                <FormLabel>Branch</FormLabel>
+                                                <FormLabel>Branch <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
                                                     <Input placeholder="e.g., Computer Science" {...field} />
                                                 </FormControl>
@@ -309,9 +309,9 @@ export default function ProfilePage() {
                                         name="graduationYear"
                                         render={({ field }) => (
                                             <FormItem className="space-y-2">
-                                                <FormLabel>Graduation Year</FormLabel>
+                                                <FormLabel>Graduation Year <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" placeholder="e.g., 2025" {...field} onChange={e => field.onChange(parseInt(e.target.value))} />
+                                                    <Input type="number" placeholder="e.g., 2025" {...field} />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
