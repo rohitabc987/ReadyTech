@@ -1,11 +1,13 @@
 
+'use client';
+
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter, type FilterState } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useState, useEffect } from 'react';
-import 'use-client'; // This file is a client component, but we will wrap it.
+
 
 // Renaming the component to indicate it's a client component
 function DashboardClient({ initialPosts }: { initialPosts: EnrichedPost[] }) {
