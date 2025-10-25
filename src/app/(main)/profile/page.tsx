@@ -117,7 +117,7 @@ export default function ProfilePage() {
     }
 
   return (
-    <main className="flex-1 mt-4">
+    <main className="flex-1 mt-4 bg-muted/30 md:bg-transparent">
         <form onSubmit={handleFormSubmit}>
             <div className="grid gap-6 lg:grid-cols-4">
                 {/* Left Column - Profile Summary */}
@@ -153,7 +153,8 @@ export default function ProfilePage() {
                             <CardDescription>Update your public profile information.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-6">
-                            <div className="flex items-center gap-6">
+                            <div className="flex flex-col md:flex-row gap-6 md:items-start">
+                                <div className='flex items-center gap-6'>
                                 <Avatar className="h-20 w-20">
                                     <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
                                     <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
@@ -169,12 +170,14 @@ export default function ProfilePage() {
                                       accept="image/png, image/jpeg, image/gif"
                                     />
                                 </div>
-                            </div>
-                            <div className="grid md:grid-cols-2 gap-4">
-                                <div className="space-y-2">
+                                </div>
+                                <div className="space-y-2 w-full md:w-1/2">
                                     <Label htmlFor="name">Full Name</Label>
                                     <Input id="name" value={user.personal.name || ''} onChange={(e) => handleFieldChange('personal', 'name', e.target.value)} />
                                 </div>
+                            </div>
+                            <div className="grid md:grid-cols-2 gap-4">
+                                
                                 <div className="space-y-2">
                                     <Label htmlFor="email">Email</Label>
                                     <Input id="email" value={user.personal.email} disabled />
@@ -313,6 +316,5 @@ export default function ProfilePage() {
     </main>
   );
 }
-
 
     
