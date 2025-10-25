@@ -234,7 +234,7 @@ export default function ProfilePage() {
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="email">Email</Label>
+                                        <Label htmlFor="email">Email <span className="text-destructive">*</span></Label>
                                         <Input id="email" value={user.personal.email} disabled />
                                     </div>
                                     <FormField
@@ -467,4 +467,3 @@ export default function ProfilePage() {
   );
 }
 
-    
