@@ -15,7 +15,7 @@ import { StarRating } from '@/components/star-rating';
 
 
 export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
-    const { id } = await params;
+    const { id } = params;
 
     const [
         interview,
