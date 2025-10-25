@@ -4,19 +4,24 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getPostStats, getPostsByUserId } from '@/lib/firebase/posts';
-import { getUserProfile } from '@/lib/firebase/users';
+import { getCurrentUser, getUserProfile } from '@/lib/firebase/users';
 import { Briefcase, Calendar, GraduationCap, MessageSquare, Star, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export default async function UserProfilePage({ params }: { params: { id: string } }) {
-    const user = await getUserProfile(params.id);
+    const [user, currentUser] = await Promise.all([
+        getUserProfile(params.id),
+        getCurrentUser()
+    ]);
+    
     if (!user) {
         notFound();
     }
 
     const userInitials = user.personal.name.split(' ').map(n => n[0]).join('');
     const userInterviews = await getPostsByUserId(user.id);
+    const isOwnProfile = currentUser.id === user.id;
 
     return (
         <main className="flex-1">
@@ -43,9 +48,11 @@ export default async function UserProfilePage({ params }: { params: { id: string
                                     <span>{user.academics.institution} &apos;{user.academics.graduationYear?.toString().slice(-2)}</span>
                                 </div>
                             </div>
-                            <Button className="mt-6 w-full">
-                                <MessageSquare className="mr-2 h-4 w-4" /> Connect
-                            </Button>
+                            {!isOwnProfile && (
+                                <Button className="mt-6 w-full">
+                                    <MessageSquare className="mr-2 h-4 w-4" /> Connect
+                                </Button>
+                            )}
                         </CardContent>
                     </Card>
                 </div>
