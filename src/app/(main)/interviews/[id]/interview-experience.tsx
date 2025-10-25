@@ -66,17 +66,22 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
         <>
             <Card>
                 <CardHeader className="p-6">
-                    {/* Responsive Header: Mobile shows Avatar + Stars, Desktop shows Title + Stars */}
                     <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
-                        {/* Mobile-only Author/Rating Header */}
-                        <div className="flex md:hidden items-center justify-between w-full">
-                             <Link href={`/users/${author.id}`} className="flex items-center gap-3">
-                                <Avatar className="h-10 w-10">
-                                    <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
-                                    <AvatarFallback>{authorInitials}</AvatarFallback>
-                                </Avatar>
-                            </Link>
-                            <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
+                        {/* Mobile-only Header */}
+                        <div className="flex flex-col md:hidden w-full gap-2">
+                             <div className="flex items-center justify-between">
+                                <Link href={`/users/${author.id}`}>
+                                    <Avatar className="h-10 w-10">
+                                        <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
+                                        <AvatarFallback>{authorInitials}</AvatarFallback>
+                                    </Avatar>
+                                </Link>
+                                <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
+                            </div>
+                            <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                                <span>{interview.main.type}</span>
+                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
+                            </div>
                         </div>
                         
                         {/* Title for all screens */}
@@ -88,12 +93,9 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                         </div>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
-                        <div className="hidden md:flex items-center gap-2">
+                    <div className="hidden md:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
+                        <div className="flex items-center gap-2">
                             <span className="font-semibold md:font-normal">{author.personal.name}</span>
-                        </div>
-                         <div className="flex md:hidden items-center gap-2">
-                            <span>{interview.main.type}</span>
                         </div>
                         <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
                         <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
