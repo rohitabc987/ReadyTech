@@ -6,7 +6,6 @@ export type UserPersonal = {
   avatarUrl?: string;
   mobile?: string;
   bio?: string;
-  createdAt: Date;
   updatedAt?: Date;
 };
 
@@ -36,6 +35,7 @@ export type UserPreferences = {
 
 export type User = {
   id: string;
+  createdAt: Date;
   personal: UserPersonal;
   academics: UserAcademics;
   expertise: UserExpertise;

@@ -4,12 +4,12 @@ import type { User, Post, Question, Resource, Comment, PostStats } from '../type
 export const mockUsers: User[] = [
   {
     id: 'u1',
+    createdAt: new Date('2022-08-15T10:00:00Z'),
     personal: {
       name: 'Aarav Sharma',
       email: 'aarav.sharma@iitdh.ac.in',
       avatarUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'SWE at Google. Passionate about algorithms and system design. Happy to mentor folks breaking into tech.',
-      createdAt: new Date('2022-08-15T10:00:00Z'),
     },
     academics: {
       role: 'mentor',
@@ -26,12 +26,12 @@ export const mockUsers: User[] = [
   },
   {
     id: 'u2',
+    createdAt: new Date('2022-09-01T11:00:00Z'),
     personal: {
       name: 'Priya Patel',
       email: 'priya.patel@nit.ac.in',
       avatarUrl: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0fGVufDB8fHx8MTc2MDgzNjQ2Mnww&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Incoming PM at Microsoft. I love talking about product sense and interview prep.',
-      createdAt: new Date('2022-09-01T11:00:00Z'),
     },
     academics: {
       role: 'mentor',
@@ -48,11 +48,12 @@ export const mockUsers: User[] = [
   },
   {
     id: 'u3',
+    createdAt: new Date('2023-01-20T12:00:00Z'),
     personal: {
       name: 'Rohan Desai',
       email: 'rohan.desai@iitdh.ac.in',
+      avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Aspiring software engineer, currently learning about cloud computing.',
-      createdAt: new Date('2023-01-20T12:00:00Z'),
     },
     academics: {
       role: 'learner',
@@ -67,12 +68,12 @@ export const mockUsers: User[] = [
   },
   {
     id: 'u4',
+    createdAt: new Date('2022-07-10T14:00:00Z'),
     personal: {
       name: 'Sneha Reddy',
       email: 'sneha.reddy@nit.ac.in',
       avatarUrl: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHByb2Zlc3Npb25hbHxlbnwwfHx8fDE3NjA4MzE4MDV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Data Scientist at Amazon. My interests include ML, NLP, and sharing knowledge.',
-      createdAt: new Date('2022-07-10T14:00:00Z'),
     },
     academics: {
       role: 'mentor',
@@ -89,12 +90,12 @@ export const mockUsers: User[] = [
   },
   {
     id: 'u5',
+    createdAt: new Date('2022-06-15T15:00:00Z'),
     personal: {
       name: 'Vikram Singh',
       email: 'vikram.singh@iitdh.ac.in',
       avatarUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
       bio: 'Hardware engineer at NVIDIA. Happy to chat about low-level systems.',
-      createdAt: new Date('2022-06-15T15:00:00Z'),
     },
     academics: {
       role: 'mentor',
@@ -183,7 +184,7 @@ export const mockPosts: Post[] = [
     main: {
         authorId: 'u3',
         authorName: 'Rohan Desai',
-        authorAvatar: 'Rohan Desai', // No URL, so name is used as fallback
+        authorAvatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdHxlbnwwfHx8fDE3NjA4MzQ4MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
         type: 'Technical Interview',
         title: 'My First Technical Interview Experience',
         description: 'This was for a startup. They asked two DSA questions. One was on strings and the other on hashmaps. I was able to solve one completely and the other partially. The interviewer was really helpful and gave hints.',

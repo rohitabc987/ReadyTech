@@ -33,14 +33,14 @@ This collection stores all user-related information, organized into sub-objects.
 ```typescript
 {
   "id": "string", // User's UID from Firebase Auth
+  "createdAt": "Timestamp",
+  "updatedAt": "Timestamp"
   "personal": {
     "name": "string",
     "email": "string", // Verified institute email
     "avatarUrl": "string",
     "mobile": "string",
     "bio": "string",
-    "createdAt": "Timestamp",
-    "updatedAt": "Timestamp"
   },
   "academics": {
     "role": "'mentor' | 'learner'",
