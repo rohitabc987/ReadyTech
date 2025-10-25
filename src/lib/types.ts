@@ -13,7 +13,7 @@ export type UserPersonal = {
 export type UserAcademics = {
   role: 'mentor' | 'learner';
   institutionType?: string;
-  institution?: 'IIT' | 'NIT' | 'IIIT' | 'Private' | 'School';
+  institution?: string;
   branch?: string;
   graduationYear?: number;
   domainVerified: boolean;
