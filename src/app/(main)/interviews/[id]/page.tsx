@@ -51,9 +51,9 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2 flex flex-col gap-6">
                     {/* Author card for mobile view */}
-                    <div className="lg:hidden border rounded-lg">
+                    <div className="lg:hidden">
                         <Link href={`/users/${author.id}`}>
-                            <UserProfileCard user={author} isOwnProfile={isOwnProfile} />
+                            <UserProfileCard user={author} isOwnProfile={isOwnProfile} className="border rounded-lg"/>
                         </Link>
                     </div>
 
@@ -107,9 +107,9 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                 </div>
 
                 {/* Author card for desktop view */}
-                <div className="hidden lg:block lg:col-span-1 border rounded-lg">
+                <div className="hidden lg:block lg:col-span-1">
                    <Link href={`/users/${author.id}`}>
-                        <UserProfileCard user={author} isOwnProfile={isOwnProfile} />
+                        <UserProfileCard user={author} isOwnProfile={isOwnProfile} className="border rounded-lg"/>
                     </Link>
                 </div>
             </div>

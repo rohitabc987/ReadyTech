@@ -15,9 +15,10 @@ interface UserProfileCardProps {
     user: User;
     isOwnProfile: boolean;
     isCompact?: boolean;
+    className?: string;
 }
 
-export function UserProfileCard({ user, isOwnProfile, isCompact = false }: UserProfileCardProps) {
+export function UserProfileCard({ user, isOwnProfile, isCompact = false, className }: UserProfileCardProps) {
     const { toast } = useToast();
     const [isRequested, setIsRequested] = useState(false);
 
@@ -76,7 +77,7 @@ export function UserProfileCard({ user, isOwnProfile, isCompact = false }: UserP
     }
 
     return (
-        <Card className="text-center border-0 shadow-none">
+        <Card className={cn("text-center border-0 shadow-none", className)}>
             <CardHeader className="relative">
                 <div className="absolute top-4 right-4">
                     {user.academics.role === 'mentor' && <Badge variant="secondary">Mentor</Badge>}
