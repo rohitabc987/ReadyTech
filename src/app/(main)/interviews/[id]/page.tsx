@@ -53,7 +53,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                     {/* Author card for mobile view */}
                     <div className="lg:hidden">
                         <Link href={`/users/${author.id}`}>
-                            <UserProfileCard user={author} isOwnProfile={isOwnProfile} className="border rounded-lg"/>
+                            <UserProfileCard user={author} isOwnProfile={isOwnProfile} isCompact={true} className="border rounded-lg"/>
                         </Link>
                     </div>
 
