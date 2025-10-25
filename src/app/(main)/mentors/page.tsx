@@ -24,25 +24,25 @@ function MentorCard({ user }: { user: User }) {
     return (
         <Link href={`/users/${user.id}`} className="block">
             <Card className="h-full flex flex-col hover:bg-muted/50 transition-colors">
-                <CardHeader className="items-center text-center p-2 md:p-4">
-                     <Avatar className="h-16 w-16 md:h-20 md:w-20 mb-2">
+                <CardHeader className="items-center text-center p-4 md:p-6">
+                     <Avatar className="h-20 w-20 md:h-24 md:w-24 mb-3">
                         <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
-                        <AvatarFallback className="text-xl md:text-2xl">{userInitials}</AvatarFallback>
+                        <AvatarFallback className="text-2xl md:text-3xl">{userInitials}</AvatarFallback>
                     </Avatar>
-                    <CardTitle className="font-headline text-base md:text-lg">{user.personal.name}</CardTitle>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <GraduationCap className="h-3 w-3" />
+                    <CardTitle className="font-headline text-lg md:text-xl">{user.personal.name}</CardTitle>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                        <GraduationCap className="h-4 w-4" />
                         <span>{user.academics.institution}</span>
                     </div>
                 </CardHeader>
-                <CardContent className="p-1 pt-0 md:p-4 md:pt-0 flex-1 flex flex-col">
-                    <p className="text-xs md:text-sm text-muted-foreground text-center flex-1 line-clamp-2">{user.personal.bio}</p>
+                <CardContent className="p-4 pt-0 md:p-6 md:pt-0 flex-1 flex flex-col">
+                    <p className="text-sm md:text-base text-muted-foreground text-center flex-1 line-clamp-3">{user.personal.bio}</p>
                     <Button 
                         variant="default"
                         size="sm" 
-                        className="w-auto mt-3 text-xs mx-2 md:text-sm md:mx-4" 
+                        className="w-full mt-4 text-sm md:text-base md:py-6" 
                         onClick={handleConnect}>
-                        <MessageSquare className="mr-1.5 h-3 w-3 md:h-4 md:w-4"/>Connect
+                        <MessageSquare className="mr-2 h-4 w-4 md:h-5 md:w-5"/>Connect
                     </Button>
                 </CardContent>
             </Card>
@@ -64,7 +64,7 @@ export default function MentorsPage() {
 
   return (
     <main className="flex-1 mt-4">
-          <div className="grid gap-4 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
               {mentors.map(mentor => (
                   <MentorCard key={mentor.id} user={mentor} />
               ))}
