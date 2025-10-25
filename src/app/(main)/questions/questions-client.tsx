@@ -74,7 +74,7 @@ export default function QuestionsClient({ initialQuestions }: { initialQuestions
   };
     
   return (
-    <main className="flex-1 bg-muted/30 md:bg-transparent">
+    <main className="flex-1 bg-mobile-background md:bg-transparent">
         <ContentFilter 
           initialFilters={{}}
           onApply={handleApplyFilters}

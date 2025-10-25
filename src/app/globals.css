@@ -43,6 +43,7 @@
     --sidebar-ring: 212 92% 55%;
     --footer: 127 94.7% 68.9%;
     --footer-foreground: 222.2 84% 4.9%;
+    --mobile-background: 210 40% 98%;
   }
   .dark {
     --background: 222.2 84% 4.9%;
@@ -80,6 +81,7 @@
     --sidebar-ring: 212 92% 65%;
     --footer: 127 94.7% 68.9%;
     --footer-foreground: 210 40% 98%;
+    --mobile-background: 222.2 84% 6.5%;
   }
 }
 

@@ -19,6 +19,7 @@ export default {
         foreground: 'hsl(var(--foreground))',
         footer: 'hsl(var(--footer))',
         'footer-foreground': 'hsl(var(--footer-foreground))',
+        'mobile-background': 'hsl(var(--mobile-background))',
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
