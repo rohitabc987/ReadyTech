@@ -238,7 +238,7 @@ export default function NewPostPage() {
   return (
     <main className="flex-1 mt-4">
       <Card>
-        <CardHeader className="p-6">
+        <CardHeader>
           <CardTitle>🥳 Share Your Knowledge & Experience</CardTitle>
           <CardDescription>  Start by providing the core details of the experience you're sharing. Fields marked with <span className="text-destructive">*</span> are required.</CardDescription>
         </CardHeader>
@@ -382,7 +382,7 @@ export default function NewPostPage() {
                 </Card>
               </div>
 
-              <div className=" p-2">
+              <div className="p-2">
                 <h3 className="text-lg font-semibold flex items-center gap-2 mb-4">📝 Description & Details</h3>
                 <div className="space-y-6">
                     <FormField
@@ -418,7 +418,7 @@ export default function NewPostPage() {
               <div>
                 <h3 className="text-lg font-semibold flex items-center gap-2 mb-4"> ❓ Questions Asked</h3>
                 <Card className="bg-muted/30 border-dashed">
-                  <CardContent className="gap-6 pt-4">
+                  <CardContent className="gap-6 pt-6">
                       <div className="space-y-4">
                           {questions.map((question, qIndex) => (
                               <div key={question.id} className="p-1 space-y-4 ">
@@ -526,3 +526,5 @@ export default function NewPostPage() {
     </main>
   );
 }
+
+    

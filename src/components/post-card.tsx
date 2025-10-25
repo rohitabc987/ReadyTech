@@ -85,7 +85,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
     const showCompanyInfo = company && role;
 
     return (
-        <div className="p-3 bg-card border">
+        <div className="p-4 bg-card border">
             <div className="flex items-start gap-3">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-10 w-10">
@@ -140,7 +140,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
               </div>
             </div>
 
-            <Separator className="my-2 -mx-3 w-[calc(100%+1.5rem)]" />
+            <Separator className="my-3" />
             <div className="flex items-center justify-between text-sm text-muted-foreground">
                 <div className="flex items-center gap-1 -ml-2">
                     <Button 
@@ -164,7 +164,7 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
             </div>
             {isCommenting && currentUser && (
               <div className="pt-4">
-                <Separator className="mb-4 -mx-3 w-[calc(100%+1.5rem)]"/>
+                <Separator className="mb-4"/>
                 <div className="flex gap-4">
                     <Avatar>
                         <AvatarImage src={currentUser.personal.avatarUrl} />
@@ -254,7 +254,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 
   return (
     <Card className="border shadow-sm">
-        <CardHeader className="p-6 pt-4 pb-0">
+        <CardHeader className="pb-2">
             <div className="flex items-start gap-4">
                 <Link href={`/users/${authorId}`}>
                     <Avatar className="h-12 w-12">
@@ -266,13 +266,13 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                     <CardTitle className="font-headline text-xl leading-snug mb-0">
                         <Link href={detailLink} className="hover:underline line-clamp-2">{title}</Link>
                     </CardTitle>
-                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-base text-muted-foreground mt-1.5">
-                        <span className="text-sm">{authorName}</span>
+                     <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-muted-foreground mt-1.5">
+                        <span>{authorName}</span>
                         <span className="text-muted-foreground/50">&bull;</span>
-                        <span className="text-sm">{type}</span>
+                        <span>{type}</span>
                          <div className="hidden sm:flex items-center gap-x-3">
                             <span className="text-muted-foreground/50">&bull;</span>
-                            <span className="text-sm">{formattedDate}</span>
+                            <span>{formattedDate}</span>
                          </div>
                     </div>
                 </div>
@@ -284,7 +284,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 )}
             </div>
         </CardHeader>
-        <CardContent className="p-6 pt-2 pb-4">
+        <CardContent className="pb-4">
             <div className="relative mb-4">
             {showCompanyInfo && (
               <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground mb-3">
@@ -296,7 +296,7 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
                 </div>
               </div>
             )}
-              <p ref={descriptionRef} className="text-base text-muted-foreground line-clamp-3 pr-1">
+              <p ref={descriptionRef} className="text-sm text-muted-foreground line-clamp-3 pr-1">
                 {description}
               </p>
               {isClamped && (
@@ -368,3 +368,5 @@ export function PostCard(props: PostCardProps) {
   
   return isMobile ? <MobilePostCard key="mobile" {...props} /> : <DesktopPostCard key="desktop" {...props} />;
 }
+
+    

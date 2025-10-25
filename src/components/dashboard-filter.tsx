@@ -43,20 +43,20 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
 
     return (
         <Card>
-            <CardHeader>
-                <div className="flex justify-between items-center p-6">
-                <CardTitle className=" text-bs md:text-2xl" >Filter Posts</CardTitle>
-                {areFiltersActive && (
-                    <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={onClear}
-                    className="text-destructive hover:text-destructive hover:bg-destructive/10 h-auto px-2 py-1"
-                    >
-                    <XCircle className="mr-1 h-4 w-4" />
-                    Clear
-                    </Button>
-                )}
+            <CardHeader className="p-6">
+                <div className="flex justify-between items-center">
+                    <CardTitle className="text-xl">Filter Posts</CardTitle>
+                    {areFiltersActive && (
+                        <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={onClear}
+                        className="text-destructive hover:text-destructive hover:bg-destructive/10 h-auto px-2 py-1"
+                        >
+                        <XCircle className="mr-1 h-4 w-4" />
+                        Clear
+                        </Button>
+                    )}
                 </div>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -345,3 +345,5 @@ export function DashboardFilter(props: DashboardFilterProps) {
     </>
   );
 }
+
+    
