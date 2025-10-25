@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -49,6 +50,11 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     return (
         <main className="flex-1 mt-4">
             <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:hidden p-2">
+                    <Link href={`/users/${author.id}`}>
+                        <UserProfileCard user={author} isOwnProfile={isOwnProfile} isCompact={true} className="border rounded-lg" />
+                    </Link>
+                </div>
                 <div className="lg:col-span-2 flex flex-col gap-3 md:gap-6">
                     <InterviewExperience
                         interview={interview}
@@ -58,7 +64,7 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                         author={author}
                     />
                     
-                    <Card id="comments">
+                    <Card id="comments" className="border-0 md:border">
                         <CardHeader className="p-6">
                             <CardTitle>Comments ({stats.commentsCount})</CardTitle>
                         </CardHeader>
@@ -90,7 +96,6 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                                                 <p className="text-xs text-muted-foreground">{new Date(comment.createdAt).toLocaleDateString()}</p>
                                             </div>
                                             <p className="text-sm mt-1">{comment.text}</p>
-                                            <Button variant="ghost" size="sm" className="mt-1 text-muted-foreground"><ThumbsUp className="mr-2 h-4 w-4"/>Like</Button>
                                         </div>
                                     </div>
                                 )

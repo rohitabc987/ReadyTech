@@ -79,10 +79,10 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                                 </Link>
                                 <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                             </div>
-                             <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                             {/* <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                                 <span>{interview.main.type}</span>
                                 {interview.main.company && <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>}
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Title for all screens */}
@@ -132,7 +132,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
             </Card>
 
             {interviewResources.length > 0 && (
-                <Card>
+                <Card className="border-0 md:border">
                     <CardHeader className="p-6 pb-4">
                         <CardTitle>Helpful Resources</CardTitle>
                     </CardHeader>
