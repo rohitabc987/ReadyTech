@@ -58,9 +58,9 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
         <>
             <Card>
                 <CardHeader className="p-6">
-                    <div className="flex items-start justify-between">
-                        <CardTitle className="font-headline text-2xl pr-4">{interview.main.title}</CardTitle>
-                        <div className="flex items-center gap-2 shrink-0">
+                    <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+                        <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
+                        <div className="flex items-center justify-end gap-2 shrink-0 w-full md:w-auto">
                            <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                         </div>
                     </div>
