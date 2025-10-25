@@ -170,7 +170,9 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                         <CardContent className="p-6 pt-0">
                             <p className="text-sm text-muted-foreground">{author.personal.bio}</p>
                             <Button asChild className="w-full mt-4">
-                                <Link href={`/users/${author.id}`}><MessageSquare className="mr-2 h-4 w-4"/>View Profile</Link>
+                                <Link href={`/users/${author.id}`}>
+                                    <MessageSquare className="mr-2 h-4 w-4"/>View Profile
+                                </Link>
                             </Button>
                         </CardContent>
                     </Card>

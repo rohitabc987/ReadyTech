@@ -188,7 +188,11 @@ export default function ProfilePage() {
                                     <Mail className="h-5 w-5 shrink-0" />
                                     <span className="truncate">{user.personal.email}</span>
                                 </div>
-                                 <Button asChild variant="outline" className="w-full mt-2"><Link href={`/users/${user.id}`}><UserIcon className="mr-2 h-4 w-4"/> View Public Profile</Link></Button>
+                                 <Button asChild variant="outline" className="w-full mt-2">
+                                    <Link href={`/users/${user.id}`}>
+                                        <UserIcon className="mr-2 h-4 w-4"/> View Public Profile
+                                    </Link>
+                                 </Button>
                             </CardContent>
                         </Card>
                     </div>
