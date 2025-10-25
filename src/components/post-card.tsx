@@ -61,18 +61,20 @@ function MobilePostCard({ post, currentUser }: PostCardProps) {
         text: post.main.description,
         url: `${window.location.origin}/interviews/${post.id}`,
       };
-      console.log("Attempting to share:", shareData);
-      try {
-        if (navigator.share) {
+
+      if (navigator.share) {
+        try {
+          console.log("Using Web Share API to share:", shareData);
           await navigator.share(shareData);
-          console.log("Shared successfully!");
-        } else {
+          console.log("Shared successfully via Web Share API!");
+        } catch (error) {
+          console.error("Error using Web Share API:", error);
+          // Fallback to clipboard if user cancels the share dialog or an error occurs
           await navigator.clipboard.writeText(shareData.url);
-          toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
-          console.log("Clipboard fallback used");
+          toast({ title: "Link Copied!", description: "Sharing was cancelled, so the link was copied instead." });
         }
-      } catch (error) {
-        console.error("Error sharing:", error);
+      } else {
+        console.log("Web Share API not supported. Falling back to clipboard.");
         await navigator.clipboard.writeText(shareData.url);
         toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
       }
@@ -217,25 +219,30 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
     setIsLiked(!isLiked);
   };
 
-  const handleShare = async () => {
-    const shareData = {
-      title: post.main.title,
-      text: post.main.description,
-      url: `${window.location.origin}/interviews/${post.id}`,
-    };
-    try {
+    const handleShare = async () => {
+      const shareData = {
+        title: post.main.title,
+        text: post.main.description,
+        url: `${window.location.origin}/interviews/${post.id}`,
+      };
+
       if (navigator.share) {
-        await navigator.share(shareData);
+        try {
+          console.log("Using Web Share API to share:", shareData);
+          await navigator.share(shareData);
+          console.log("Shared successfully via Web Share API!");
+        } catch (error) {
+          console.error("Error using Web Share API:", error);
+          // Fallback to clipboard if user cancels the share dialog or an error occurs
+          await navigator.clipboard.writeText(shareData.url);
+          toast({ title: "Link Copied!", description: "Sharing was cancelled, so the link was copied instead." });
+        }
       } else {
+        console.log("Web Share API not supported. Falling back to clipboard.");
         await navigator.clipboard.writeText(shareData.url);
         toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
       }
-    } catch (error) {
-      console.error('Error sharing:', error);
-      await navigator.clipboard.writeText(shareData.url);
-      toast({ title: "Link Copied!", description: "Post link copied to your clipboard." });
-    }
-  };
+    };
 
 
   const isAvatarUrl = authorAvatar?.startsWith('http');
