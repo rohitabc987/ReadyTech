@@ -117,7 +117,7 @@ export default function ProfilePage() {
     }
 
   return (
-    <main className="flex-1 mt-4 bg-muted/30 md:bg-transparent">
+    <main className="flex-1 mt-4">
         <form onSubmit={handleFormSubmit}>
             <div className="grid gap-6 lg:grid-cols-4">
                 {/* Left Column - Profile Summary */}
@@ -147,7 +147,7 @@ export default function ProfilePage() {
 
                 {/* Right Column - Editable Form */}
                 <div className="lg:col-span-3 flex flex-col gap-6">
-                    <Card>
+                    <Card className="bg-muted/30">
                         <CardHeader>
                             <CardTitle>Personal Details</CardTitle>
                             <CardDescription>Update your public profile information.</CardDescription>
@@ -232,7 +232,7 @@ export default function ProfilePage() {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="bg-muted/30">
                         <CardHeader>
                             <CardTitle>Areas of Expertise</CardTitle>
                             <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
@@ -284,7 +284,7 @@ export default function ProfilePage() {
                         </CardContent>
                     </Card>
 
-                    <Card>
+                    <Card className="bg-muted/30">
                         <CardHeader>
                             <CardTitle>Preferences & Settings</CardTitle>
                             <CardDescription>Manage your account settings and notifications.</CardDescription>
@@ -316,5 +316,3 @@ export default function ProfilePage() {
     </main>
   );
 }
-
-    
