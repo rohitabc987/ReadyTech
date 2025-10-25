@@ -306,26 +306,28 @@ function DesktopPostCard({ post, currentUser }: PostCardProps) {
 
 
             <Separator className="my-2" />
-            <div className="flex items-center justify-start gap-2 text-sm text-muted-foreground">
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className={cn("h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 transition", isLiked ? "text-red-500 hover:text-red-600" : "hover:text-primary")}
-                onClick={handleLike}
-              >
-                <ThumbsUp className={cn("h-5 w-5 transition-transform active:scale-125", isLiked && "fill-red-500")} />
-                <span>Like</span>
-              </Button>
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className={cn("h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 transition", isLiked ? "text-red-500 hover:text-red-600" : "hover:text-primary")}
+                  onClick={handleLike}
+                >
+                  <ThumbsUp className={cn("h-5 w-5 transition-transform active:scale-125", isLiked && "fill-red-500")} />
+                  <span>Like</span>
+                </Button>
 
-              <Button 
-                variant="ghost" 
-                size="sm" 
-                className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
-                onClick={() => setIsCommenting(!isCommenting)}
-              >
-                <MessageSquare className="h-5 w-5" />
-                <span>Comment</span>
-              </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-auto px-3 py-1.5 gap-2 rounded-md hover:bg-primary/10 hover:text-primary transition"
+                  onClick={() => setIsCommenting(!isCommenting)}
+                >
+                  <MessageSquare className="h-5 w-5" />
+                  <span>Comment</span>
+                </Button>
+              </div>
                <Button 
                 variant="ghost" 
                 size="sm" 
@@ -368,5 +370,3 @@ export function PostCard(props: PostCardProps) {
   
   return isMobile ? <MobilePostCard key="mobile" {...props} /> : <DesktopPostCard key="desktop" {...props} />;
 }
-
-    
