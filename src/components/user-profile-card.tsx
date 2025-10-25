@@ -36,7 +36,7 @@ export function UserProfileCard({ user, isOwnProfile, isCompact = false, classNa
 
     if (isCompact) {
         return (
-            <div className="h-full flex flex-col text-center">
+            <Card className={cn("h-full flex flex-col text-center", className)}>
                  <CardHeader className="items-center space-y-1.5 p-2 md:p-4">
                      <Avatar className="h-14 w-14  md:h-20 md:w-20 md:mb-3">
                         <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
@@ -72,7 +72,7 @@ export function UserProfileCard({ user, isOwnProfile, isCompact = false, classNa
                         </Button>
                     )}
                 </CardContent>
-            </div>
+            </Card>
         )
     }
 

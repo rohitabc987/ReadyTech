@@ -1,3 +1,4 @@
+
 'use client';
 
 import type { User } from '@/lib/types';
@@ -12,8 +13,8 @@ function MentorCard({ user }: { user: User }) {
 
     return (
         <Link href={`/users/${user.id}`} className="block h-full">
-             <div className="h-full flex flex-col hover:bg-muted/50 transition-colors rounded-lg border">
-                <UserProfileCard user={user} isOwnProfile={isOwnProfile} isCompact={true} />
+             <div className="h-full flex flex-col hover:bg-muted/50 transition-colors rounded-lg">
+                <UserProfileCard user={user} isOwnProfile={isOwnProfile} isCompact={true} className="border"/>
             </div>
         </Link>
     )
