@@ -135,7 +135,7 @@ export function ContentFilter({
   };
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-0 p-2 md:p-0 md:mb-4">
+    <div className="flex flex-col md:flex-row md:justify-between items-center gap-2 mb-0 p-4 md:p-0 md:mb-4">
           <div className="w-full grid grid-cols-2 gap-2 md:flex md:w-auto md:gap-4">
             {showCompanyFilter && (
               <ComboboxFilter 

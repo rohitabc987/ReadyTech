@@ -79,8 +79,8 @@ export default function MentorsClient({ initialMentors }: { initialMentors: User
 
 
   return (
-    <main className="flex-1">
-          <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+    <main className="flex-1 bg-muted/30 md:bg-transparent">
+          <div className="grid gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 p-4 md:p-0">
               {mentors.map(mentor => (
                   <MentorCard key={mentor.id} user={mentor} />
               ))}

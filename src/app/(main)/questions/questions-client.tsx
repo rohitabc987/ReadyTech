@@ -74,7 +74,7 @@ export default function QuestionsClient({ initialQuestions }: { initialQuestions
   };
     
   return (
-    <main className="flex-1 mt-4">
+    <main className="flex-1 bg-muted/30 md:bg-transparent">
         <ContentFilter 
           initialFilters={{}}
           onApply={handleApplyFilters}
@@ -109,7 +109,7 @@ export default function QuestionsClient({ initialQuestions }: { initialQuestions
             </TableBody>
         </Table>
         </div>
-        <div className="grid md:hidden gap-2">
+        <div className="grid md:hidden gap-2 p-4 md:p-0">
         {filteredQuestions.map((q, i) => (
             <React.Fragment key={i}>
             <Card className="border-0 shadow-none bg-transparent">

@@ -42,7 +42,7 @@ export default function ResourcesClient({ initialResources }: { initialResources
     };
 
   return (
-    <main className="flex-1 mt-4">
+    <main className="flex-1 bg-muted/30 md:bg-transparent">
       <ContentFilter 
         initialFilters={{}}
         onApply={handleApplyFilters}
@@ -51,7 +51,7 @@ export default function ResourcesClient({ initialResources }: { initialResources
         showTopicFilter={true}
       />
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-2">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-2 p-4 md:p-0">
           {filteredResources.map(resource => (
               <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
                   <Card className="h-full hover:bg-muted/50 transition-colors">

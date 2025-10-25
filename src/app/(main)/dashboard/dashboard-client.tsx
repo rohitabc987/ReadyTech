@@ -72,7 +72,7 @@ export default function DashboardClient({ initialPosts }: { initialPosts: Enrich
   );
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 md:gap-8">
+    <div className="grid grid-cols-1 md:grid-cols-4 md:gap-8 bg-muted/30 md:bg-transparent">
       {/* Filters */}
       <aside className="hidden md:block md:col-span-1 md:sticky md:top-20 self-start">
         <DashboardFilter 

@@ -206,7 +206,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
     return (
         <div className="p-4 bg-card md:rounded-lg border">
             <div className="flex justify-between items-center ">
-                <h2 className="text-lg font-bold mb-1 md: mb-2">Filter</h2>
+                {/* <h2 className="text-lg font-bold mb-1 md: mb-2">Filter</h2> */}
                 {areFiltersActive && (
                     <Button
                     variant="ghost"
