@@ -149,8 +149,8 @@ export default function ProfilePage() {
                 <div className="lg:col-span-3 flex flex-col gap-6">
                     <Card className="bg-muted/30">
                         <CardHeader>
-                            <CardTitle>Personal Details</CardTitle>
-                            <CardDescription>Update your public profile information.</CardDescription>
+                            <CardTitle>🧑‍🎓 Personal Details</CardTitle>
+                            {/* <CardDescription>Update your public profile information.</CardDescription> */}
                         </CardHeader>
                         <CardContent className="space-y-6">
                             <div className="flex flex-col md:flex-row gap-6 md:items-start">
@@ -196,8 +196,8 @@ export default function ProfilePage() {
 
                     <Card>
                         <CardHeader>
-                          <CardTitle>Academic & Professional Info</CardTitle>
-                          <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription>
+                          <CardTitle>🎓 Academic & Professional Info</CardTitle>
+                          {/* <CardDescription>Update your institution, graduation details, and mentorship status.</CardDescription> */}
                         </CardHeader>
                         <CardContent className="space-y-6">
                             <div className="grid md:grid-cols-2 gap-4">
@@ -234,7 +234,7 @@ export default function ProfilePage() {
 
                     <Card className="bg-muted/30">
                         <CardHeader>
-                            <CardTitle>Areas of Expertise</CardTitle>
+                            <CardTitle>😎 Areas of Expertise</CardTitle>
                             <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -265,7 +265,7 @@ export default function ProfilePage() {
                     
                     <Card>
                         <CardHeader>
-                            <CardTitle>Social Links</CardTitle>
+                            <CardTitle>🗣️ Social Links</CardTitle>
                             <CardDescription>Add links to your social and professional profiles.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4">
@@ -286,7 +286,7 @@ export default function ProfilePage() {
 
                     <Card className="bg-muted/30">
                         <CardHeader>
-                            <CardTitle>Preferences & Settings</CardTitle>
+                            <CardTitle>✋ Preferences & Settings</CardTitle>
                             <CardDescription>Manage your account settings and notifications.</CardDescription>
                         </CardHeader>
                         <CardContent className="space-y-4 divide-y">
@@ -307,7 +307,7 @@ export default function ProfilePage() {
                         </CardContent>
                     </Card>
 
-                    <div className="flex justify-end sticky bottom-4">
+                    <div className="flex justify-center sticky bottom-4">
                         <Button size="lg" type="submit" className="shadow-lg">Save All Changes</Button>
                     </div>
                 </div>
