@@ -17,6 +17,7 @@ import { ComboboxInput } from '@/components/combobox-input';
 import { iitList, nitList, iiitList, privateList } from '@/lib/data/collegelist';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
+import Link from 'next/link';
 
 const allColleges = [...iitList, ...nitList, ...iiitList, ...privateList];
 
@@ -312,5 +313,6 @@ export default function ProfilePage() {
     </main>
   );
 }
+
 
     
