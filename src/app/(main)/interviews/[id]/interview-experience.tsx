@@ -70,11 +70,15 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                     <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
                         {/* Mobile-only Author/Rating Header */}
                         <div className="flex md:hidden items-center justify-between w-full">
-                             <Link href={`/users/${author.id}`}>
+                             <Link href={`/users/${author.id}`} className="flex items-center gap-3">
                                 <Avatar className="h-10 w-10">
                                     <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
                                     <AvatarFallback>{authorInitials}</AvatarFallback>
                                 </Avatar>
+                                <div>
+                                    <p className="font-semibold text-sm">{author.personal.name}</p>
+                                    <p className="text-xs text-muted-foreground">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
+                                </div>
                             </Link>
                             <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                         </div>
@@ -88,7 +92,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                         </div>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
+                    <div className="hidden md:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
                         <div className="flex items-center gap-2">
                             <span className="font-semibold md:font-normal">{author.personal.name}</span>
                         </div>
