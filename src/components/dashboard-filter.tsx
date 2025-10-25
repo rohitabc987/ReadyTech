@@ -102,8 +102,9 @@ function DesktopFilter({ filters, onFilterChange, onApply, onClear }: DashboardF
                     <Button onClick={onApply} className="w-full">Search</Button>
                     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
-                        <Button variant="outline" className="w-full relative">
-                        <Filter className="mr-2 h-4 w-4" /> More
+                        <Button variant="outline" className="w-full min-w-4">
+                        <Filter className="mr-auto h-4 w-4" />
+                         More
                         {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span></span>}
                         </Button>
                     </SheetTrigger>
@@ -246,7 +247,7 @@ function MobileFilter({ filters, onFilterChange, onApply, onClear }: DashboardFi
                 <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                     <SheetTrigger asChild>
                         <Button variant="outline" className="w-full relative">
-                            <Filter className="mr-2 h-4 w-4" />
+                            <Filter className="mr-2 h-4 w-auto" />
                             More
                             {areAdvancedFiltersActive && <span className="absolute -top-1 -right-1 flex h-3 w-3"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-destructive opacity-75"></span><span className="relative inline-flex rounded-full h-3 w-3 bg-destructive"></span></span>}
                         </Button>
