@@ -1,11 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { getPostComments, getPostDetails, getPostResources, getPostStats } from '@/lib/firebase/posts';
 import { getCurrentUser, getUserProfile } from '@/lib/firebase/users';
-import { Briefcase, Calendar, FileText, Link as LinkIcon, MessageSquare, ThumbsUp, Video } from 'lucide-react';
+import { ThumbsUp } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { mockQuestions } from '@/lib/data/mock-data';
@@ -49,19 +49,13 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     return (
         <main className="flex-1 mt-4">
             <div className="grid gap-6 lg:grid-cols-3">
-                <div className="lg:col-span-2 flex flex-col gap-6">
-                    {/* Author card for mobile view */}
-                    <div className="lg:hidden">
-                        <Link href={`/users/${author.id}`}>
-                            <UserProfileCard user={author} isOwnProfile={isOwnProfile} isCompact={true} className="border rounded-lg"/>
-                        </Link>
-                    </div>
-
+                <div className="lg:col-span-2 flex flex-col gap-3 md:gap-6">
                     <InterviewExperience
                         interview={interview}
                         stats={stats}
                         interviewQuestions={interviewQuestions}
                         interviewResources={interviewResources}
+                        author={author}
                     />
                     
                     <Card id="comments">

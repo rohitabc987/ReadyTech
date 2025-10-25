@@ -2,20 +2,23 @@
 'use client';
 
 import { useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StarRating } from '@/components/star-rating';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
-import type { Post, PostStats, Question, Resource } from '@/lib/types';
-import { Briefcase, Calendar, FileText, Link as LinkIcon, Video, Award, BarChart, FileBadge, CheckCircle, XCircle } from 'lucide-react';
+import type { Post, PostStats, Question, Resource, User } from '@/lib/types';
+import { Briefcase, Calendar, FileText, Link as LinkIcon, Video, CheckCircle, XCircle, FileBadge } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import Link from 'next/link';
 
 interface InterviewExperienceProps {
     interview: Post;
     stats: PostStats;
     interviewQuestions: Question[];
     interviewResources: Resource[];
+    author: User;
 }
 
 const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
@@ -37,7 +40,7 @@ const getResultInfo = (result: Post['companyInfo']['result']) => {
     }
 };
 
-export function InterviewExperience({ interview, stats, interviewQuestions, interviewResources }: InterviewExperienceProps) {
+export function InterviewExperience({ interview, stats, interviewQuestions, interviewResources, author }: InterviewExperienceProps) {
     const { toast } = useToast();
 
     useEffect(() => {
@@ -52,19 +55,39 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
     }, [toast]);
     
     const { icon: ResultIcon, color: resultColor, text: resultText } = getResultInfo(interview.companyInfo.result);
+    const authorInitials = author.personal.name.split(' ').map(n => n[0]).join('');
 
 
     return (
         <>
             <Card>
                 <CardHeader className="p-6">
+                    {/* Responsive Header: Mobile shows Avatar + Stars, Desktop shows Title + Stars */}
                     <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+                        {/* Mobile-only Author/Rating Header */}
+                        <div className="flex md:hidden items-center justify-between">
+                             <Link href={`/users/${author.id}`}>
+                                <Avatar className="h-10 w-10">
+                                    <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
+                                    <AvatarFallback>{authorInitials}</AvatarFallback>
+                                </Avatar>
+                            </Link>
+                            <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
+                        </div>
+                        
+                        {/* Title for all screens */}
                         <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
-                        <div className="flex items-center justify-end gap-2 shrink-0 w-full md:w-auto">
+                        
+                        {/* Desktop-only Rating */}
+                        <div className="hidden md:flex items-center justify-end gap-2 shrink-0 w-full md:w-auto">
                            <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                         </div>
                     </div>
+                    
                     <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
+                        <div className="flex items-center gap-2">
+                            <span className="font-semibold md:font-normal">{author.personal.name}</span>
+                        </div>
                         <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
                         <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
                     </div>
