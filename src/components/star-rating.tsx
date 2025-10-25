@@ -44,13 +44,6 @@ export function StarRating({ initialRating = 0, totalRatings = 0, postId }: Star
   return (
     <div className="flex flex-col items-end">
       <div className="flex items-center gap-2">
-         {initialRating > 0 && (
-          <div className="flex items-center gap-1 text-sm text-muted-foreground">
-            <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
-            <span className="font-bold text-base text-foreground">{averageRating}</span>
-            <span className="text-xs">({currentTotalRatings})</span>
-          </div>
-        )}
         <div className="flex items-center" onMouseLeave={() => setHoverRating(0)}>
           {[...Array(5)].map((_, index) => {
             const starValue = index + 1;
@@ -69,6 +62,13 @@ export function StarRating({ initialRating = 0, totalRatings = 0, postId }: Star
             );
           })}
         </div>
+         {initialRating > 0 && (
+          <div className="flex items-center gap-1 text-sm text-muted-foreground">
+            <Star className="h-4 w-4 fill-amber-400 text-amber-500" />
+            <span className="font-bold text-base text-foreground">{averageRating}</span>
+            <span className="text-xs">({currentTotalRatings})</span>
+          </div>
+        )}
       </div>
     </div>
   );
