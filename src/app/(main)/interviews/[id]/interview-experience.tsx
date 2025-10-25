@@ -54,7 +54,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
         return () => clearTimeout(timer);
     }, [toast]);
     
-    if (!author) {
+    if (!author || !author.personal) {
         return null; // Or return a loading skeleton
     }
 
@@ -75,10 +75,6 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                                     <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
                                     <AvatarFallback>{authorInitials}</AvatarFallback>
                                 </Avatar>
-                                <div>
-                                    <p className="font-semibold text-sm">{author.personal.name}</p>
-                                    <p className="text-xs text-muted-foreground">{new Date(interview.main.createdAt).toLocaleDateString()}</p>
-                                </div>
                             </Link>
                             <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                         </div>
@@ -92,9 +88,12 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                         </div>
                     </div>
                     
-                    <div className="hidden md:flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
-                        <div className="flex items-center gap-2">
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground pt-2">
+                        <div className="hidden md:flex items-center gap-2">
                             <span className="font-semibold md:font-normal">{author.personal.name}</span>
+                        </div>
+                         <div className="flex md:hidden items-center gap-2">
+                            <span>{interview.main.type}</span>
                         </div>
                         <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
                         <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
