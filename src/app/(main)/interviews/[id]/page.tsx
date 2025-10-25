@@ -50,11 +50,6 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     return (
         <main className="flex-1 mt-4">
             <div className="grid gap-6 lg:grid-cols-3">
-                <div className="lg:hidden p-2">
-                    <Link href={`/users/${author.id}`}>
-                        <UserProfileCard user={author} isOwnProfile={isOwnProfile} isCompact={true} className="border rounded-lg" />
-                    </Link>
-                </div>
                 <div className="lg:col-span-2 flex flex-col gap-3 md:gap-6">
                     <InterviewExperience
                         interview={interview}
