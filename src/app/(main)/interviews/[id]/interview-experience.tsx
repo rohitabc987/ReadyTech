@@ -54,8 +54,12 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
         return () => clearTimeout(timer);
     }, [toast]);
     
+    if (!author) {
+        return null; // Or return a loading skeleton
+    }
+
     const { icon: ResultIcon, color: resultColor, text: resultText } = getResultInfo(interview.companyInfo.result);
-    const authorInitials = author.personal.name.split(' ').map(n => n[0]).join('');
+    const authorInitials = author.personal.name ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
 
 
     return (
@@ -65,7 +69,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                     {/* Responsive Header: Mobile shows Avatar + Stars, Desktop shows Title + Stars */}
                     <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
                         {/* Mobile-only Author/Rating Header */}
-                        <div className="flex md:hidden items-center justify-between">
+                        <div className="flex md:hidden items-center justify-between w-full">
                              <Link href={`/users/${author.id}`}>
                                 <Avatar className="h-10 w-10">
                                     <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
@@ -79,7 +83,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                         <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
                         
                         {/* Desktop-only Rating */}
-                        <div className="hidden md:flex items-center justify-end gap-2 shrink-0 w-full md:w-auto">
+                        <div className="hidden md:flex flex-shrink-0">
                            <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                         </div>
                     </div>
