@@ -8,7 +8,8 @@ import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
 import { useToast } from '@/hooks/use-toast';
 import type { Post, PostStats, Question, Resource } from '@/lib/types';
-import { Briefcase, Calendar, FileText, Link as LinkIcon, Video } from 'lucide-react';
+import { Briefcase, Calendar, FileText, Link as LinkIcon, Video, Award, BarChart, FileBadge, CheckCircle, XCircle } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface InterviewExperienceProps {
     interview: Post;
@@ -25,6 +26,17 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
     }
 };
 
+const getResultInfo = (result: Post['companyInfo']['result']) => {
+    switch (result) {
+      case 'Selected':
+        return { icon: CheckCircle, color: 'text-green-600', text: 'Selected' };
+      case 'Rejected':
+        return { icon: XCircle, color: 'text-destructive', text: 'Not Selected' };
+      default:
+        return { icon: FileBadge, color: 'text-amber-600', text: 'In Process' };
+    }
+};
+
 export function InterviewExperience({ interview, stats, interviewQuestions, interviewResources }: InterviewExperienceProps) {
     const { toast } = useToast();
 
@@ -38,6 +50,9 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
 
         return () => clearTimeout(timer);
     }, [toast]);
+    
+    const { icon: ResultIcon, color: resultColor, text: resultText } = getResultInfo(interview.companyInfo.result);
+
 
     return (
         <>
@@ -56,6 +71,26 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                 </CardHeader>
                 <CardContent className="p-6 pt-0">
                     <p className="whitespace-pre-wrap">{interview.main.description}</p>
+                    
+                    <Separator className="my-6" />
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
+                        <div className="flex flex-col items-start gap-1">
+                            <div className="text-muted-foreground font-medium">Difficulty</div>
+                            <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty || 'N/A'}</Badge>
+                        </div>
+                        <div className="flex flex-col items-start gap-1">
+                            <div className="text-muted-foreground font-medium">Application</div>
+                            <Badge variant="outline">{interview.companyInfo.applicationType || 'N/A'}</Badge>
+                        </div>
+                        <div className="flex flex-col items-start gap-1">
+                            <div className="text-muted-foreground font-medium">Outcome</div>
+                            <div className={cn("flex items-center gap-1.5 font-semibold", resultColor)}>
+                                <ResultIcon className="h-4 w-4" />
+                                <span>{resultText}</span>
+                            </div>
+                        </div>
+                    </div>
                     
                     {interviewQuestions.length > 0 && (
                         <>
