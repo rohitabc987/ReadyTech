@@ -72,7 +72,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                 <CardContent className="p-6 pt-0">
                     <p className="whitespace-pre-wrap">{interview.main.description}</p>
                     
-                    <div className="flex flex-wrap items-center gap-4 text-sm mt-6">
+                    <div className="flex flex-wrap items-center gap-4 text-sm mt-4">
                         <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty || 'N/A'}</Badge>
                         <Badge variant="outline">{interview.companyInfo.applicationType || 'N/A'}</Badge>
                         <div className={cn("flex items-center gap-1.5 font-semibold", resultColor)}>
@@ -83,7 +83,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                     
                     {interviewQuestions.length > 0 && (
                         <>
-                            <Separator className="my-6" />
+                            <Separator className="my-4" />
                             <h3 className="font-semibold text-lg mb-4">Questions Asked</h3>
                             <div className="space-y-4">
                                 {interviewQuestions.map((q, i) => (
