@@ -14,18 +14,14 @@ import { ContentFilter } from '@/components/content-filter';
 
 type QuestionWithCompany = Question & { company: string; interviewId: string };
 
-export default function QuestionsPage() {
-  const [allQuestions, setAllQuestions] = React.useState<QuestionWithCompany[]>([]);
-  const [filteredQuestions, setFilteredQuestions] = React.useState<QuestionWithCompany[]>([]);
+function QuestionsClient({ initialQuestions }: { initialQuestions: QuestionWithCompany[] }) {
+  const [allQuestions, setAllQuestions] = React.useState<QuestionWithCompany[]>(initialQuestions);
+  const [filteredQuestions, setFilteredQuestions] = React.useState<QuestionWithCompany[]>(initialQuestions);
 
   React.useEffect(() => {
-    const loadQuestions = async () => {
-      const questions = await getAllQuestions();
-      setAllQuestions(questions);
-      setFilteredQuestions(questions);
-    };
-    loadQuestions();
-  }, []);
+    setAllQuestions(initialQuestions);
+    setFilteredQuestions(initialQuestions);
+  }, [initialQuestions]);
 
   const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
     let questionsToFilter = [...allQuestions];
@@ -45,7 +41,7 @@ export default function QuestionsPage() {
   };
     
   return (
-    <main className="flex-1">
+    <main className="flex-1 mt-4">
         <ContentFilter 
           initialFilters={{}}
           onApply={handleApplyFilters}
@@ -107,6 +103,12 @@ export default function QuestionsPage() {
     </main>
   );
 }
+
+export default async function QuestionsPage() {
+  const initialQuestions = await getAllQuestions();
+  return <QuestionsClient initialQuestions={initialQuestions} />;
+}
+
 
 // Keep the internal Table components for now, can be moved to ui/ if needed
 const Table = React.forwardRef<HTMLTableElement, React.HTMLAttributes<HTMLTableElement>>(({ className, ...props }, ref) => (

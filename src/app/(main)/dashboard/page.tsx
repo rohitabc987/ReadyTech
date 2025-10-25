@@ -1,20 +1,19 @@
 
-'use client';
-
-import { useEffect, useState } from 'react';
 import { getPosts } from '@/lib/firebase/posts';
 import { DashboardFilter, type FilterState } from '@/components/dashboard-filter';
 import { PostCard, type EnrichedPost } from '@/components/post-card';
 import { useAuth } from '@/context/auth-context';
-import { useIsMobile } from '@/hooks/use-mobile';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useState, useEffect } from 'react';
+import 'use-client'; // This file is a client component, but we will wrap it.
 
-export default function DashboardPage() {
+// Renaming the component to indicate it's a client component
+function DashboardClient({ initialPosts }: { initialPosts: EnrichedPost[] }) {
   const { user: currentUser } = useAuth();
   
-  const [allPosts, setAllPosts] = useState<EnrichedPost[]>([]);
-  const [filteredPosts, setFilteredPosts] = useState<EnrichedPost[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [allPosts, setAllPosts] = useState<EnrichedPost[]>(initialPosts);
+  const [filteredPosts, setFilteredPosts] = useState<EnrichedPost[]>(initialPosts);
+  const [isLoading, setIsLoading] = useState(false); // No initial loading
   const [filters, setFilters] = useState<FilterState>({
     type: '',
     company: '',
@@ -23,20 +22,15 @@ export default function DashboardPage() {
     college: '',
   });
 
-  const isMobile = useIsMobile();
-
+  // When initialPosts change (e.g. on navigation), reset the state
   useEffect(() => {
-    const loadPosts = async () => {
-      setIsLoading(true);
-      const posts = await getPosts();
-      setAllPosts(posts);
-      setFilteredPosts(posts);
-      setIsLoading(false);
-    };
-    loadPosts();
-  }, []);
+    setAllPosts(initialPosts);
+    setFilteredPosts(initialPosts);
+  }, [initialPosts]);
+
 
   const handleApplyFilters = () => {
+    setIsLoading(true);
     let postsToFilter = [...allPosts];
 
     if (filters.type && filters.type !== 'all') {
@@ -61,6 +55,7 @@ export default function DashboardPage() {
     }
 
     setFilteredPosts(postsToFilter);
+    setIsLoading(false);
   };
   
   const handleClearFilters = () => {
@@ -128,4 +123,9 @@ export default function DashboardPage() {
   );
 }
 
-    
+
+// The main page component is now a Server Component
+export default async function DashboardPage() {
+  const initialPosts = await getPosts();
+  return <DashboardClient initialPosts={initialPosts} />;
+}

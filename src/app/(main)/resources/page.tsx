@@ -15,18 +15,14 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
     }
 }
 
-export default function ResourcesPage() {
-    const [allResources, setAllResources] = React.useState<EnrichedResource[]>([]);
-    const [filteredResources, setFilteredResources] = React.useState<EnrichedResource[]>([]);
+function ResourcesClient({ initialResources }: { initialResources: EnrichedResource[] }) {
+    const [allResources, setAllResources] = React.useState<EnrichedResource[]>(initialResources);
+    const [filteredResources, setFilteredResources] = React.useState<EnrichedResource[]>(initialResources);
 
     React.useEffect(() => {
-      const loadResources = async () => {
-        const resources = await getAllResources();
-        setAllResources(resources);
-        setFilteredResources(resources);
-      };
-      loadResources();
-    }, []);
+      setAllResources(initialResources);
+      setFilteredResources(initialResources);
+    }, [initialResources]);
 
     const handleApplyFilters = (filters: { company?: string; topic?: string; }) => {
       let resourcesToFilter = [...allResources];
@@ -46,7 +42,7 @@ export default function ResourcesPage() {
     };
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 mt-4">
       <ContentFilter 
         initialFilters={{}}
         onApply={handleApplyFilters}
@@ -55,7 +51,7 @@ export default function ResourcesPage() {
         showTopicFilter={true}
       />
       
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-2">
           {filteredResources.map(resource => (
               <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
                   <Card className="h-full hover:bg-muted/50 transition-colors">
@@ -83,4 +79,9 @@ export default function ResourcesPage() {
       </div>
     </main>
   );
+}
+
+export default async function ResourcesPage() {
+  const initialResources = await getAllResources();
+  return <ResourcesClient initialResources={initialResources} />;
 }

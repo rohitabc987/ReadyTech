@@ -33,8 +33,8 @@ function MentorCard({ user }: { user: User }) {
     return (
         <Link href={`/users/${user.id}`} className="block">
             <Card className="h-full flex flex-col hover:bg-muted/50 transition-colors">
-                <CardHeader className="items-center text-center p-6">
-                     <Avatar className="h-20 w-20 md:h-20 md:w-20 mb-3">
+                <CardHeader className="items-center text-center space-y-0.5 md:space-y-1.5 p-2 md:p-4">
+                     <Avatar className="h-16 w-16 md:h-20 md:w-20 mb-3">
                         <AvatarImage src={user.personal.avatarUrl} alt={user.personal.name} />
                         <AvatarFallback className="text-3xl">{userInitials}</AvatarFallback>
                     </Avatar>
@@ -44,12 +44,12 @@ function MentorCard({ user }: { user: User }) {
                         <span>{user.academics.institution}</span>
                     </div>
                 </CardHeader>
-                <CardContent className="p-6 pt-0 flex-1 flex flex-col">
-                    <p className="text-sm md:text-base text-muted-foreground text-center flex-1 line-clamp-3">{user.personal.bio}</p>
+                <CardContent className="p-0 pt-0 flex-1 flex flex-col p-1 md:p-4">
+                    <p className="text-sm md:text-base text-muted-foreground text-center flex-1 line-clamp-2 md:line-clamp-3">{user.personal.bio}</p>
                     <Button 
                         variant={isRequested ? "secondary" : "default"}
                         size="sm" 
-                        className="w-full mt-4" 
+                        className="w-auto m-3 md:m-5" 
                         onClick={handleConnect}
                         disabled={isRequested}
                     >
@@ -85,7 +85,7 @@ export default function MentorsPage() {
 
   return (
     <main className="flex-1">
-          <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
+          <div className="grid gap-2 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 m-1 mt-3">
               {mentors.map(mentor => (
                   <MentorCard key={mentor.id} user={mentor} />
               ))}
