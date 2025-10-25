@@ -72,23 +72,12 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                 <CardContent className="p-6 pt-0">
                     <p className="whitespace-pre-wrap">{interview.main.description}</p>
                     
-                    <Separator className="my-6" />
-
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 text-sm">
-                        <div className="flex flex-col items-start gap-1">
-                            <div className="text-muted-foreground font-medium">Difficulty</div>
-                            <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty || 'N/A'}</Badge>
-                        </div>
-                        <div className="flex flex-col items-start gap-1">
-                            <div className="text-muted-foreground font-medium">Application</div>
-                            <Badge variant="outline">{interview.companyInfo.applicationType || 'N/A'}</Badge>
-                        </div>
-                        <div className="flex flex-col items-start gap-1">
-                            <div className="text-muted-foreground font-medium">Outcome</div>
-                            <div className={cn("flex items-center gap-1.5 font-semibold", resultColor)}>
-                                <ResultIcon className="h-4 w-4" />
-                                <span>{resultText}</span>
-                            </div>
+                    <div className="flex flex-wrap items-center gap-4 text-sm mt-6">
+                        <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty || 'N/A'}</Badge>
+                        <Badge variant="outline">{interview.companyInfo.applicationType || 'N/A'}</Badge>
+                        <div className={cn("flex items-center gap-1.5 font-semibold", resultColor)}>
+                            <ResultIcon className="h-4 w-4" />
+                            <span>{resultText}</span>
                         </div>
                     </div>
                     
