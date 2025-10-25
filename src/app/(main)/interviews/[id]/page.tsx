@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { mockQuestions } from '@/lib/data/mock-data';
 import { InterviewExperience } from './interview-experience';
+import { UserProfileCard } from '@/components/user-profile-card';
 
 
 export default async function InterviewDetailPage({ params }: { params: { id: string } }) {
@@ -38,11 +39,22 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
     // This part still uses mock-data directly, which is fine for now
     // as we transition. A real implementation would fetch from a 'questions' collection.
     const interviewQuestions = mockQuestions.filter(q => q.postId === interview.id);
+    
+    if (!author) {
+        return notFound();
+    }
+
+    const isOwnProfile = currentUser.id === author.id;
 
     return (
         <main className="flex-1 mt-4">
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-2 flex flex-col gap-6">
+                    {/* Author card for mobile view */}
+                    <div className="lg:hidden">
+                        <UserProfileCard user={author} isOwnProfile={isOwnProfile} />
+                    </div>
+
                     <InterviewExperience
                         interview={interview}
                         stats={stats}
@@ -92,32 +104,10 @@ export default async function InterviewDetailPage({ params }: { params: { id: st
                     </Card>
                 </div>
 
-                {author && <div className="lg:col-span-1">
-                    <Card>
-                        <CardHeader className="flex-row items-center gap-4 space-y-0 p-6">
-                            <Avatar className="h-12 w-12">
-                                <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name}/>
-                                <AvatarFallback>{author.personal.name.split(' ').map(n => n[0]).join('')}</AvatarFallback>
-                            </Avatar>
-                            <div>
-                                <CardTitle className="text-base">Posted by</CardTitle>
-                                <CardDescription>
-                                    <Link href={`/users/${author.id}`} className="font-semibold text-foreground hover:underline">
-                                        {author.personal.name}
-                                    </Link>
-                                </CardDescription>
-                            </div>
-                        </CardHeader>
-                        <CardContent className="p-6 pt-0">
-                            <p className="text-sm text-muted-foreground">{author.personal.bio}</p>
-                            <Button asChild className="w-full mt-4">
-                                <Link href={`/users/${author.id}`}>
-                                    <MessageSquare className="mr-2 h-4 w-4"/>View Profile
-                                </Link>
-                            </Button>
-                        </CardContent>
-                    </Card>
-                </div>}
+                {/* Author card for desktop view */}
+                <div className="hidden lg:block lg:col-span-1">
+                    <UserProfileCard user={author} isOwnProfile={isOwnProfile} />
+                </div>
             </div>
         </main>
     );
