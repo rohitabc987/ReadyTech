@@ -55,7 +55,7 @@ function MentorCard({ user }: { user: User }) {
                         {isRequested ? (
                             <>
                                 <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
-                                Request Sent
+                                <p className="text-black" >Request Sent</p>
                             </>
                         ) : (
                             <>

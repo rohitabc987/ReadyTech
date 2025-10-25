@@ -6,7 +6,6 @@ export type UserPersonal = {
   avatarUrl?: string;
   mobile?: string;
   bio?: string;
-  updatedAt?: Date;
 };
 
 export type UserAcademics = {
@@ -134,3 +133,5 @@ export type Testimonial = {
   rating: number;
   quote: string;
 };
+
+    
