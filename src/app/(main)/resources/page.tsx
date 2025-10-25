@@ -46,7 +46,7 @@ export default function ResourcesPage() {
     };
 
   return (
-    <main className="flex-1 mt-4 p-2">
+    <main className="flex-1">
       <ContentFilter 
         initialFilters={{}}
         onApply={handleApplyFilters}
@@ -59,7 +59,7 @@ export default function ResourcesPage() {
           {filteredResources.map(resource => (
               <a key={resource.id} href={resource.url} target="_blank" rel="noopener noreferrer" className="block hover:no-underline">
                   <Card className="h-full hover:bg-muted/50 transition-colors">
-                      <CardHeader className="flex-row items-start gap-4 space-y-0 p-4">
+                      <CardHeader className="flex-row items-start gap-4 space-y-0">
                           <div className="p-3 bg-muted rounded-lg">
                               <ResourceIcon type={resource.type} />
                           </div>
@@ -68,7 +68,7 @@ export default function ResourcesPage() {
                               <CardDescription className="text-xs uppercase font-medium">{resource.type}</CardDescription>
                           </div>
                       </CardHeader>
-                      <CardContent className="p-4 pt-0">
+                      <CardContent>
                           <p className="text-sm text-muted-foreground line-clamp-2">{resource.description}</p>
                       </CardContent>
                   </Card>

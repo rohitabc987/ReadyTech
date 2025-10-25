@@ -45,67 +45,65 @@ export default function QuestionsPage() {
   };
     
   return (
-    <main className="flex-1 mt-4">
-        <CardContent>
-            <ContentFilter 
-              initialFilters={{}}
-              onApply={handleApplyFilters}
-              onClear={handleClearFilters}
-              showCompanyFilter={true}
-              showTopicFilter={true}
-            />
+    <main className="flex-1">
+        <ContentFilter 
+          initialFilters={{}}
+          onApply={handleApplyFilters}
+          onClear={handleClearFilters}
+          showCompanyFilter={true}
+          showTopicFilter={true}
+        />
 
-          <div className="hidden md:block border rounded-lg">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="w-1/2">Question</TableHead>
-                  <TableHead>Topic</TableHead>
-                  <TableHead>Source Company</TableHead>
-                  <TableHead className="text-right">Action</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filteredQuestions.map((q, i) => (
-                  <TableRow key={i}>
-                    <TableCell className="font-medium">{q.text}</TableCell>
-                    <TableCell><Badge variant="secondary">{q.topic}</Badge></TableCell>
-                    <TableCell>{q.company}</TableCell>
-                    <TableCell className="text-right">
-                      <Button variant="outline" size="sm" asChild>
-                        <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="grid md:hidden gap-2">
+        <div className="hidden md:block border rounded-lg">
+        <Table>
+            <TableHeader>
+            <TableRow>
+                <TableHead className="w-1/2">Question</TableHead>
+                <TableHead>Topic</TableHead>
+                <TableHead>Source Company</TableHead>
+                <TableHead className="text-right">Action</TableHead>
+            </TableRow>
+            </TableHeader>
+            <TableBody>
             {filteredQuestions.map((q, i) => (
-              <React.Fragment key={i}>
-                <Card className="border-0 shadow-none bg-transparent">
-                  <CardHeader className="p-2 pb-2">
-                    <CardTitle className="text-base font-normal line-clamp-2">{q.text}</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-1 pt-1 pb-0">
-                    <div className="flex items-center justify-between text-sm text-muted-foreground">
-                      <div className="flex items-center gap-x-3 flex-wrap">
-                        {q.topic && <Badge variant="secondary">{q.topic}</Badge>}
-                        {q.topic && q.company && <span className="hidden sm:inline">&bull;</span>}
-                        {q.company && <span>{q.company}</span>}
-                      </div>
-                      <Button variant="outline" size="sm" asChild className="h-auto px-2 py-1 text-xs">
-                        <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-                { i < filteredQuestions.length - 1 && <Separator /> }
-              </React.Fragment>
+                <TableRow key={i}>
+                <TableCell className="font-medium">{q.text}</TableCell>
+                <TableCell><Badge variant="secondary">{q.topic}</Badge></TableCell>
+                <TableCell>{q.company}</TableCell>
+                <TableCell className="text-right">
+                    <Button variant="outline" size="sm" asChild>
+                    <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
+                    </Button>
+                </TableCell>
+                </TableRow>
             ))}
-          </div>
-        </CardContent>
+            </TableBody>
+        </Table>
+        </div>
+        <div className="grid md:hidden gap-2">
+        {filteredQuestions.map((q, i) => (
+            <React.Fragment key={i}>
+            <Card className="border-0 shadow-none bg-transparent">
+                <CardHeader className="p-2 pb-2">
+                <CardTitle className="text-base font-medium line-clamp-2">{q.text}</CardTitle>
+                </CardHeader>
+                <CardContent className="p-2 pt-1 pb-0">
+                <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <div className="flex items-center gap-x-3 flex-wrap">
+                    {q.topic && <Badge variant="secondary">{q.topic}</Badge>}
+                    {q.topic && q.company && <span className="hidden sm:inline">&bull;</span>}
+                    {q.company && <span>{q.company}</span>}
+                    </div>
+                    <Button variant="outline" size="sm" asChild className="h-auto px-2 py-1 text-xs">
+                    <Link href={`/interviews/${q.interviewId}`}>View Context</Link>
+                    </Button>
+                </div>
+                </CardContent>
+            </Card>
+            { i < filteredQuestions.length - 1 && <Separator /> }
+            </React.Fragment>
+        ))}
+        </div>
     </main>
   );
 }

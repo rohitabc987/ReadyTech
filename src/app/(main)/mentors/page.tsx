@@ -40,7 +40,7 @@ function MentorCard({ user }: { user: User }) {
                     <Button 
                         variant="default"
                         size="sm" 
-                        className="w-full mt-4 text-sm md:text-base md:py-6" 
+                        className="w-full mt-4 text-sm md:py-6" 
                         onClick={handleConnect}>
                         <MessageSquare className="mr-2 h-4 w-4 md:h-5 md:w-5"/>Connect
                     </Button>
@@ -63,7 +63,7 @@ export default function MentorsPage() {
 
 
   return (
-    <main className="flex-1 mt-4">
+    <main className="flex-1">
           <div className="grid gap-4 md:gap-6 grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4">
               {mentors.map(mentor => (
                   <MentorCard key={mentor.id} user={mentor} />
