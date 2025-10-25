@@ -2,10 +2,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { getPostStats, getPostsByUserId } from '@/lib/firebase/posts';
 import { getUserProfile } from '@/lib/firebase/users';
-import { Briefcase, Calendar, GraduationCap, Mail, MessageSquare, Star } from 'lucide-react';
+import { Briefcase, Calendar, GraduationCap, MessageSquare, Star, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -19,7 +19,7 @@ export default async function UserProfilePage({ params }: { params: { id: string
     const userInterviews = await getPostsByUserId(user.id);
 
     return (
-        <main className="flex-1 mt-4">
+        <main className="flex-1">
             <div className="grid gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-1 flex flex-col gap-6">
                     <Card className="text-center">
@@ -42,10 +42,6 @@ export default async function UserProfilePage({ params }: { params: { id: string
                                     <GraduationCap className="h-4 w-4" />
                                     <span>{user.academics.institution} &apos;{user.academics.graduationYear?.toString().slice(-2)}</span>
                                 </div>
-                                <div className="flex items-center gap-2">
-                                    <Mail className="h-4 w-4" />
-                                    <span>{user.personal.email}</span>
-                                </div>
                             </div>
                             <Button className="mt-6 w-full">
                                 <MessageSquare className="mr-2 h-4 w-4" /> Connect
@@ -62,17 +58,26 @@ export default async function UserProfilePage({ params }: { params: { id: string
                             {userInterviews.length > 0 ? (await Promise.all(userInterviews.map(async interview => {
                                 const stats = await getPostStats(interview.id);
                                 return (
-                                <div key={interview.id} className="p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                                    <h3 className="font-semibold text-primary">
-                                        <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
-                                    </h3>
-                                    <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1">
-                                        <div className="flex items-center gap-1"><Briefcase className="h-3 w-3" />{interview.companyInfo.company}</div>
-                                        <div className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(interview.main.createdAt).toLocaleDateString()}</div>
-                                        {stats?.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3" />{stats.avgRating.toFixed(1)}</div>}
-                                    </div>
-                                    <p className="text-sm text-muted-foreground mt-2 line-clamp-2">{interview.main.description}</p>
-                                </div>
+                                <Card key={interview.id} className="transition-colors hover:bg-muted/50">
+                                    <CardHeader>
+                                        <CardTitle className="text-lg">
+                                            <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
+                                        </CardTitle>
+                                        <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
+                                            <div className="flex items-center gap-1"><Briefcase className="h-3 w-3" />{interview.main.company}</div>
+                                            <div className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(interview.main.createdAt).toLocaleDateString()}</div>
+                                            {stats?.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3 fill-amber-400 text-amber-500" />{stats.avgRating.toFixed(1)}</div>}
+                                        </div>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-sm text-muted-foreground line-clamp-2">{interview.main.description}</p>
+                                    </CardContent>
+                                    <CardFooter>
+                                        <Button variant="outline" size="sm" asChild>
+                                            <Link href={`/interviews/${interview.id}`}>View Post <ArrowRight className="ml-2 h-4 w-4"/></Link>
+                                        </Button>
+                                    </CardFooter>
+                                </Card>
                             )}))) : (
                                 <p className="text-sm text-center text-muted-foreground py-8">
                                     {user.personal.name} has not shared any experiences yet.
