@@ -64,28 +64,29 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
 
     return (
         <>
-            <Card>
-                <CardHeader className="p-6">
+            <Card className="">
+                <CardHeader className="p-3 md:p-6">
                     <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+                        
+                        {/* Title for all screens */}
+                        <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
+
                         {/* Mobile-only Header */}
                         <div className="flex flex-col md:hidden w-full gap-2">
                              <div className="flex items-center justify-between">
                                 <Link href={`/users/${author.id}`}>
-                                    <Avatar className="h-10 w-10">
+                                    <Avatar className="h-10 w-10 ml-1">
                                         <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
                                         <AvatarFallback>{authorInitials}</AvatarFallback>
                                     </Avatar>
                                 </Link>
                                 <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                             </div>
-                            <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                            {/* <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                                 <span>{interview.main.type}</span>
-                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>
-                            </div>
+                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company}</div>
+                            </div> */}
                         </div>
-                        
-                        {/* Title for all screens */}
-                        <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
                         
                         {/* Desktop-only Rating */}
                         <div className="hidden md:flex flex-shrink-0">
@@ -101,7 +102,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                         <div className="flex items-center gap-2"><Calendar className="h-4 w-4"/>{new Date(interview.main.createdAt).toLocaleDateString()}</div>
                     </div>
                 </CardHeader>
-                <CardContent className="p-6 pt-0">
+                <CardContent className="p-3 md:p-6 pt-0">
                     <p className="whitespace-pre-wrap">{interview.main.description}</p>
                     
                     <div className="flex flex-wrap items-center gap-4 text-sm mt-4">
