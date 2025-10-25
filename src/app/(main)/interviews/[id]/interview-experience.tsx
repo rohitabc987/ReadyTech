@@ -64,16 +64,13 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
 
     return (
         <>
-            <Card className="">
+            <Card className="border-0 md:border">
                 <CardHeader className="p-3 md:p-6">
-                    <div className="flex flex-col-reverse md:flex-row md:items-start md:justify-between gap-4">
+                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                         
-                        {/* Title for all screens */}
-                        <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
-
                         {/* Mobile-only Header */}
-                        <div className="flex flex-col md:hidden w-full gap-2">
-                             <div className="flex items-center justify-between">
+                        <div className="flex flex-col md:hidden w-full gap-3">
+                            <div className="flex items-center justify-between">
                                 <Link href={`/users/${author.id}`}>
                                     <Avatar className="h-10 w-10 ml-1">
                                         <AvatarImage src={author.personal.avatarUrl} alt={author.personal.name} />
@@ -82,11 +79,14 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                                 </Link>
                                 <StarRating initialRating={stats.avgRating} totalRatings={stats.ratingsCount} postId={interview.id} />
                             </div>
-                            {/* <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
+                             <div className="flex items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
                                 <span>{interview.main.type}</span>
-                                <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company}</div>
-                            </div> */}
+                                {interview.main.company && <div className="flex items-center gap-2"><Briefcase className="h-4 w-4"/>{interview.main.company} &bull; {interview.main.role}</div>}
+                            </div>
                         </div>
+
+                        {/* Title for all screens */}
+                        <CardTitle className="font-headline text-2xl md:pr-4">{interview.main.title}</CardTitle>
                         
                         {/* Desktop-only Rating */}
                         <div className="hidden md:flex flex-shrink-0">
