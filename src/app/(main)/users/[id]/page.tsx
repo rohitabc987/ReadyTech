@@ -50,7 +50,7 @@ export default async function UserProfilePage({ params }: { params: { id: string
                     </Card>
                 </div>
                 <div className="lg:col-span-2">
-                    <Card>
+                    <Card className="border-0 shadow-none">
                         <CardHeader>
                             <CardTitle>Shared Experiences ({userInterviews.length})</CardTitle>
                         </CardHeader>
@@ -60,11 +60,11 @@ export default async function UserProfilePage({ params }: { params: { id: string
                                 return (
                                 <Card key={interview.id} className="transition-colors hover:bg-muted/50">
                                     <CardHeader>
-                                        <CardTitle className="text-lg">
-                                            <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
+                                        <CardTitle className="text-lg font-semibold">
+                                            {interview.main.title}
                                         </CardTitle>
                                         <div className="flex items-center gap-4 text-xs text-muted-foreground pt-1">
-                                            <div className="flex items-center gap-1"><Briefcase className="h-3 w-3" />{interview.main.company}</div>
+                                            {interview.main.company && <div className="flex items-center gap-1"><Briefcase className="h-3 w-3" />{interview.main.company}</div>}
                                             <div className="flex items-center gap-1"><Calendar className="h-3 w-3" />{new Date(interview.main.createdAt).toLocaleDateString()}</div>
                                             {stats?.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3 fill-amber-400 text-amber-500" />{stats.avgRating.toFixed(1)}</div>}
                                         </div>
