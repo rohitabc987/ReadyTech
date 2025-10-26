@@ -96,8 +96,8 @@ export function LandingPageContent() {
 
             <div className="mt-10 grid gap-6 md:grid-cols-3">
               <div className="group flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2 hover:shadow-lg bg-gradient-to-br from-primary/10 to-transparent">
-                <div className="bg-primary/10 p-4 rounded-full mb-4">
-                  <Users className="h-10 w-10 text-primary" />
+                <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                  🚀
                 </div>
                 <h3 className="text-xl font-semibold">Empower Students</h3>
                 <p className="text-muted-foreground mt-2">
@@ -106,8 +106,8 @@ export function LandingPageContent() {
               </div>
 
               <div className="group flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2 hover:shadow-lg bg-gradient-to-br from-primary/10 to-transparent">
-                <div className="bg-primary/10 p-4 rounded-full mb-4">
-                  <BookOpen className="h-10 w-10 text-primary" />
+                <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                  🌉
                 </div>
                 <h3 className="text-xl font-semibold">Bridge Academia & Reality</h3>
                 <p className="text-muted-foreground mt-2">
@@ -116,8 +116,8 @@ export function LandingPageContent() {
               </div>
 
               <div className="group flex flex-col items-center p-6 bg-white/50 backdrop-blur-sm rounded-2xl shadow-sm transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2 hover:shadow-lg bg-gradient-to-br from-primary/10 to-transparent">
-                <div className="bg-primary/10 p-4 rounded-full mb-4">
-                  <Star className="h-10 w-10 text-primary" />
+                <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                  🤝
                 </div>
                 <h3 className="text-xl font-semibold">Build a Thriving Community</h3>
                 <p className="text-muted-foreground mt-2">
@@ -250,3 +250,5 @@ export function LandingPageContent() {
     </main>
   );
 }
+
+    
