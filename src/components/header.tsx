@@ -18,6 +18,7 @@ import { Button } from '@/components/ui/button';
 import { UserNav } from './user-nav';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
+import { BackButton } from './back-button';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -47,6 +48,9 @@ function NavLink({ href, children, onClick }: { href: string, children: React.Re
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const mainNavPaths = menuItems.map(item => item.href);
+  const showMobileMenu = mainNavPaths.includes(pathname);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
@@ -63,36 +67,41 @@ export function Header() {
         </div>
         
         {/* Mobile Menu */}
-        <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-          <SheetTrigger asChild>
-            <Button
-              variant="ghost"
-              className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 md:hidden"
-            >
-              <Menu className="h-5 w-5" />
-              <span className="sr-only">Toggle Menu</span>
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="left" className="pr-0">
-             <SheetHeader className="items-start">
-                <SheetTitle className="sr-only">Navigation</SheetTitle>
-             </SheetHeader>
-             <Link
-                href="/dashboard"
-                className="mb-4 flex items-center"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                <Logo />
-              </Link>
-            <div className="flex flex-col space-y-4">
-              {menuItems.map((item) => (
-                 <NavLink key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
-                    {item.label}
-                 </NavLink>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+        <div className="flex items-center md:hidden">
+            <BackButton />
+            {showMobileMenu && (
+                <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+                <SheetTrigger asChild>
+                    <Button
+                    variant="ghost"
+                    className="mr-2 px-0 text-base hover:bg-transparent focus-visible:bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+                    >
+                    <Menu className="h-5 w-5" />
+                    <span className="sr-only">Toggle Menu</span>
+                    </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="pr-0">
+                    <SheetHeader className="items-start">
+                        <SheetTitle className="sr-only">Navigation</SheetTitle>
+                    </SheetHeader>
+                    <Link
+                        href="/dashboard"
+                        className="mb-4 flex items-center"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                        <Logo />
+                    </Link>
+                    <div className="flex flex-col space-y-4">
+                    {menuItems.map((item) => (
+                        <NavLink key={item.href} href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                            {item.label}
+                        </NavLink>
+                    ))}
+                    </div>
+                </SheetContent>
+                </Sheet>
+            )}
+        </div>
         
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
            <div className="md:hidden">
