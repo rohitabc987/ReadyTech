@@ -41,7 +41,7 @@ export function LandingPageContent() {
 
   useEffect(() => {
     const triggerAnimation = () => {
-      if (window.location.hash === '#join' && ctaRef.current) {
+      if (ctaRef.current) {
         const ctas = ctaRef.current.querySelectorAll('[data-cta="join"]');
   
         ctas.forEach((el) => el.classList.add('animate-attention'));
@@ -52,28 +52,8 @@ export function LandingPageContent() {
       }
     };
   
-    const handleLinkClick = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      const link = target.closest('a');
-      if (link && link.getAttribute('href') === '#join') {
-        e.preventDefault();
-        window.location.hash = '#join'; // ensures hashchange event happens
-        triggerAnimation();
-        document.querySelector('#join')?.scrollIntoView({ behavior: 'smooth' });
-      }
-    };
-  
-    // Attach both listeners
-    window.addEventListener('hashchange', triggerAnimation);
-    document.addEventListener('click', handleLinkClick);
-  
     // Run on mount (page reload)
     triggerAnimation();
-  
-    return () => {
-      window.removeEventListener('hashchange', triggerAnimation);
-      document.removeEventListener('click', handleLinkClick);
-    };
   }, []);
   
   
