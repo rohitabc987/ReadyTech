@@ -75,11 +75,21 @@ export default function ProfilePage() {
     
     const isProfileLocked = useMemo(() => {
         if (!user?.updatedAt) return false;
+        // Check if current date is less than 7 days from the last update
         return differenceInDays(new Date(), user.updatedAt) < 7;
     }, [user]);
 
-    const canEditExpertise = !isProfileLocked || !user?.expertise?.expertiseAreas;
-    const canEditSocials = !isProfileLocked || (!user?.social?.linkedin && !user?.social?.github && !user?.social?.youtube);
+    const canEditExpertise = useMemo(() => {
+        return !isProfileLocked || !user?.expertise?.expertiseAreas;
+    }, [isProfileLocked, user?.expertise?.expertiseAreas]);
+
+    const canEditSocials = useMemo(() => {
+        return !isProfileLocked || (
+            !user?.social?.linkedin &&
+            !user?.social?.github &&
+            !user?.social?.youtube
+        );
+    }, [isProfileLocked, user?.social]);
 
 
     useEffect(() => {
@@ -137,18 +147,15 @@ export default function ProfilePage() {
     function onSubmit(data: ProfileFormValues) {
         // Here you would typically save the user object to your backend/database
         // including the new `updatedAt` timestamp
-        console.log('User profile saved:', { ...data, updatedAt: new Date() });
+        const updatedUserData = { ...user, updatedAt: new Date() };
+        console.log('User profile saved:', { ...data, updatedAt: updatedUserData.updatedAt });
         toast({
             title: 'Profile Saved!',
             description: 'Your changes have been successfully saved.',
         });
         
-        // Refetch user to update the lock status
-        const fetchUser = async () => {
-            const currentUser = await getCurrentUser();
-             setUser({...currentUser, updatedAt: new Date()});
-        };
-        fetchUser();
+        // Update user state to reflect the new `updatedAt` timestamp and re-evaluate locks
+        setUser(updatedUserData);
     };
 
 
@@ -473,7 +480,7 @@ export default function ProfilePage() {
                             </Card>
 
                             <div className="flex justify-center sticky bottom-4">
-                                <Button size="lg" type="submit" className="shadow-lg" disabled={isProfileLocked && !canEditExpertise && !canEditSocials}>
+                                <Button size="lg" type="submit" className="shadow-lg" disabled={!canEditExpertise && !canEditSocials && isProfileLocked}>
                                     Save All Changes
                                 </Button>
                             </div>
