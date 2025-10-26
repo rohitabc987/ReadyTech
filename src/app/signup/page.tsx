@@ -29,7 +29,7 @@ export default function SignupPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <LandingHeader />
       <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-primary/5 to-transparent">
-        <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border/50">
+        <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border/50 md:rounded-2xl md:shadow-lg">
           <CardHeader className="text-center space-y-4 pt-8">
             <div className="text-5xl">🫶</div>
             <CardTitle className="font-headline text-3xl">Join ReadyTech</CardTitle>
@@ -38,7 +38,7 @@ export default function SignupPage() {
             </CardDescription>
           </CardHeader>
           <CardContent className="pb-8 px-8">
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-y-4">
                <Button asChild size="lg" className="w-full btn-glow">
                 <Link href="/dashboard">
                   Continue as College Student
