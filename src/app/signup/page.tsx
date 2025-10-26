@@ -31,6 +31,7 @@ export default function SignupPage() {
       <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-primary/5 to-transparent">
         <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border/50">
           <CardHeader className="text-center space-y-4 pt-8">
+            <div className="text-5xl">🫶</div>
             <CardTitle className="font-headline text-3xl">Join ReadyTech</CardTitle>
             <CardDescription>
               Choose your path to get started. Are you a college student or a school student?
