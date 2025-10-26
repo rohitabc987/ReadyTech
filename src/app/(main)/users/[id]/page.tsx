@@ -25,21 +25,21 @@ export default async function UserProfilePage({ params }: { params: { id: string
 
     return (
         <main className="flex-1 mt-4">
-            <div className="grid gap-6 lg:grid-cols-3">
+            <div className="grid gap-2 md:gap-6 lg:grid-cols-3">
                 <div className="lg:col-span-1 flex flex-col gap-6">
                     <UserProfileCard user={user} isOwnProfile={isOwnProfile} />
                 </div>
                 <div className="lg:col-span-2">
                     <Card className="border-0 shadow-none">
-                        <CardHeader>
+                        <CardHeader className="p-3 py-4 md:p-6">
                             <CardTitle>Shared Experiences ({userInterviews.length})</CardTitle>
                         </CardHeader>
-                        <CardContent className="flex flex-col gap-4">
+                        <CardContent className="flex flex-col gap-4 p-0 md:p-6 pt-0">
                             {userInterviews.length > 0 ? (await Promise.all(userInterviews.map(async interview => {
                                 const stats = await getPostStats(interview.id);
                                 return (
-                                <Card key={interview.id} className="transition-colors hover:bg-muted/50 border-0 lg:border">
-                                    <CardHeader>
+                                <Card key={interview.id} className="transition-colors hover:bg-muted/50 border-0 lg:border lg:shadow-sm">
+                                    <CardHeader  className="p-0 md:p-6">
                                         <CardTitle className="text-lg font-semibold">
                                             <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
                                         </CardTitle>
@@ -49,10 +49,10 @@ export default async function UserProfilePage({ params }: { params: { id: string
                                             {stats?.avgRating && <div className="flex items-center gap-1"><Star className="h-3 w-3 fill-amber-400 text-amber-500" />{stats.avgRating.toFixed(1)}</div>}
                                         </div>
                                     </CardHeader>
-                                    <CardContent>
+                                    <CardContent className="p-0 py-2 md:p-4 md:pt-0">
                                         <p className="text-sm text-muted-foreground line-clamp-2">{interview.main.description}</p>
                                     </CardContent>
-                                    <CardFooter>
+                                    <CardFooter className="p-0 py-2 md:p-6 md:pt-0">
                                         <Button variant="outline" size="sm" asChild>
                                             <Link href={`/interviews/${interview.id}`}>View Post <ArrowRight className="ml-2 h-4 w-4"/></Link>
                                         </Button>
