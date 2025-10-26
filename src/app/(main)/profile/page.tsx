@@ -226,7 +226,7 @@ export default function ProfilePage() {
                                         control={form.control}
                                         name="name"
                                         render={({ field }) => (
-                                            <FormItem className="space-y-2 w-full md:w-1/2">
+                                            <FormItem className="space-y-2 flex-1">
                                                 <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
                                                 <FormControl>
                                                     <Input {...field} />
@@ -470,3 +470,5 @@ export default function ProfilePage() {
     </main>
   );
 }
+
+    
