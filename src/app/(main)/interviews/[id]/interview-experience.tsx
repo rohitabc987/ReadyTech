@@ -29,7 +29,8 @@ const ResourceIcon = ({ type }: { type: 'pdf' | 'video' | 'link' }) => {
     }
 };
 
-const getResultInfo = (result: Post['companyInfo']['result']) => {
+const getResultInfo = (result?: Post['companyInfo']['result']) => {
+    if (!result) return null;
     switch (result) {
       case 'Selected':
         return { icon: CheckCircle, color: 'text-green-600', text: 'Selected' };
@@ -58,7 +59,7 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
         return null; // Or return a loading skeleton
     }
 
-    const { icon: ResultIcon, color: resultColor, text: resultText } = getResultInfo(interview.companyInfo.result);
+    const resultInfo = getResultInfo(interview.companyInfo.result);
     const authorInitials = author.personal.name ? author.personal.name.split(' ').map(n => n[0]).join('') : '';
 
 
@@ -106,18 +107,20 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
                     <p className="whitespace-pre-wrap">{interview.main.description}</p>
                     
                     <div className="flex flex-wrap items-center gap-4 text-sm mt-4">
-                        <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty || 'N/A'}</Badge>
-                        <Badge variant="outline">{interview.companyInfo.applicationType || 'N/A'}</Badge>
-                        <div className={cn("flex items-center gap-1.5 font-semibold", resultColor)}>
-                            <ResultIcon className="h-4 w-4" />
-                            <span>{resultText}</span>
-                        </div>
+                        {interview.companyInfo?.difficulty && <Badge variant="outline" className="capitalize">{interview.companyInfo.difficulty}</Badge>}
+                        {interview.companyInfo?.applicationType && <Badge variant="outline">{interview.companyInfo.applicationType}</Badge>}
+                        {resultInfo && (
+                            <div className={cn("flex items-center gap-1.5 font-semibold", resultInfo.color)}>
+                                <resultInfo.icon className="h-4 w-4" />
+                                <span>{resultInfo.text}</span>
+                            </div>
+                        )}
                     </div>
                     
                     {interviewQuestions.length > 0 && (
                         <>
                             <Separator className="my-4" />
-                            <h3 className="font-semibold text-lg mb-4">Questions Asked</h3>
+                            <h3 className="font-bold text-xl mb-4">Questions Asked</h3>
                             <div className="space-y-4">
                                 {interviewQuestions.map((q, i) => (
                                     <div key={i} className="p-4 bg-muted/50 rounded-lg font-code">
@@ -133,13 +136,13 @@ export function InterviewExperience({ interview, stats, interviewQuestions, inte
 
             {interviewResources.length > 0 && (
                 <Card className="border-0 md:border">
-                    <CardHeader className="p-6 pb-4">
+                    <CardHeader className="p-2 pl-3 pb-4 md:p-6">
                         <CardTitle>Helpful Resources</CardTitle>
                     </CardHeader>
-                    <CardContent className="p-6 pt-0">
+                    <CardContent className="p-2 pt-0 md:p-6">
                         <div className="space-y-2">
                             {interviewResources.map(r => (
-                                <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-3 border rounded-lg hover:bg-muted/50">
+                                <a key={r.id} href={r.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 p-2 md:p-3 border rounded-lg hover:bg-muted/50">
                                     <ResourceIcon type={r.type} />
                                     <div>
                                         <p className="font-semibold">{r.title}</p>
