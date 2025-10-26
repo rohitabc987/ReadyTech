@@ -18,7 +18,7 @@ export function LandingHeader() {
 
         <div className="flex items-center gap-4">
             <Button asChild>
-                <Link href="/#join" data-cta="join">Sign Up</Link>
+                <Link href="/signup" data-cta="join">Sign Up</Link>
             </Button>
         </div>
       </div>
