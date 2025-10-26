@@ -129,12 +129,14 @@ export default function ProfilePage() {
             const currentExpertise = form.getValues('expertiseAreas') || [];
             form.setValue('expertiseAreas', [...currentExpertise, newExpertise]);
             setNewExpertise('');
+            form.trigger('expertiseAreas'); // Trigger re-render
         }
     };
 
     const handleRemoveExpertise = (expertiseToRemove: string) => {
         const currentExpertise = form.getValues('expertiseAreas') || [];
         form.setValue('expertiseAreas', currentExpertise.filter(e => e !== expertiseToRemove));
+        form.trigger('expertiseAreas'); // Trigger re-render
     };
 
     function onSubmit(data: ProfileFormValues) {
@@ -199,42 +201,56 @@ export default function ProfilePage() {
 
                     {/* Right Column - Editable Form */}
                     <div className="lg:col-span-3 flex flex-col gap-6">
-                        <Card className="bg-muted/30">
+                        <Card>
                             <CardHeader>
                                 <CardTitle>🧑‍🎓 Personal Details</CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-6">
-                                <div className="flex flex-col md:flex-row gap-6 md:items-start">
-                                    <div className='flex items-center gap-6'>
-                                        <Avatar className="h-20 w-20">
-                                            <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
-                                            <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
-                                        </Avatar>
-                                        <div>
-                                            <Button variant="outline" type="button" onClick={handlePhotoChangeClick}>Change Photo</Button>
-                                            <p className="text-xs text-muted-foreground mt-2">JPG, GIF or PNG. 1MB max.</p>
-                                            <Input 
-                                            type="file" 
-                                            ref={fileInputRef} 
-                                            onChange={handleFileChange}
-                                            className="hidden" 
-                                            accept="image/png, image/jpeg, image/gif"
-                                            />
-                                        </div>
-                                    </div>
-                                    <FormField
-                                        control={form.control}
-                                        name="name"
-                                        render={({ field }) => (
-                                            <FormItem className="space-y-2 flex-1">
-                                                <FormLabel>Full Name <span className="text-destructive">*</span></FormLabel>
-                                                <FormControl>
-                                                    <Input {...field} />
-                                                </FormControl>
-                                                <FormMessage />
-                                            </FormItem>
-                                        )}
+                            <div className="grid md:grid-cols-2 gap-6 items-start">
+                                {/* Left side: avatar + change photo */}
+                                <div className="flex items-center gap-6">
+                                    <Avatar className="h-20 w-20">
+                                    <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
+                                    <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
+                                    </Avatar>
+                                    <div>
+                                    <Button variant="outline" type="button" onClick={handlePhotoChangeClick}>
+                                        Change Photo
+                                    </Button>
+                                    <p className="text-xs text-muted-foreground mt-2">
+                                        JPG, GIF or PNG. 1MB max.
+                                    </p>
+                                    <Input
+                                        type="file"
+                                        ref={fileInputRef}
+                                        onChange={handleFileChange}
+                                        className="hidden"
+                                        accept="image/png, image/jpeg, image/gif"
                                     />
+                                    </div>
+                                </div>
+
+                                {/* Right side: full name field */}
+                                <FormField
+                                    control={form.control}
+                                    name="name"
+                                    render={({ field }) => (
+                                    <FormItem className="space-y-2">
+                                        <FormLabel>
+                                        Full Name <span className="text-destructive">*</span>
+                                        </FormLabel>
+                                        <FormControl>
+                                        <Input {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                    )}
+                                />
+                                </div>
+                                <div className="space-y-2">
+                                    <Label htmlFor="bio">Bio <span className="text-destructive">*</span></Label>
+                                    <Textarea id="bio" placeholder="Tell us a little bit about yourself" {...form.register('bio')} />
+                                    <FormMessage>{form.formState.errors.bio?.message}</FormMessage>
                                 </div>
                                 <div className="grid md:grid-cols-2 gap-4">
                                     <div className="space-y-2">
@@ -255,19 +271,6 @@ export default function ProfilePage() {
                                         )}
                                     />
                                 </div>
-                                <FormField
-                                    control={form.control}
-                                    name="bio"
-                                    render={({ field }) => (
-                                        <FormItem className="space-y-2">
-                                            <FormLabel>Bio <span className="text-destructive">*</span></FormLabel>
-                                            <FormControl>
-                                                <Textarea placeholder="Tell us about yourself..." className="min-h-[100px]" {...field} />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
                             </CardContent>
                         </Card>
 
@@ -342,7 +345,7 @@ export default function ProfilePage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="bg-muted/30">
+                        <Card>
                             <CardHeader>
                                 <CardTitle>😎 Areas of Expertise</CardTitle>
                                 <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
@@ -421,7 +424,7 @@ export default function ProfilePage() {
                             </CardContent>
                         </Card>
 
-                        <Card className="bg-muted/30">
+                        <Card>
                             <CardHeader>
                                 <CardTitle>✋ Preferences & Settings</CardTitle>
                                 <CardDescription>Manage your account settings and notifications.</CardDescription>
