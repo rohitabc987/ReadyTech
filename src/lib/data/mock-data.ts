@@ -19,7 +19,7 @@ export const mockUsers: User[] = [
       domainVerified: true,
     },
     expertise: {
-      expertiseAreas: ['DSA', 'System Design'],
+      expertiseAreas: 'DSA, System Design',
     },
     social: {},
     preferences: {},
@@ -41,7 +41,7 @@ export const mockUsers: User[] = [
       domainVerified: true,
     },
     expertise: {
-      expertiseAreas: ['Product Management', 'Interview Prep'],
+      expertiseAreas: 'Product Management, Interview Prep',
     },
     social: {},
     preferences: {},
@@ -83,7 +83,7 @@ export const mockUsers: User[] = [
       domainVerified: true,
     },
     expertise: {
-      expertiseAreas: ['Machine Learning', 'NLP', 'Data Science'],
+      expertiseAreas: 'Machine Learning, NLP, Data Science',
     },
     social: {},
     preferences: {},
@@ -105,7 +105,7 @@ export const mockUsers: User[] = [
       domainVerified: true,
     },
     expertise: {
-      expertiseAreas: ['Hardware', 'Embedded Systems'],
+      expertiseAreas: 'Hardware, Embedded Systems',
     },
     social: {},
     preferences: {},

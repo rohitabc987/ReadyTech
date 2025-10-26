@@ -33,7 +33,7 @@ const profileFormSchema = z.object({
   branch: z.string().min(1, 'Branch is required.'),
   graduationYear: z.coerce.number({ required_error: "Graduation year is required."}).min(1950).max(2050),
   isMentor: z.boolean(),
-  expertiseAreas: z.array(z.string()).optional(),
+  expertiseAreas: z.string().optional(),
   linkedin: z.string().optional(),
   github: z.string().optional(),
   youtube: z.string().optional(),
@@ -51,7 +51,6 @@ export default function ProfilePage() {
     const [userInitials, setUserInitials] = useState('');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const [newExpertise, setNewExpertise] = useState('');
 
     const form = useForm<ProfileFormValues>({
         resolver: zodResolver(profileFormSchema),
@@ -63,7 +62,7 @@ export default function ProfilePage() {
             branch: '',
             graduationYear: new Date().getFullYear() + 4,
             isMentor: false,
-            expertiseAreas: [],
+            expertiseAreas: '',
             linkedin: '',
             github: '',
             youtube: '',
@@ -91,7 +90,7 @@ export default function ProfilePage() {
                     branch: currentUser.academics.branch || '',
                     graduationYear: currentUser.academics.graduationYear,
                     isMentor: currentUser.academics.role === 'mentor',
-                    expertiseAreas: currentUser.expertise.expertiseAreas || [],
+                    expertiseAreas: currentUser.expertise.expertiseAreas || '',
                     linkedin: currentUser.social.linkedin || '',
                     github: currentUser.social.github || '',
                     youtube: currentUser.social.youtube || '',
@@ -124,21 +123,6 @@ export default function ProfilePage() {
         }
     };
     
-    const handleAddExpertise = () => {
-        if (newExpertise && !form.getValues('expertiseAreas')?.includes(newExpertise)) {
-            const currentExpertise = form.getValues('expertiseAreas') || [];
-            form.setValue('expertiseAreas', [...currentExpertise, newExpertise]);
-            setNewExpertise('');
-            form.trigger('expertiseAreas'); // Trigger re-render
-        }
-    };
-
-    const handleRemoveExpertise = (expertiseToRemove: string) => {
-        const currentExpertise = form.getValues('expertiseAreas') || [];
-        form.setValue('expertiseAreas', currentExpertise.filter(e => e !== expertiseToRemove));
-        form.trigger('expertiseAreas'); // Trigger re-render
-    };
-
     function onSubmit(data: ProfileFormValues) {
         // Here you would typically save the user object to your backend/database
         console.log('User profile saved:', data);
@@ -351,28 +335,20 @@ export default function ProfilePage() {
                                 <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
                             </CardHeader>
                             <CardContent className="space-y-4">
-                                <div className="flex gap-2">
-                                    <Input 
-                                        placeholder="e.g., System Design" 
-                                        value={newExpertise}
-                                        onChange={(e) => setNewExpertise(e.target.value)}
-                                        onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); handleAddExpertise(); }}}
-                                    />
-                                    <Button type="button" onClick={handleAddExpertise}>
-                                        <PlusCircle className="h-4 w-4" />
-                                        <span className="sr-only sm:not-sr-only sm:ml-2">Add</span>
-                                    </Button>
-                                </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {form.watch('expertiseAreas')?.map((expertise, index) => (
-                                        <Badge key={index} variant="secondary" className="pl-3 pr-1 py-1 text-sm">
-                                            {expertise}
-                                            <button type="button" onClick={() => handleRemoveExpertise(expertise)} className="ml-2 rounded-full hover:bg-destructive/20 p-0.5">
-                                                <X className="h-3 w-3" />
-                                            </button>
-                                        </Badge>
-                                    ))}
-                                </div>
+                                <FormField
+                                    control={form.control}
+                                    name="expertiseAreas"
+                                    render={({ field }) => (
+                                        <FormItem>
+                                        <FormLabel>Skills</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="e.g., System Design, DSA, React" {...field} />
+                                        </FormControl>
+                                        <p className="text-xs text-muted-foreground">Enter your areas of expertise, separated by commas.</p>
+                                        <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
                             </CardContent>
                         </Card>
                         
@@ -473,5 +449,3 @@ export default function ProfilePage() {
     </main>
   );
 }
-
-    

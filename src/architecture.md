@@ -54,7 +54,7 @@ This collection stores all user-related information, organized into sub-objects.
     "domainVerified": "boolean"
   },
   "expertise": {
-    "expertiseAreas": ["string"] // e.g., ["DSA", "System Design"]
+    "expertiseAreas": "string" // e.g., "DSA, System Design"
   },
   "social": {
     "linkedin": "string",

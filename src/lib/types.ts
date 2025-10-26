@@ -18,7 +18,7 @@ export type UserAcademics = {
 };
 
 export type UserExpertise = {
-  expertiseAreas?: string[]; // e.g. ["DSA", "System Design", "AI"]
+  expertiseAreas?: string; // e.g. "DSA, System Design, AI"
 };
 
 export type UserSocial = {
