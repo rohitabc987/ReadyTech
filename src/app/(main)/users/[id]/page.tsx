@@ -31,14 +31,14 @@ export default async function UserProfilePage({ params }: { params: { id: string
                 </div>
                 <div className="lg:col-span-2">
                     <Card className="border-0 shadow-none">
-                        <CardHeader className="p-3 py-4 md:p-6">
+                        <CardHeader className="p-3 py-4 md:p-6 md:pb-0">
                             <CardTitle>Shared Experiences ({userInterviews.length})</CardTitle>
                         </CardHeader>
                         <CardContent className="flex flex-col gap-4 p-0 md:p-6 pt-0">
                             {userInterviews.length > 0 ? (await Promise.all(userInterviews.map(async interview => {
                                 const stats = await getPostStats(interview.id);
                                 return (
-                                <Card key={interview.id} className="transition-colors hover:bg-muted/50 border-0 lg:border lg:shadow-sm">
+                                <Card key={interview.id} className="transition-colors hover:bg-muted/50 border-0 lg:border lg:shadow-sm px-4">
                                     <CardHeader  className="p-0 md:p-6">
                                         <CardTitle className="text-lg font-semibold">
                                             <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
