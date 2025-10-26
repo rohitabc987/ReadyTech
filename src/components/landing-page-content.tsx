@@ -80,7 +80,7 @@ export function LandingPageContent() {
   return (
     <main className="flex-1">
       {/* Hero Section */}
-      <section id="join" className="w-full py-20 md:py-24 lg:py-32 bg-gradient-to-b from-primary/5 to-transparent">
+      <section id="join" className="w-full py-16 md:py-20 lg:py-24 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
@@ -102,7 +102,7 @@ export function LandingPageContent() {
       </section>
 
       {/* Our Mission Section */}
-      <section id="mission" className="relative overflow-hidden py-16 md:py-24 bg-gradient-to-b from-white via-primary/5 to-white">
+      <section id="mission" className="relative overflow-hidden py-16 md:py-20 bg-gradient-to-b from-white via-primary/5 to-white">
         <div className="absolute inset-0 bg-grid-slate-100/40 [mask-image:radial-gradient(white,transparent_75%)]"></div>
         <div className="container relative mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -116,7 +116,7 @@ export function LandingPageContent() {
             </p>
 
             <div className="mt-12 grid gap-8 md:grid-cols-3">
-              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+              <div className="group flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2">
                 <div className="bg-primary/10 p-4 rounded-full mb-4">
                   <Users className="h-10 w-10 text-primary" />
                 </div>
@@ -126,7 +126,7 @@ export function LandingPageContent() {
                 </p>
               </div>
 
-              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+              <div className="group flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2">
                 <div className="bg-primary/10 p-4 rounded-full mb-4">
                   <BookOpen className="h-10 w-10 text-primary" />
                 </div>
@@ -136,7 +136,7 @@ export function LandingPageContent() {
                 </p>
               </div>
 
-              <div className="flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all border border-primary/10">
+              <div className="group flex flex-col items-center p-6 bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all border border-transparent hover:border-primary/20 hover:-translate-y-2">
                 <div className="bg-primary/10 p-4 rounded-full mb-4">
                   <Star className="h-10 w-10 text-primary" />
                 </div>
@@ -159,26 +159,27 @@ export function LandingPageContent() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="w-full py-16 md:py-24 bg-muted/30">
+      <section id="how-it-works" className="w-full py-16 md:py-20 bg-muted/30">
           <div className="container mx-auto px-4 md:px-6">
-              <h2 className="text-3xl font-headline font-bold text-center mb-12">How It Works</h2>
-              <div className="grid gap-8 md:grid-cols-3 text-center">
-                  <div className="flex flex-col items-center">
-                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+              <h2 className="text-3xl font-headline font-bold text-center mb-16">How It Works</h2>
+              <div className="relative grid gap-12 md:grid-cols-3 text-center">
+                  <div className="absolute top-1/2 left-0 w-full h-0.5 bg-border -translate-y-20 hidden md:block"></div>
+                  <div className="relative flex flex-col items-center">
+                      <div className="bg-background border-4 border-muted/30 p-4 rounded-full mb-4 ring-4 ring-background">
                           <UserCheck className="h-10 w-10 text-primary" />
                       </div>
                       <h3 className="text-xl font-bold font-headline">1. Create Your Profile</h3>
                       <p className="text-muted-foreground mt-2">Sign up with your institute email and tell us about your goals, whether you're a college student or a JEE aspirant.</p>
                   </div>
-                  <div className="flex flex-col items-center">
-                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+                  <div className="relative flex flex-col items-center">
+                      <div className="bg-background border-4 border-muted/30 p-4 rounded-full mb-4 ring-4 ring-background">
                           <Search className="h-10 w-10 text-primary" />
                       </div>
                       <h3 className="text-xl font-bold font-headline">2. Explore & Learn</h3>
                       <p className="text-muted-foreground mt-2">Browse interview experiences, search the question bank, and connect with mentors who fit your needs.</p>
                   </div>
-                  <div className="flex flex-col items-center">
-                      <div className="bg-primary/10 p-4 rounded-full mb-4 ring-4 ring-primary/5">
+                  <div className="relative flex flex-col items-center">
+                       <div className="bg-background border-4 border-muted/30 p-4 rounded-full mb-4 ring-4 ring-background">
                           <FileText className="h-10 w-10 text-primary" />
                       </div>
                       <h3 className="text-xl font-bold font-headline">3. Share & Contribute</h3>
@@ -189,7 +190,7 @@ export function LandingPageContent() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="w-full py-16 md:py-24 bg-background">
+      <section id="features" className="w-full py-16 md:py-20 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-headline font-bold text-center mb-12">Explore Our Features</h2>
           <div className="grid gap-8 md:grid-cols-3 text-center">
@@ -219,7 +220,7 @@ export function LandingPageContent() {
       </section>
 
       {/* Testimonials Section */}
-      <section id="testimonials" className="w-full py-16 md:py-24 bg-muted/30">
+      <section id="testimonials" className="w-full py-16 md:py-20 bg-muted/30">
         <div className="container mx-auto px-4 md:px-6">
           <h2 className="text-3xl font-headline font-bold text-center mb-12">What Our Community Says</h2>
           <Carousel
@@ -234,8 +235,8 @@ export function LandingPageContent() {
               {mockTestimonials.map((testimonial) => (
                 <CarouselItem key={testimonial.id} className="basis-full md:basis-1/2 lg:basis-1/3">
                   <div className="p-1 h-full">
-                    <Card className="h-full">
-                      <CardContent className="pt-6 flex flex-col items-center text-center">
+                    <Card className="h-full flex flex-col">
+                      <CardContent className="pt-6 flex flex-col items-center text-center flex-1">
                         <Avatar className="h-16 w-16 mb-4">
                           <AvatarImage src={testimonial.avatarUrl} />
                           <AvatarFallback>{testimonial.avatarFallback}</AvatarFallback>
@@ -245,7 +246,7 @@ export function LandingPageContent() {
                         <div className="flex gap-0.5 my-2">
                           {[...Array(testimonial.rating)].map((_, i) => <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-500" />)}
                         </div>
-                        <p className="text-muted-foreground text-sm flex-1">{testimonial.quote}</p>
+                        <p className="text-muted-foreground text-sm flex-1 mt-2">{testimonial.quote}</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -279,4 +280,3 @@ export function LandingPageContent() {
   );
 }
 
-    
