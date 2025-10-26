@@ -1,4 +1,5 @@
 
+
 'use client';
 
 import { useRef, useEffect } from 'react';
@@ -63,7 +64,7 @@ export function LandingPageContent() {
       <section id="join" className="w-full py-16 md:py-20 lg:py-24 bg-gradient-to-b from-primary/5 to-transparent">
         <div className="container mx-auto text-center px-4 md:px-6">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl font-headline font-bold tracking-tight sm:text-5xl md:text-6xl text-primary">
+            <h1 className="text-4xl font-headline font-extrabold tracking-tight sm:text-5xl md:text-6xl bg-gradient-to-r from-primary to-indigo-600 bg-clip-text text-transparent">
               Ready, Set, Tech! Learn from Real Experiences, Not Just Books
             </h1>
             <p className="mt-6 text-lg leading-8 text-muted-foreground">
@@ -250,5 +251,3 @@ export function LandingPageContent() {
     </main>
   );
 }
-
-    
