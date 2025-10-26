@@ -136,22 +136,22 @@ export function LandingPageContent() {
               <div className="relative grid gap-10 md:grid-cols-3 text-center">
                   <div className="absolute top-12 left-0 w-full h-0.5 bg-border -translate-y-1/2 hidden md:block"></div>
                   <div className="relative flex flex-col items-center">
-                      <div className="bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
-                          <UserCheck className="h-10 w-10 text-primary" />
+                      <div className="text-5xl bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
+                          ✍️
                       </div>
                       <h3 className="text-xl font-bold font-headline">1. Create Your Profile</h3>
                       <p className="text-muted-foreground mt-2">Sign up with your institute email and tell us about your goals.</p>
                   </div>
                   <div className="relative flex flex-col items-center">
-                      <div className="bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
-                          <Search className="h-10 w-10 text-primary" />
+                      <div className="text-5xl bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
+                          📚
                       </div>
                       <h3 className="text-xl font-bold font-headline">2. Explore & Learn</h3>
                       <p className="text-muted-foreground mt-2">Browse interview experiences, search the question bank, and connect with mentors.</p>
                   </div>
                   <div className="relative flex flex-col items-center">
-                       <div className="bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
-                          <FileText className="h-10 w-10 text-primary" />
+                       <div className="text-5xl bg-background border-4 border-muted/30 p-5 rounded-full mb-4 ring-8 ring-muted/30">
+                          🤝
                       </div>
                       <h3 className="text-xl font-bold font-headline">3. Share & Contribute</h3>
                       <p className="text-muted-foreground mt-2">Give back to the community by sharing your own interview experiences.</p>
@@ -166,22 +166,22 @@ export function LandingPageContent() {
           <h2 className="text-3xl font-headline font-bold text-center mb-12">Explore Our Features</h2>
           <div className="grid gap-8 md:grid-cols-3 text-center">
             <div className="flex flex-col items-center">
-              <div className="bg-primary/10 p-4 rounded-full mb-4">
-                <Briefcase className="h-8 w-8 text-primary" />
+              <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                💼
               </div>
               <h3 className="text-xl font-bold font-headline">Real Experiences</h3>
               <p className="text-muted-foreground mt-2">Learn from detailed interview experiences shared by students from top colleges.</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-primary/10 p-4 rounded-full mb-4">
-                <Users className="h-8 w-8 text-primary" />
+              <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                🧑‍🏫
               </div>
               <h3 className="text-xl font-bold font-headline">Find Mentors</h3>
               <p className="text-muted-foreground mt-2">Connect with experienced mentors for personalized guidance and support.</p>
             </div>
             <div className="flex flex-col items-center">
-              <div className="bg-primary/10 p-4 rounded-full mb-4">
-                <BookOpen className="h-8 w-8 text-primary" />
+              <div className="text-5xl bg-primary/10 p-4 rounded-full mb-4">
+                📚
               </div>
               <h3 className="text-xl font-bold font-headline">Resource Library</h3>
               <p className="text-muted-foreground mt-2">Access a curated library of questions, articles, and videos.</p>
