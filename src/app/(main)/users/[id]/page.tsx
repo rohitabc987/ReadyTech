@@ -38,7 +38,7 @@ export default async function UserProfilePage({ params }: { params: { id: string
                             {userInterviews.length > 0 ? (await Promise.all(userInterviews.map(async interview => {
                                 const stats = await getPostStats(interview.id);
                                 return (
-                                <Card key={interview.id} className="transition-colors hover:bg-muted/50">
+                                <Card key={interview.id} className="transition-colors hover:bg-muted/50 border-0 lg:border">
                                     <CardHeader>
                                         <CardTitle className="text-lg font-semibold">
                                             <Link href={`/interviews/${interview.id}`} className="hover:underline">{interview.main.title}</Link>
