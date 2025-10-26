@@ -17,7 +17,7 @@ function ComingSoonButton() {
   };
 
   return (
-    <Button variant="outline" size="lg" onClick={handleClick} className="w-full">
+    <Button variant="outline" size="lg" onClick={handleClick} className="w-full btn-glow">
       Continue as School Student
     </Button>
   );
@@ -26,19 +26,19 @@ function ComingSoonButton() {
 
 export default function SignupPage() {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-background">
       <LandingHeader />
-      <main className="flex-1 flex items-center justify-center p-4 bg-muted/20">
-        <Card className="w-full max-w-md mx-auto shadow-xl">
+      <main className="flex-1 flex items-center justify-center p-4 bg-gradient-to-b from-primary/5 to-transparent">
+        <Card className="w-full max-w-md mx-auto bg-card/80 backdrop-blur-sm border-border/50">
           <CardHeader className="text-center space-y-4 pt-8">
-            <CardTitle className="font-headline text-2xl">Join ReadyTech</CardTitle>
+            <CardTitle className="font-headline text-3xl">Join ReadyTech</CardTitle>
             <CardDescription>
               Choose your path to get started. Are you a college student or a school student?
             </CardDescription>
           </CardHeader>
           <CardContent className="pb-8 px-8">
             <div className="flex flex-col gap-4">
-               <Button asChild size="lg" className="w-full">
+               <Button asChild size="lg" className="w-full btn-glow">
                 <Link href="/dashboard">
                   Continue as College Student
                 </Link>
