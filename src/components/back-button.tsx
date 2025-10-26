@@ -4,6 +4,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
 import { useIsMobile } from '@/hooks/use-mobile';
+import { useState, useEffect } from 'react';
 
 const mainNavPaths = ['/dashboard', '/questions', '/resources', '/mentors', '/create-post', '/profile'];
 
@@ -11,8 +12,14 @@ export function BackButton() {
   const router = useRouter();
   const pathname = usePathname();
   const isMobile = useIsMobile();
+  const [showButton, setShowButton] = useState(false);
 
-  if (!isMobile || mainNavPaths.includes(pathname)) {
+  useEffect(() => {
+    // This logic runs only on the client, avoiding server-side rendering issues.
+    setShowButton(isMobile && !mainNavPaths.includes(pathname));
+  }, [isMobile, pathname]);
+
+  if (!showButton) {
     return null;
   }
 

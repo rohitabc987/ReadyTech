@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   BookOpen,
   Briefcase,
@@ -19,6 +19,7 @@ import { UserNav } from './user-nav';
 import { cn } from '@/lib/utils';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from './ui/sheet';
 import { BackButton } from './back-button';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const menuItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -49,8 +50,16 @@ function NavLink({ href, children, onClick }: { href: string, children: React.Re
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const mainNavPaths = menuItems.map(item => item.href);
-  const showMobileMenu = mainNavPaths.includes(pathname);
+  const isMobile = useIsMobile();
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+
+  useEffect(() => {
+    // Determine if the mobile menu should be shown.
+    // This check now safely runs on the client.
+    const isMainPage = menuItems.some(item => item.href === pathname);
+    setShowMobileMenu(isMobile && isMainPage);
+  }, [isMobile, pathname]);
+
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background">
