@@ -77,7 +77,7 @@ export function UserProfileCard({ user, isOwnProfile, isCompact = false, classNa
     }
 
     return (
-        <Card className={cn("text-center border-0 shadow-none", className)}>
+        <Card className={cn("text-center border-0 shadow-none lg:border", className)}>
             <CardHeader className="relative">
                 <div className="absolute top-4 right-4">
                     {user.academics.role === 'mentor' && <Badge variant="secondary">Mentor</Badge>}
