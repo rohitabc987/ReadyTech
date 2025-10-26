@@ -17,7 +17,7 @@ export function LandingHeader() {
         </div>
 
         <div className="flex items-center gap-4">
-            <Button asChild className="btn-glow">
+            <Button asChild className="transition-transform duration-300 hover:scale-105">
                 <Link href="/signup" data-cta="join">Sign Up</Link>
             </Button>
         </div>
