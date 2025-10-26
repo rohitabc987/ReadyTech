@@ -125,14 +125,6 @@ export function LandingPageContent() {
                 </p>
               </div>
             </div>
-
-            <div className="mt-10">
-              <Button asChild size="lg" className="px-8 py-6 text-lg">
-                <Link href="/signup">
-                  Join the Movement <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
       </section>
@@ -245,7 +237,7 @@ export function LandingPageContent() {
               Join a thriving community of learners and mentors. Your journey to success starts here.
             </p>
             <div className="mt-8">
-              <Button asChild size="lg">
+              <Button asChild size="lg" className="btn-glow">
                 <Link href="/signup">
                   Join Now <ArrowRight className="ml-2 h-5 w-5" />
                 </Link>
