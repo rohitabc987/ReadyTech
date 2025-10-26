@@ -22,6 +22,16 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 import { differenceInDays } from 'date-fns';
 
 
@@ -53,6 +63,8 @@ export default function ProfilePage() {
     const [userInitials, setUserInitials] = useState('');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [formData, setFormData] = useState<ProfileFormValues | null>(null);
 
     const form = useForm<ProfileFormValues>({
         resolver: zodResolver(profileFormSchema),
@@ -78,18 +90,6 @@ export default function ProfilePage() {
         // Check if current date is less than 7 days from the last update
         return differenceInDays(new Date(), user.updatedAt) < 7;
     }, [user]);
-
-    const canEditExpertise = useMemo(() => {
-        return !isProfileLocked || !user?.expertise?.expertiseAreas;
-    }, [isProfileLocked, user?.expertise?.expertiseAreas]);
-
-    const canEditSocials = useMemo(() => {
-        return !isProfileLocked || (
-            !user?.social?.linkedin &&
-            !user?.social?.github &&
-            !user?.social?.youtube
-        );
-    }, [isProfileLocked, user?.social]);
 
 
     useEffect(() => {
@@ -145,18 +145,26 @@ export default function ProfilePage() {
     };
 
     function onSubmit(data: ProfileFormValues) {
-        // Here you would typically save the user object to your backend/database
-        // including the new `updatedAt` timestamp
-        const updatedUserData = { ...user, updatedAt: new Date() };
-        console.log('User profile saved:', { ...data, updatedAt: updatedUserData.updatedAt });
+        setFormData(data);
+        setIsAlertOpen(true);
+    };
+
+    function handleConfirmSave() {
+        if (!formData) return;
+    
+        const updatedUserData = { ...user!, updatedAt: new Date() };
+        console.log('User profile saved:', { ...formData, updatedAt: updatedUserData.updatedAt });
+        
         toast({
             title: 'Profile Saved!',
             description: 'Your changes have been successfully saved.',
         });
-        
-        // Update user state to reflect the new `updatedAt` timestamp and re-evaluate locks
+
+        // Update user state to reflect the new `updatedAt` timestamp and re-evaluate lock
         setUser(updatedUserData);
-    };
+        setIsAlertOpen(false);
+        setFormData(null);
+    }
 
 
     if (loading || !user) {
@@ -177,141 +185,242 @@ export default function ProfilePage() {
 
     return (
         <main className="flex-1 mt-4">
+            <AlertDialog open={isAlertOpen} onOpenChange={setIsAlertOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                    <AlertDialogTitle>Confirm Profile Update</AlertDialogTitle>
+                    <AlertDialogDescription>
+                        Are you sure you want to save these changes? You will not be able to edit your profile again for 7 days.
+                    </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={handleConfirmSave}>Yes, Save Changes</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)}>
-                    <div className="grid gap-6 lg:grid-cols-4">
-                        {/* Left Column - Profile Summary */}
-                        <div className="lg:col-span-1 flex flex-col gap-6">
-                            <Card>
-                                <CardHeader className="items-center text-center p-6">
-                                    <Avatar className="h-28 w-28 border-4 border-background mb-2">
-                                        <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
-                                        <AvatarFallback className="text-4xl">{userInitials}</AvatarFallback>
-                                    </Avatar>
-                                    <CardTitle className="font-headline text-2xl">{form.watch('name')}</CardTitle>
-                                    <CardDescription>{form.watch('branch') || 'Branch not set'}</CardDescription>
-                                </CardHeader>
-                                <CardContent className="p-6 pt-0 space-y-4 text-sm text-muted-foreground">
-                                    <div className="flex items-center gap-3">
-                                        <GraduationCapIcon className="h-5 w-5 shrink-0" />
-                                        <span className="truncate">{form.watch('institution') || 'Institution not set'} &apos;{form.watch('graduationYear')?.toString().slice(-2)}</span>
-                                    </div>
-                                    <div className="flex items-center gap-3">
-                                        <Mail className="h-5 w-5 shrink-0" />
-                                        <span className="truncate">{user.personal.email}</span>
-                                    </div>
-                                    <Button asChild variant="outline" className="w-full mt-2">
-                                        <Link href={`/users/${user.id}`}>
-                                            <UserIcon className="mr-2 h-4 w-4" /> View Public Profile
-                                        </Link>
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        </div>
+                    <fieldset disabled={isProfileLocked} className="group">
+                        <div className="grid gap-6 lg:grid-cols-4">
+                            {/* Left Column - Profile Summary */}
+                            <div className="lg:col-span-1 flex flex-col gap-6">
+                                <Card>
+                                    <CardHeader className="items-center text-center p-6">
+                                        <Avatar className="h-28 w-28 border-4 border-background mb-2">
+                                            <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
+                                            <AvatarFallback className="text-4xl">{userInitials}</AvatarFallback>
+                                        </Avatar>
+                                        <CardTitle className="font-headline text-2xl group-disabled:opacity-70">{form.watch('name')}</CardTitle>
+                                        <CardDescription className="group-disabled:opacity-70">{form.watch('branch') || 'Branch not set'}</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="p-6 pt-0 space-y-4 text-sm text-muted-foreground group-disabled:opacity-70">
+                                        <div className="flex items-center gap-3">
+                                            <GraduationCapIcon className="h-5 w-5 shrink-0" />
+                                            <span className="truncate">{form.watch('institution') || 'Institution not set'} &apos;{form.watch('graduationYear')?.toString().slice(-2)}</span>
+                                        </div>
+                                        <div className="flex items-center gap-3">
+                                            <Mail className="h-5 w-5 shrink-0" />
+                                            <span className="truncate">{user.personal.email}</span>
+                                        </div>
+                                        <Button asChild variant="outline" className="w-full mt-2">
+                                            <Link href={`/users/${user.id}`}>
+                                                <UserIcon className="mr-2 h-4 w-4" /> View Public Profile
+                                            </Link>
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </div>
 
-                        {/* Right Column - Editable Form */}
-                        <div className="lg:col-span-3 flex flex-col gap-6">
-                           {isProfileLocked && (
-                                <Alert>
-                                    <Info className="h-4 w-4" />
-                                    <AlertTitle>Profile Locked</AlertTitle>
-                                    <AlertDescription>
-                                        You can update your core profile details once every 7 days. You can still fill in any empty sections.
-                                    </AlertDescription>
-                                </Alert>
-                            )}
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>🧑‍🎓 Personal Details</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                    <fieldset disabled={isProfileLocked} className="space-y-6 group">
+                            {/* Right Column - Editable Form */}
+                            <div className="lg:col-span-3 flex flex-col gap-6">
+                            {isProfileLocked && (
+                                    <Alert>
+                                        <Info className="h-4 w-4" />
+                                        <AlertTitle>Profile Locked</AlertTitle>
+                                        <AlertDescription>
+                                            You can update your profile once every 7 days.
+                                        </AlertDescription>
+                                    </Alert>
+                                )}
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>🧑‍🎓 Personal Details</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
                                         <div className="grid md:grid-cols-2 gap-6 items-start">
-                                            <div className="flex items-center gap-6">
-                                                <Avatar className="h-20 w-20">
-                                                    <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
-                                                    <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
-                                                </Avatar>
-                                                <div>
-                                                    <Button variant="outline" type="button" onClick={handlePhotoChangeClick}>
-                                                        Change Photo
-                                                    </Button>
-                                                    <p className="text-xs text-muted-foreground mt-2">
-                                                        JPG, GIF or PNG. 1MB max.
-                                                    </p>
-                                                    <Input
-                                                        type="file"
-                                                        ref={fileInputRef}
-                                                        onChange={handleFileChange}
-                                                        className="hidden"
-                                                        accept="image/png, image/jpeg, image/gif"
-                                                    />
+                                                <div className="flex items-center gap-6">
+                                                    <Avatar className="h-20 w-20">
+                                                        <AvatarImage src={imagePreview || user.personal.avatarUrl} alt={user.personal.name} />
+                                                        <AvatarFallback className="text-2xl">{userInitials}</AvatarFallback>
+                                                    </Avatar>
+                                                    <div>
+                                                        <Button variant="outline" type="button" onClick={handlePhotoChangeClick}>
+                                                            Change Photo
+                                                        </Button>
+                                                        <p className="text-xs text-muted-foreground mt-2">
+                                                            JPG, GIF or PNG. 1MB max.
+                                                        </p>
+                                                        <Input
+                                                            type="file"
+                                                            ref={fileInputRef}
+                                                            onChange={handleFileChange}
+                                                            className="hidden"
+                                                            accept="image/png, image/jpeg, image/gif"
+                                                        />
+                                                    </div>
                                                 </div>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="name"
+                                                    render={({ field }) => (
+                                                        <FormItem className="space-y-2">
+                                                            <FormLabel>
+                                                                Full Name <span className="text-destructive">*</span>
+                                                            </FormLabel>
+                                                            <FormControl>
+                                                                <Input {...field} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
                                             </div>
-                                            <FormField
-                                                control={form.control}
-                                                name="name"
-                                                render={({ field }) => (
-                                                    <FormItem className="space-y-2">
-                                                        <FormLabel>
-                                                            Full Name <span className="text-destructive">*</span>
-                                                        </FormLabel>
-                                                        <FormControl>
-                                                            <Input {...field} />
-                                                        </FormControl>
-                                                        <FormMessage />
-                                                    </FormItem>
-                                                )}
-                                            />
-                                        </div>
-                                        <div className="grid md:grid-cols-2 gap-4">
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                <div className="space-y-2">
+                                                    <Label htmlFor="email">Email <span className="text-destructive">*</span></Label>
+                                                    <Input id="email" value={user.personal.email} disabled />
+                                                </div>
+                                                <FormField
+                                                    control={form.control}
+                                                    name="mobile"
+                                                    render={({ field }) => (
+                                                        <FormItem className="space-y-2">
+                                                            <FormLabel>Mobile Number <span className="text-destructive">*</span></FormLabel>
+                                                            <FormControl>
+                                                                <Input {...field} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                            </div>
                                             <div className="space-y-2">
-                                                <Label htmlFor="email">Email <span className="text-destructive">*</span></Label>
-                                                <Input id="email" value={user.personal.email} disabled />
+                                                <Label htmlFor="bio">Bio <span className="text-destructive">*</span></Label>
+                                                <Textarea id="bio" placeholder="Tell us a little bit about yourself" {...form.register('bio')} />
+                                                <FormMessage>{form.formState.errors.bio?.message}</FormMessage>
+                                            </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>🎓 Academic & Professional Info</CardTitle>
+                                    </CardHeader>
+                                    <CardContent className="space-y-6">
+                                            <div className="grid md:grid-cols-2 gap-4">
+                                                <FormField
+                                                    control={form.control}
+                                                    name="institution"
+                                                    render={({ field }) => (
+                                                        <FormItem className="space-y-2">
+                                                            <FormLabel>College Name <span className="text-destructive">*</span></FormLabel>
+                                                            <FormControl>
+                                                                <ComboboxInput
+                                                                    options={allColleges}
+                                                                    placeholder="Select or type your college"
+                                                                    value={field.value}
+                                                                    onChange={field.onChange}
+                                                                />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <FormField
+                                                    control={form.control}
+                                                    name="branch"
+                                                    render={({ field }) => (
+                                                        <FormItem className="space-y-2">
+                                                            <FormLabel>Branch <span className="text-destructive">*</span></FormLabel>
+                                                            <FormControl>
+                                                                <Input placeholder="e.g., Computer Science" {...field} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
+                                                <FormField
+                                                    control={form.control}
+                                                    name="graduationYear"
+                                                    render={({ field }) => (
+                                                        <FormItem className="space-y-2">
+                                                            <FormLabel>Graduation Year <span className="text-destructive">*</span></FormLabel>
+                                                            <FormControl>
+                                                                <Input type="number" placeholder="e.g., 2025" {...field} />
+                                                            </FormControl>
+                                                            <FormMessage />
+                                                        </FormItem>
+                                                    )}
+                                                />
                                             </div>
                                             <FormField
                                                 control={form.control}
-                                                name="mobile"
+                                                name="isMentor"
                                                 render={({ field }) => (
-                                                    <FormItem className="space-y-2">
-                                                        <FormLabel>Mobile Number <span className="text-destructive">*</span></FormLabel>
+                                                    <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-background">
+                                                        <div className="space-y-0.5">
+                                                            <FormLabel className="text-base">🧑‍🏫  Available for Mentorship</FormLabel>
+                                                            <p className="text-sm text-muted-foreground">
+                                                                Enable this to appear in the "Connection" section for other users.
+                                                            </p>
+                                                        </div>
                                                         <FormControl>
-                                                            <Input {...field} />
+                                                            <Switch checked={field.value} onCheckedChange={field.onChange} />
                                                         </FormControl>
-                                                        <FormMessage />
                                                     </FormItem>
                                                 )}
                                             />
-                                        </div>
-                                        <div className="space-y-2">
-                                            <Label htmlFor="bio">Bio <span className="text-destructive">*</span></Label>
-                                            <Textarea id="bio" placeholder="Tell us a little bit about yourself" {...form.register('bio')} />
-                                            <FormMessage>{form.formState.errors.bio?.message}</FormMessage>
-                                        </div>
-                                    </fieldset>
-                                </CardContent>
-                            </Card>
+                                    </CardContent>
+                                </Card>
 
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>🎓 Academic & Professional Info</CardTitle>
-                                </CardHeader>
-                                <CardContent className="space-y-6">
-                                     <fieldset disabled={isProfileLocked} className="space-y-6 group">
-                                        <div className="grid md:grid-cols-2 gap-4">
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>😎 Areas of Expertise</CardTitle>
+                                        <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
                                             <FormField
                                                 control={form.control}
-                                                name="institution"
+                                                name="expertiseAreas"
                                                 render={({ field }) => (
-                                                    <FormItem className="space-y-2">
-                                                        <FormLabel>College Name <span className="text-destructive">*</span></FormLabel>
+                                                    <FormItem>
+                                                        <FormLabel>Skills</FormLabel>
                                                         <FormControl>
-                                                            <ComboboxInput
-                                                                options={allColleges}
-                                                                placeholder="Select or type your college"
-                                                                value={field.value}
-                                                                onChange={field.onChange}
-                                                            />
+                                                            <Input placeholder="e.g., System Design, DSA, React" {...field} />
+                                                        </FormControl>
+                                                        <p className="text-xs text-muted-foreground">Enter your areas of expertise, separated by commas.</p>
+                                                        <FormMessage />
+                                                    </FormItem>
+                                                )}
+                                            />
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>🗣️ Social Links</CardTitle>
+                                        <CardDescription>Add links to your social and professional profiles.</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4">
+                                            <FormField
+                                                control={form.control}
+                                                name="linkedin"
+                                                render={({ field }) => (
+                                                    <FormItem className="relative">
+                                                        <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                                                        <FormControl>
+                                                            <Input placeholder="linkedin.com/in/..." className="pl-10" {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -319,12 +428,12 @@ export default function ProfilePage() {
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="branch"
+                                                name="github"
                                                 render={({ field }) => (
-                                                    <FormItem className="space-y-2">
-                                                        <FormLabel>Branch <span className="text-destructive">*</span></FormLabel>
+                                                    <FormItem className="relative">
+                                                        <Github className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                                                         <FormControl>
-                                                            <Input placeholder="e.g., Computer Science" {...field} />
+                                                            <Input placeholder="github.com/..." className="pl-10" {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
@@ -332,28 +441,34 @@ export default function ProfilePage() {
                                             />
                                             <FormField
                                                 control={form.control}
-                                                name="graduationYear"
+                                                name="youtube"
                                                 render={({ field }) => (
-                                                    <FormItem className="space-y-2">
-                                                        <FormLabel>Graduation Year <span className="text-destructive">*</span></FormLabel>
+                                                    <FormItem className="relative">
+                                                        <Youtube className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                                                         <FormControl>
-                                                            <Input type="number" placeholder="e.g., 2025" {...field} />
+                                                            <Input placeholder="youtube.com/..." className="pl-10" {...field} />
                                                         </FormControl>
                                                         <FormMessage />
                                                     </FormItem>
                                                 )}
                                             />
-                                        </div>
+                                    </CardContent>
+                                </Card>
+
+                                <Card>
+                                    <CardHeader>
+                                        <CardTitle>✋ Preferences & Settings</CardTitle>
+                                        <CardDescription>Manage your account settings and notifications.</CardDescription>
+                                    </CardHeader>
+                                    <CardContent className="space-y-4 divide-y">
                                         <FormField
                                             control={form.control}
-                                            name="isMentor"
+                                            name="notificationsEnabled"
                                             render={({ field }) => (
-                                                <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-background">
+                                                <FormItem className="flex items-center justify-between pt-4 first:pt-0">
                                                     <div className="space-y-0.5">
-                                                        <FormLabel className="text-base">🧑‍🏫  Available for Mentorship</FormLabel>
-                                                        <p className="text-sm text-muted-foreground">
-                                                            Enable this to appear in the "Connection" section for other users.
-                                                        </p>
+                                                        <FormLabel>Email Notifications</FormLabel>
+                                                        <p className="text-sm text-muted-foreground">Receive notifications about new connections and messages.</p>
                                                     </div>
                                                     <FormControl>
                                                         <Switch checked={field.value} onCheckedChange={field.onChange} />
@@ -361,131 +476,32 @@ export default function ProfilePage() {
                                                 </FormItem>
                                             )}
                                         />
-                                    </fieldset>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>😎 Areas of Expertise</CardTitle>
-                                    <CardDescription>Showcase your skills to attract mentees and connections.</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                    <fieldset disabled={!canEditExpertise}>
                                         <FormField
                                             control={form.control}
-                                            name="expertiseAreas"
+                                            name="darkMode"
                                             render={({ field }) => (
-                                                <FormItem>
-                                                    <FormLabel>Skills</FormLabel>
+                                                <FormItem className="flex items-center justify-between pt-4 first:pt-0">
+                                                    <div className="space-y-0.5">
+                                                        <FormLabel>Dark Mode</FormLabel>
+                                                        <p className="text-sm text-muted-foreground">Enable or disable the dark theme for your account.</p>
+                                                    </div>
                                                     <FormControl>
-                                                        <Input placeholder="e.g., System Design, DSA, React" {...field} />
+                                                        <Switch checked={field.value} onCheckedChange={field.onChange} />
                                                     </FormControl>
-                                                    <p className="text-xs text-muted-foreground">Enter your areas of expertise, separated by commas.</p>
-                                                    <FormMessage />
                                                 </FormItem>
                                             )}
                                         />
-                                    </fieldset>
-                                </CardContent>
-                            </Card>
+                                    </CardContent>
+                                </Card>
 
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>🗣️ Social Links</CardTitle>
-                                    <CardDescription>Add links to your social and professional profiles.</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-4">
-                                     <fieldset disabled={!canEditSocials} className="space-y-4">
-                                        <FormField
-                                            control={form.control}
-                                            name="linkedin"
-                                            render={({ field }) => (
-                                                <FormItem className="relative">
-                                                    <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                                    <FormControl>
-                                                        <Input placeholder="linkedin.com/in/..." className="pl-10" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="github"
-                                            render={({ field }) => (
-                                                <FormItem className="relative">
-                                                    <Github className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                                    <FormControl>
-                                                        <Input placeholder="github.com/..." className="pl-10" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                        <FormField
-                                            control={form.control}
-                                            name="youtube"
-                                            render={({ field }) => (
-                                                <FormItem className="relative">
-                                                    <Youtube className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                                    <FormControl>
-                                                        <Input placeholder="youtube.com/..." className="pl-10" {...field} />
-                                                    </FormControl>
-                                                    <FormMessage />
-                                                </FormItem>
-                                            )}
-                                        />
-                                    </fieldset>
-                                </CardContent>
-                            </Card>
-
-                            <Card>
-                                <CardHeader>
-                                    <CardTitle>✋ Preferences & Settings</CardTitle>
-                                    <CardDescription>Manage your account settings and notifications.</CardDescription>
-                                </CardHeader>
-                                <CardContent className="space-y-4 divide-y">
-                                    <FormField
-                                        control={form.control}
-                                        name="notificationsEnabled"
-                                        render={({ field }) => (
-                                            <FormItem className="flex items-center justify-between pt-4 first:pt-0">
-                                                <div className="space-y-0.5">
-                                                    <FormLabel>Email Notifications</FormLabel>
-                                                    <p className="text-sm text-muted-foreground">Receive notifications about new connections and messages.</p>
-                                                </div>
-                                                <FormControl>
-                                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                    <FormField
-                                        control={form.control}
-                                        name="darkMode"
-                                        render={({ field }) => (
-                                            <FormItem className="flex items-center justify-between pt-4 first:pt-0">
-                                                <div className="space-y-0.5">
-                                                    <FormLabel>Dark Mode</FormLabel>
-                                                    <p className="text-sm text-muted-foreground">Enable or disable the dark theme for your account.</p>
-                                                </div>
-                                                <FormControl>
-                                                    <Switch checked={field.value} onCheckedChange={field.onChange} />
-                                                </FormControl>
-                                            </FormItem>
-                                        )}
-                                    />
-                                </CardContent>
-                            </Card>
-
-                            <div className="flex justify-center sticky bottom-4">
-                                <Button size="lg" type="submit" className="shadow-lg" disabled={!canEditExpertise && !canEditSocials && isProfileLocked}>
-                                    Save All Changes
-                                </Button>
+                                <div className="flex justify-center sticky bottom-4">
+                                    <Button size="lg" type="submit" className="shadow-lg" disabled={isProfileLocked}>
+                                        Save All Changes
+                                    </Button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </fieldset>
                 </form>
             </Form>
         </main>
