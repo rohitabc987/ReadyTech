@@ -35,6 +35,7 @@ export type UserPreferences = {
 export type User = {
   id: string;
   createdAt: Date;
+  updatedAt?: Date;
   personal: UserPersonal;
   academics: UserAcademics;
   expertise: UserExpertise;

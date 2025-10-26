@@ -5,6 +5,7 @@ export const mockUsers: User[] = [
   {
     id: 'u1',
     createdAt: new Date('2022-08-15T10:00:00Z'),
+    updatedAt: new Date('2024-07-20T10:00:00Z'),
     personal: {
       name: 'Aarav Sharma',
       email: 'aarav.sharma@iitdh.ac.in',
@@ -27,6 +28,7 @@ export const mockUsers: User[] = [
   {
     id: 'u2',
     createdAt: new Date('2022-09-01T11:00:00Z'),
+    updatedAt: new Date(),
     personal: {
       name: 'Priya Patel',
       email: 'priya.patel@nit.ac.in',
@@ -49,6 +51,7 @@ export const mockUsers: User[] = [
   {
     id: 'u3',
     createdAt: new Date('2023-01-20T12:00:00Z'),
+    updatedAt: new Date('2024-07-28T12:00:00Z'), // Last updated a few days ago
     personal: {
       name: 'Rohan Desai',
       email: 'rohan.desai@iitdh.ac.in',
