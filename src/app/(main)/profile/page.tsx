@@ -78,8 +78,8 @@ export default function ProfilePage() {
         return differenceInDays(new Date(), user.updatedAt) < 7;
     }, [user]);
 
-    const canEditExpertise = !isProfileLocked || !form.getValues('expertiseAreas');
-    const canEditSocials = !isProfileLocked || (!form.getValues('linkedin') && !form.getValues('github') && !form.getValues('youtube'));
+    const canEditExpertise = !isProfileLocked || !user?.expertise?.expertiseAreas;
+    const canEditSocials = !isProfileLocked || (!user?.social?.linkedin && !user?.social?.github && !user?.social?.youtube);
 
 
     useEffect(() => {
@@ -343,7 +343,7 @@ export default function ProfilePage() {
                                             render={({ field }) => (
                                                 <FormItem className="flex items-center justify-between rounded-lg border p-4 bg-background">
                                                     <div className="space-y-0.5">
-                                                        <FormLabel className="text-base">Available for Mentorship</FormLabel>
+                                                        <FormLabel className="text-base">🧑‍🏫  Available for Mentorship</FormLabel>
                                                         <p className="text-sm text-muted-foreground">
                                                             Enable this to appear in the "Connection" section for other users.
                                                         </p>
